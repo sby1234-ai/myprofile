@@ -15,6 +15,18 @@
       scroll-behavior: smooth;
     }
 
+    /* 움직임 줄이기: 사용자가 OS에서 끄면 부드러운 스크롤을 사용하지 않습니다 */
+    @media (prefers-reduced-motion: reduce) {
+      html {
+        scroll-behavior: auto;
+      }
+
+      * {
+        transition: none !important;
+        animation: none !important;
+      }
+    }
+
     body {
       margin: 0;
       font-family: Arial, "Noto Sans KR", sans-serif;
@@ -35,7 +47,7 @@
     header {
       background: #111827;
       color: white;
-      padding: 18px 0;
+      padding: 14px 0;
     }
 
     nav {
@@ -46,7 +58,7 @@
     }
 
     .logo {
-      font-size: 20px;
+      font-size: 19px;
       font-weight: 700;
     }
 
@@ -62,57 +74,106 @@
       text-decoration: underline;
     }
 
+    /* ── 첫 화면 ───────────────────────────── */
     .hero {
-      padding: 55px 0 40px;
+      padding: 30px 0 26px;
     }
 
     .hero-grid {
       display: grid;
-      grid-template-columns: 1.4fr 1fr;
-      gap: 30px;
-      align-items: center;
+      grid-template-columns: 1.25fr 1fr;
+      gap: 26px;
+      align-items: start;
     }
 
     .tag {
       display: inline-block;
       background: #e5e7eb;
-      padding: 6px 12px;
+      padding: 5px 11px;
       border-radius: 20px;
-      font-size: 14px;
-      margin-bottom: 12px;
+      font-size: 13px;
+      margin-bottom: 10px;
     }
 
     h1 {
-      font-size: clamp(34px, 5vw, 56px);
-      line-height: 1.15;
-      margin: 0 0 18px;
+      font-size: clamp(26px, 3.2vw, 38px);
+      line-height: 1.2;
+      margin: 0 0 12px;
     }
 
-    .hero p {
-      font-size: 18px;
+    .hero-lead {
+      font-size: 16px;
       color: #4b5563;
-      margin-bottom: 24px;
+      margin: 0 0 14px;
     }
 
     .purpose {
       background: white;
       border-left: 5px solid #111827;
-      padding: 18px 20px;
+      padding: 14px 16px;
       border-radius: 10px;
+      font-size: 15px;
     }
 
     .purpose strong {
       display: block;
-      margin-bottom: 5px;
+      margin-bottom: 4px;
     }
 
+    /* 첫 화면 요약 카드 */
+    .glance {
+      background: white;
+      border-radius: 14px;
+      padding: 18px 20px;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.06);
+    }
+
+    .glance h2 {
+      margin: 0 0 12px;
+      font-size: 19px;
+    }
+
+    .glance-list {
+      list-style: none;
+      margin: 0 0 16px;
+      padding: 0;
+      font-size: 15px;
+    }
+
+    .glance-list li {
+      padding: 7px 0;
+      border-top: 1px solid #e5e7eb;
+    }
+
+    .glance-list li:first-child {
+      border-top: 0;
+    }
+
+    .glance-list b {
+      display: inline-block;
+      min-width: 76px;
+    }
+
+    .glance-evidence {
+      background: #111827;
+      color: #e5e7eb;
+      border-radius: 10px;
+      padding: 14px 16px;
+      font-size: 14px;
+    }
+
+    .glance-evidence p {
+      margin: 0 0 4px;
+    }
+
+    /* ── 아래 섹션 ─────────────────────────── */
     .section {
-      padding: 35px 0;
+      padding: 30px 0;
     }
 
     .section h2 {
-      margin-bottom: 20px;
-      font-size: 28px;
+      margin: 0 0 18px;
+      font-size: 26px;
     }
 
     .cards {
@@ -148,6 +209,10 @@
       padding: 25px;
     }
 
+    .evidence h3 {
+      margin-top: 0;
+    }
+
     .evidence p {
       color: #e5e7eb;
     }
@@ -156,9 +221,10 @@
       border: 0;
       background: white;
       color: #111827;
-      padding: 11px 16px;
+      padding: 10px 15px;
       border-radius: 8px;
       font-weight: bold;
+      font-size: 14px;
       cursor: pointer;
       margin-top: 10px;
     }
@@ -167,16 +233,17 @@
       opacity: 0.85;
     }
 
-    button:focus {
+    button:focus-visible {
       outline: 3px solid #93c5fd;
       outline-offset: 3px;
     }
 
     #detail {
-      margin-top: 15px;
-      padding: 15px;
+      margin-top: 12px;
+      padding: 13px 15px;
       background: #374151;
       border-radius: 8px;
+      font-size: 14px;
     }
 
     .privacy {
@@ -191,6 +258,10 @@
       padding: 22px;
     }
 
+    .privacy-box h3 {
+      margin-top: 0;
+    }
+
     .privacy-box ul {
       padding-left: 20px;
       margin-bottom: 0;
@@ -198,14 +269,14 @@
 
     footer {
       margin-top: 30px;
-      padding: 30px 0;
+      padding: 28px 0;
       background: #111827;
       color: #d1d5db;
       text-align: center;
       font-size: 14px;
     }
 
-    @media (max-width: 800px) {
+    @media (max-width: 900px) {
       .hero-grid,
       .cards,
       .privacy {
@@ -220,10 +291,6 @@
       nav a {
         margin-left: 0;
         margin-right: 15px;
-      }
-
-      .hero {
-        padding-top: 35px;
       }
     }
   </style>
@@ -248,7 +315,7 @@
 
   <main>
 
-    <!-- 첫 화면 -->
+    <!-- 첫 화면: 소개 · 강점 · 근거를 스크롤 없이 함께 보여줍니다 -->
     <section class="hero" id="about">
       <div class="container">
         <div class="hero-grid">
@@ -261,9 +328,10 @@
               IT 학습자입니다.
             </h1>
 
-            <p>
+            <p class="hero-lead">
               새로운 기술을 직접 실습하고,
               문제가 생기면 원인을 찾아 해결하는 과정을 중요하게 생각합니다.
+              관심 분야는 서버 · 네트워크 · Linux · 웹 기술입니다.
             </p>
 
             <div class="purpose">
@@ -273,17 +341,32 @@
             </div>
           </div>
 
-          <div class="card">
-            <h3>현재 관심 분야</h3>
+          <div class="glance">
+            <h2>한눈에 보기</h2>
 
-            <p>
-              서버 · 네트워크 · Linux · 웹 기술
-            </p>
+            <ul class="glance-list">
+              <li><b>강점 01</b> 오류의 원인을 좁혀 해결합니다</li>
+              <li><b>강점 02</b> 읽기보다 직접 설치하고 확인합니다</li>
+              <li><b>강점 03</b> 작은 기능부터 범위를 넓힙니다</li>
+            </ul>
 
-            <p>
-              직접 구성하고 테스트하면서
-              기술을 이해하는 방식을 선호합니다.
-            </p>
+            <div class="glance-evidence">
+              <p><b>근거</b> 이 페이지 자체가 직접 만든 결과물입니다.</p>
+
+              <button
+                type="button"
+                id="detailButton"
+                aria-expanded="false"
+                aria-controls="detail"
+              >
+                만든 과정 자세히 보기
+              </button>
+
+              <div id="detail" hidden>
+                페이지 구조 작성 → 화면 구성 → 공개 → 브라우저 검사 →
+                오류 및 화면 문제 수정 순서로 작업했습니다.
+              </div>
+            </div>
           </div>
 
         </div>
@@ -291,7 +374,7 @@
     </section>
 
 
-    <!-- 강점 3개 -->
+    <!-- 강점 3개 상세 -->
     <section class="section" id="strengths">
       <div class="container">
 
@@ -363,7 +446,7 @@
     </section>
 
 
-    <!-- 근거 -->
+    <!-- 근거 상세 -->
     <section class="section" id="evidence">
       <div class="container">
 
@@ -379,19 +462,9 @@
             GitHub Pages를 이용해 실제 공개 페이지로 연결했습니다.
           </p>
 
-          <button
-            type="button"
-            id="detailButton"
-            aria-expanded="false"
-            aria-controls="detail"
-          >
-            만든 과정 자세히 보기
-          </button>
-
-          <div id="detail" hidden>
-            페이지 구조 작성 → 화면 구성 → 공개 → 브라우저 검사 →
-            오류 및 화면 문제 수정 순서로 작업했습니다.
-          </div>
+          <p>
+            첫 화면의 <b>만든 과정 자세히 보기</b> 버튼에서 작업 순서를 확인할 수 있습니다.
+          </p>
 
         </div>
 
