@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -5,332 +6,417 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>IT Portfolio</title>
- 
+
   <style>
+    :root {
+      --ink: #1a1d21;
+      --muted: #565f6b;
+      --label: #5b6470;
+      --accent: #0f5f57;
+      --bg: #f4f6f9;
+      --card: #ffffff;
+      --dark: #12161c;
+      --dark-soft: #1c2027;
+      --dark-text: #cfd6df;
+      --line: #e3e7ed;
+    }
+
     * {
       box-sizing: border-box;
     }
- 
+
     html {
       scroll-behavior: smooth;
     }
- 
-    /* 움직임 줄이기: 사용자가 OS에서 끄면 부드러운 스크롤을 사용하지 않습니다 */
+
+    /* 움직임 줄이기: 사용자가 끄면 부드러운 스크롤과 전환을 사용하지 않습니다 */
     @media (prefers-reduced-motion: reduce) {
       html {
         scroll-behavior: auto;
       }
- 
+
       * {
         transition: none !important;
         animation: none !important;
       }
     }
- 
+
     body {
       margin: 0;
-      font-family: Arial, "Noto Sans KR", sans-serif;
-      background: #f5f7fa;
-      color: #202124;
-      line-height: 1.6;
+      font-family: "Helvetica Neue", Arial, "Noto Sans KR", sans-serif;
+      background: var(--bg);
+      color: var(--ink);
+      line-height: 1.65;
+      -webkit-font-smoothing: antialiased;
     }
- 
+
     a {
       color: inherit;
     }
- 
+
     .container {
-      width: min(1100px, calc(100% - 40px));
+      width: min(1080px, calc(100% - 44px));
       margin: 0 auto;
     }
- 
+
+    /* ── 헤더 ─────────────────────────────── */
     header {
-      background: #111827;
+      background: var(--dark);
       color: white;
-      padding: 14px 0;
+      padding: 15px 0;
     }
- 
+
     nav {
       display: flex;
       justify-content: space-between;
       align-items: center;
       gap: 20px;
     }
- 
+
     .logo {
-      font-size: 19px;
+      font-size: 15px;
       font-weight: 700;
+      letter-spacing: 0.14em;
     }
- 
-    nav a {
+
+    .nav-links a {
       text-decoration: none;
-      margin-left: 20px;
-      color: #e5e7eb;
+      margin-left: 22px;
+      color: #d6dbe3;
+      font-size: 14px;
+      padding-bottom: 2px;
+      border-bottom: 1px solid transparent;
+      transition: border-color 0.15s ease;
     }
- 
-    nav a:hover,
-    nav a:focus {
+
+    .nav-links a:hover,
+    .nav-links a:focus-visible {
       color: white;
-      text-decoration: underline;
+      border-bottom-color: currentColor;
     }
- 
+
     /* ── 첫 화면 ───────────────────────────── */
     .hero {
-      padding: 30px 0 26px;
+      padding: 44px 0 34px;
     }
- 
+
     .hero-grid {
       display: grid;
-      grid-template-columns: 1.25fr 1fr;
-      gap: 26px;
+      grid-template-columns: 1.3fr 1fr;
+      gap: 34px;
       align-items: start;
     }
- 
-    .tag {
-      display: inline-block;
-      background: #e5e7eb;
-      padding: 5px 11px;
-      border-radius: 20px;
-      font-size: 13px;
-      margin-bottom: 10px;
+
+    .eyebrow {
+      display: block;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.16em;
+      color: var(--accent);
+      margin-bottom: 12px;
     }
- 
+
     h1 {
-      font-size: clamp(26px, 3.2vw, 38px);
-      line-height: 1.2;
-      margin: 0 0 12px;
+      font-size: clamp(27px, 3.3vw, 40px);
+      line-height: 1.22;
+      letter-spacing: -0.02em;
+      margin: 0 0 14px;
+      font-weight: 700;
     }
- 
+
     .hero-lead {
       font-size: 16px;
-      color: #4b5563;
-      margin: 0 0 14px;
+      color: var(--muted);
+      margin: 0 0 20px;
+      max-width: 46ch;
     }
- 
+
     .purpose {
-      background: white;
-      border-left: 5px solid #111827;
-      padding: 14px 16px;
-      border-radius: 10px;
-      font-size: 15px;
+      background: var(--card);
+      border-radius: 12px;
+      padding: 16px 18px;
+      font-size: 14.5px;
+      color: var(--muted);
+      border: 1px solid var(--line);
     }
- 
+
     .purpose strong {
       display: block;
-      margin-bottom: 4px;
+      margin-bottom: 5px;
+      color: var(--ink);
+      font-size: 13px;
     }
- 
+
     /* 첫 화면 요약 카드 */
     .glance {
-      background: white;
+      background: var(--card);
       border-radius: 14px;
-      padding: 18px 20px;
-      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.06);
+      border: 1px solid var(--line);
+      overflow: hidden;
     }
- 
+
+    .glance-body {
+      padding: 20px 22px 18px;
+    }
+
     .glance h2 {
-      margin: 0 0 12px;
-      font-size: 19px;
+      margin: 0 0 14px;
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      color: var(--accent);
     }
- 
+
     .glance-list {
       list-style: none;
-      margin: 0 0 16px;
+      margin: 0;
       padding: 0;
       font-size: 15px;
     }
- 
+
     .glance-list li {
-      padding: 7px 0;
-      border-top: 1px solid #e5e7eb;
+      padding: 10px 0;
+      border-top: 1px solid var(--line);
     }
- 
+
     .glance-list li:first-child {
       border-top: 0;
+      padding-top: 0;
     }
- 
-    .glance-list b {
-      display: inline-block;
-      min-width: 76px;
-    }
- 
-    .glance-evidence {
-      background: #111827;
-      color: #e5e7eb;
-      border-radius: 10px;
-      padding: 14px 16px;
+
+    .glance-foot {
+      background: var(--dark-soft);
+      color: var(--dark-text);
+      padding: 18px 22px 20px;
       font-size: 14px;
     }
- 
-    .glance-evidence p {
-      margin: 0 0 4px;
+
+    .glance-foot p {
+      margin: 0 0 12px;
     }
- 
-    /* ── 아래 섹션 ─────────────────────────── */
+
+    /* ── 섹션 공통 ─────────────────────────── */
     .section {
-      padding: 30px 0;
+      padding: 34px 0;
     }
- 
+
+    .section-head {
+      margin-bottom: 22px;
+    }
+
     .section h2 {
-      margin: 0 0 18px;
-      font-size: 26px;
+      margin: 0;
+      font-size: 23px;
+      letter-spacing: -0.01em;
+      font-weight: 700;
     }
- 
+
+    /* ── 강점 카드 ─────────────────────────── */
     .cards {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
-      gap: 18px;
+      gap: 20px;
     }
- 
+
     .card {
-      background: white;
+      background: var(--card);
+      border: 1px solid var(--line);
       border-radius: 14px;
-      padding: 22px;
-      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.06);
+      padding: 24px 22px;
+      transition: border-color 0.15s ease;
     }
- 
+
+    .card:hover {
+      border-color: #c8cfd9;
+    }
+
     .card h3 {
-      margin-top: 0;
-      margin-bottom: 12px;
+      margin: 0 0 16px;
+      font-size: 17px;
+      letter-spacing: -0.01em;
     }
- 
-    .label {
-      font-size: 13px;
-      font-weight: bold;
-      color: #6b7280;
-      margin-top: 12px;
+
+    .step {
+      padding-left: 13px;
+      border-left: 2px solid var(--line);
+      margin-top: 14px;
+    }
+
+    .step:first-of-type {
+      margin-top: 0;
+    }
+
+    .step .label {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      color: var(--label);
       margin-bottom: 3px;
     }
- 
-    .evidence {
-      background: #111827;
-      color: white;
+
+    .step p {
+      margin: 0;
+      font-size: 14.5px;
+    }
+
+    /* ── 만든 과정 ─────────────────────────── */
+    .process {
+      background: var(--card);
+      border: 1px solid var(--line);
       border-radius: 14px;
-      padding: 25px;
+      padding: 26px 24px;
+      display: grid;
+      grid-template-columns: 1fr 1.35fr;
+      gap: 28px;
+      align-items: start;
     }
- 
-    .evidence h3 {
-      margin-top: 0;
+
+    .process h3 {
+      margin: 0 0 6px;
+      font-size: 15px;
+      letter-spacing: 0.02em;
     }
- 
-    .evidence p {
-      color: #e5e7eb;
+
+    .process .stack {
+      font-size: 13.5px;
+      color: var(--muted);
     }
- 
+
+    .process p {
+      margin: 0 0 12px;
+      font-size: 14.5px;
+      color: var(--muted);
+    }
+
+    .process p:last-child {
+      margin-bottom: 0;
+    }
+
+    /* ── 버튼 ─────────────────────────────── */
     button {
       border: 0;
       background: white;
-      color: #111827;
-      padding: 10px 15px;
+      color: var(--dark);
+      padding: 10px 16px;
       border-radius: 8px;
-      font-weight: bold;
-      font-size: 14px;
+      font-weight: 700;
+      font-size: 13.5px;
+      font-family: inherit;
       cursor: pointer;
-      margin-top: 10px;
+      transition: opacity 0.15s ease;
     }
- 
+
     button:hover {
-      opacity: 0.85;
+      opacity: 0.86;
     }
- 
+
     button:focus-visible {
-      outline: 3px solid #93c5fd;
+      outline: 3px solid #7fb3ff;
       outline-offset: 3px;
     }
- 
+
     #detail {
-      margin-top: 12px;
-      padding: 13px 15px;
-      background: #374151;
-      border-radius: 8px;
-      font-size: 14px;
+      margin-top: 14px;
+      padding-top: 14px;
+      border-top: 1px solid rgba(255, 255, 255, 0.16);
+      font-size: 13.5px;
+      line-height: 1.7;
     }
- 
+
+    /* ── 푸터 ─────────────────────────────── */
     footer {
-      margin-top: 30px;
-      padding: 28px 0;
-      background: #111827;
-      color: #d1d5db;
-      text-align: center;
-      font-size: 14px;
+      margin-top: 26px;
+      padding: 26px 0;
+      background: var(--dark);
+      color: #aeb6c2;
+      font-size: 13px;
     }
- 
+
+    /* ── 좁은 화면 ─────────────────────────── */
     @media (max-width: 900px) {
       .hero-grid,
-      .cards {
+      .cards,
+      .process {
         grid-template-columns: 1fr;
       }
- 
+
       nav {
         flex-direction: column;
         align-items: flex-start;
+        gap: 10px;
       }
- 
-      nav a {
+
+      .nav-links a {
         margin-left: 0;
-        margin-right: 15px;
+        margin-right: 18px;
+      }
+
+      .hero {
+        padding-top: 32px;
       }
     }
   </style>
 </head>
- 
+
 <body>
- 
+
   <header>
     <div class="container">
       <nav aria-label="주요 메뉴">
-        <div class="logo">MY PORTFOLIO</div>
- 
-        <div>
+        <div class="logo">PORTFOLIO</div>
+
+        <div class="nav-links">
           <a href="#about">소개</a>
           <a href="#strengths">강점</a>
-          <a href="#evidence">만든 과정</a>
+          <a href="#process">만든 과정</a>
         </div>
       </nav>
     </div>
   </header>
- 
- 
+
+
   <main>
- 
+
     <!-- 첫 화면: 소개 · 강점 · 근거를 스크롤 없이 함께 보여줍니다 -->
     <section class="hero" id="about">
       <div class="container">
         <div class="hero-grid">
- 
+
           <div>
-            <span class="tag">IT · Learning · Problem Solving</span>
- 
+            <span class="eyebrow">IT · LEARNING · PROBLEM SOLVING</span>
+
             <h1>
               배우고 직접 해결하는<br>
               IT 학습자입니다.
             </h1>
- 
+
             <p class="hero-lead">
-              새로운 기술을 직접 실습하고,
-              문제가 생기면 원인을 찾아 해결하는 과정을 중요하게 생각합니다.
+              새로운 기술을 직접 실습하고, 문제가 생기면 원인을 찾아
+              해결하는 과정을 중요하게 생각합니다.
               관심 분야는 서버 · 네트워크 · Linux · 웹 기술입니다.
             </p>
- 
+
             <div class="purpose">
               <strong>이 페이지는 누구를 위한 것인가?</strong>
-              IT 분야에서 함께 배우고 일할 사람에게
-              저의 관심 분야와 문제 해결 방식, 학습 결과를 보여주기 위한 페이지입니다.
+              IT 분야에서 함께 배우고 일할 사람에게 저의 관심 분야와
+              문제 해결 방식, 학습 결과를 보여주기 위한 페이지입니다.
             </div>
           </div>
- 
+
           <div class="glance">
-            <h2>한눈에 보기</h2>
- 
-            <ul class="glance-list">
-              <li><b>강점 01</b> 오류의 원인을 좁혀 해결합니다</li>
-              <li><b>강점 02</b> 읽기보다 직접 설치하고 확인합니다</li>
-              <li><b>강점 03</b> 작은 기능부터 범위를 넓힙니다</li>
-            </ul>
- 
-            <div class="glance-evidence">
+            <div class="glance-body">
+              <h2>한눈에 보기</h2>
+
+              <ul class="glance-list">
+                <li>오류의 원인을 좁혀 해결합니다</li>
+                <li>읽기보다 직접 설치하고 확인합니다</li>
+                <li>작은 기능부터 범위를 넓힙니다</li>
+              </ul>
+            </div>
+
+            <div class="glance-foot">
               <p>이 페이지는 HTML과 CSS를 직접 작성해 만들었습니다.</p>
- 
+
               <button
                 type="button"
                 id="detailButton"
@@ -339,135 +425,142 @@
               >
                 만든 과정 자세히 보기
               </button>
- 
+
               <div id="detail" hidden>
                 페이지 구조 작성 → 화면 구성 → 공개 → 브라우저 검사 →
-                오류 및 화면 문제 수정 순서로 작업했습니다.
+                오류 및 화면 문제 수정
               </div>
             </div>
           </div>
- 
+
         </div>
       </div>
     </section>
- 
- 
-    <!-- 강점 3개 상세 -->
+
+
+    <!-- 강점 3가지 -->
     <section class="section" id="strengths">
       <div class="container">
- 
-        <h2>제가 보여주고 싶은 3가지</h2>
- 
+
+        <div class="section-head">
+          <h2>제가 보여주고 싶은 3가지</h2>
+        </div>
+
         <div class="cards">
- 
+
           <article class="card">
-            <h3>01. 문제 해결</h3>
- 
-            <div class="label">상황</div>
-            <div>
-              서버나 웹페이지를 직접 구성하면서 예상하지 못한 오류를 만나는 상황이 있습니다.
+            <h3>문제 해결</h3>
+
+            <div class="step">
+              <div class="label">상황</div>
+              <p>서버나 웹페이지를 직접 구성하면서 예상하지 못한 오류를 만나는 상황이 있습니다.</p>
             </div>
- 
-            <div class="label">행동</div>
-            <div>
-              설정을 하나씩 확인하고 오류 메시지와 동작 결과를 비교하면서 원인을 좁혀갑니다.
+
+            <div class="step">
+              <div class="label">행동</div>
+              <p>설정을 하나씩 확인하고 오류 메시지와 동작 결과를 비교하면서 원인을 좁혀갑니다.</p>
             </div>
- 
-            <div class="label">결과</div>
-            <div>
-              문제가 발생한 지점을 찾아 수정하고 정상적으로 동작하는지 다시 확인합니다.
+
+            <div class="step">
+              <div class="label">결과</div>
+              <p>문제가 발생한 지점을 찾아 수정하고 정상적으로 동작하는지 다시 확인합니다.</p>
             </div>
           </article>
- 
- 
+
+
           <article class="card">
-            <h3>02. 직접 실습</h3>
- 
-            <div class="label">상황</div>
-            <div>
-              새로운 IT 기술이나 도구를 처음 접했을 때가 있습니다.
+            <h3>직접 실습</h3>
+
+            <div class="step">
+              <div class="label">상황</div>
+              <p>새로운 IT 기술이나 도구를 처음 접했을 때가 있습니다.</p>
             </div>
- 
-            <div class="label">행동</div>
-            <div>
-              설명만 읽는 것보다 직접 설치하고 설정하면서 기능을 확인합니다.
+
+            <div class="step">
+              <div class="label">행동</div>
+              <p>설명만 읽는 것보다 직접 설치하고 설정하면서 기능을 확인합니다.</p>
             </div>
- 
-            <div class="label">결과</div>
-            <div>
-              단순히 개념을 아는 것에서 끝나지 않고 실제 동작 과정을 경험합니다.
+
+            <div class="step">
+              <div class="label">결과</div>
+              <p>단순히 개념을 아는 것에서 끝나지 않고 실제 동작 과정을 경험합니다.</p>
             </div>
           </article>
- 
- 
+
+
           <article class="card">
-            <h3>03. 꾸준한 학습</h3>
- 
-            <div class="label">상황</div>
-            <div>
-              익숙하지 않은 기술을 배우면서 모르는 부분이 생깁니다.
+            <h3>꾸준한 학습</h3>
+
+            <div class="step">
+              <div class="label">상황</div>
+              <p>익숙하지 않은 기술을 배우면서 모르는 부분이 생깁니다.</p>
             </div>
- 
-            <div class="label">행동</div>
-            <div>
-              작은 기능부터 직접 따라 하고 결과를 확인하면서 하나씩 범위를 넓힙니다.
+
+            <div class="step">
+              <div class="label">행동</div>
+              <p>작은 기능부터 직접 따라 하고 결과를 확인하면서 하나씩 범위를 넓힙니다.</p>
             </div>
- 
-            <div class="label">결과</div>
-            <div>
-              학습한 내용을 실제 페이지와 서버 구성 같은 결과물로 연결하려고 합니다.
+
+            <div class="step">
+              <div class="label">결과</div>
+              <p>학습한 내용을 실제 페이지와 서버 구성 같은 결과물로 연결하려고 합니다.</p>
             </div>
           </article>
- 
+
         </div>
       </div>
     </section>
- 
- 
+
+
     <!-- 만든 과정 -->
-    <section class="section" id="evidence">
+    <section class="section" id="process">
       <div class="container">
- 
-        <h2>이 페이지는 이렇게 만들었습니다</h2>
- 
-        <div class="evidence">
- 
-          <h3>HTML · CSS · GitHub Pages</h3>
- 
-          <p>
-            HTML로 문서 구조를 잡고 CSS로 화면을 구성한 뒤,
-            GitHub Pages에 올려 누구나 링크로 열어볼 수 있게 했습니다.
-          </p>
- 
-          <p>
-            만든 뒤에는 브라우저 개발자 도구로 링크와 키보드 이동, 제목 구조,
-            글자 대비를 확인하고 발견한 문제를 수정했습니다.
-            자세한 순서는 첫 화면의 <b>만든 과정 자세히 보기</b> 버튼에 있습니다.
-          </p>
- 
+
+        <div class="section-head">
+          <h2>만든 과정</h2>
         </div>
- 
+
+        <div class="process">
+
+          <div>
+            <h3>HTML · CSS · GitHub Pages</h3>
+            <div class="stack">프레임워크 없이 작성</div>
+          </div>
+
+          <div>
+            <p>
+              HTML로 문서 구조를 잡고 CSS로 화면을 구성한 뒤,
+              GitHub Pages에 올려 누구나 링크로 열어볼 수 있게 했습니다.
+            </p>
+
+            <p>
+              만든 뒤에는 브라우저 개발자 도구로 링크와 키보드 이동,
+              제목 구조, 글자 대비를 확인하고 발견한 문제를 수정했습니다.
+            </p>
+          </div>
+
+        </div>
+
       </div>
     </section>
- 
- 
+
   </main>
- 
- 
+
+
   <footer>
     <div class="container">
       개인 정보는 공개하지 않고 학습 결과와 관심 분야만 보여주는 포트폴리오입니다.
     </div>
   </footer>
- 
- 
+
+
   <script>
     const button = document.getElementById("detailButton");
     const detail = document.getElementById("detail");
- 
+
     button.addEventListener("click", function () {
       const isHidden = detail.hidden;
- 
+
       detail.hidden = !isHidden;
       button.setAttribute("aria-expanded", String(isHidden));
       button.textContent = isHidden
@@ -475,6 +568,6 @@
         : "만든 과정 자세히 보기";
     });
   </script>
- 
+
 </body>
 </html>
