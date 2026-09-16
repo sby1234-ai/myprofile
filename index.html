@@ -901,7 +901,7 @@
       </section>
 
 
-      <!-- 과제 8: 비공개 영역 (패스키로 잠김) -->
+      <!-- 비공개 영역 (패스키로 잠김) -->
       <section class="section" id="private">
         <div class="container">
 
@@ -1051,10 +1051,10 @@
     }
   </script>
 
-  <!-- ============ 과제 8: 패스키 인증 ============ -->
+  <!-- ============ 패스키 인증 스크립트 ============ -->
   <script>
     const SUPABASE_URL = "https://yrqnaccncelcwrpjcpeu.supabase.co";
-    const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InlycW5hY2NuY2VsY3dycGpjcGV1Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODk1MjI3MjgsImV4cCI6MjEwNTA5ODcyOH0.xjt6ONrmhnCMb2URbyjP6OiBqX_ZFX9HuGe_SBtpMk0";
+    const SUPABASE_ANON_KEY = "sb_publishable_reRLzmrZwGch1JVytSPjWA_b-H1LWCR";
 
     const FN = (name) => `${SUPABASE_URL}/functions/v1/${name}`;
     const sb = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
@@ -1216,124 +1216,130 @@
         challengeId: start.data.challengeId,
         credential: credentialToJSON(assertion),
       });
-      if (!verify.ok) throw new Error(verify.data.error || "로그인 실패");
-
-      await sb.auth.setSession({
-        access_token: verify.data.access_token,
-        refresh_token: verify.data.refresh_token,
-      });
+      if (!verify.ok) throw new Error(verify.data.error || "로그인 검증 실패");
+      
+      if (verify.data.session) {
+        await sb.auth.setSession(verify.data.session);
+      }
       return verify.data;
     }
 
-    // ---------- 화면 갱신 ----------
-    async function refreshLoggedInView() {
+    // ---------- 데이터 로드 / 뷰 업데이트 ----------
+    async function updateView() {
       const { data: { session } } = await sb.auth.getSession();
-      if (!session) {
+      if (session) {
+        loggedOutView.hidden = true;
+        loggedInView.hidden = false;
+        el("currentHandle").textContent = session.user.user_metadata?.handle || session.user.email || "사용자";
+
+        // 데이터 로드
+        loadPrivateNotes(session);
+        loadPasskeys(session);
+      } else {
         loggedOutView.hidden = false;
         loggedInView.hidden = true;
-        return;
-      }
-      loggedOutView.hidden = true;
-      loggedInView.hidden = false;
-
-      el("currentHandle").textContent = session.user?.user_metadata?.handle ?? session.user?.id ?? "";
-      console.log("현재 로그인된 user_id (다른 계정에서 이 값으로 조회 시도해볼 수 있음):", session.user.id);
-
-      const notesRes = await callFn("private-notes", null, session.access_token, "GET");
-      const notesList = el("notesList");
-      notesList.innerHTML = "";
-      if (notesRes.ok) {
-        (notesRes.data.notes ?? []).forEach((n) => {
-          const div = document.createElement("div");
-          div.className = "note-card";
-          div.innerHTML = `<h4></h4><p></p>`;
-          div.querySelector("h4").textContent = n.title;
-          div.querySelector("p").textContent = n.content;
-          notesList.appendChild(div);
-        });
-      }
-
-      const listRes = await callFn("passkey-list", null, session.access_token, "GET");
-      const passkeyList = el("passkeyList");
-      passkeyList.innerHTML = "";
-      if (listRes.ok) {
-        (listRes.data.passkeys ?? []).forEach((p) => {
-          const row = document.createElement("div");
-          row.className = "passkey-row";
-          const date = new Date(p.created_at).toLocaleString("ko-KR");
-          row.innerHTML = `<span></span><button type="button" class="danger" style="padding:5px 10px;font-size:12px;">삭제</button>`;
-          row.querySelector("span").textContent = `${p.device_name} · 등록일 ${date}`;
-          row.querySelector("button").addEventListener("click", async () => {
-            const del = await callFn("passkey-delete", { id: p.id }, session.access_token);
-            if (del.ok) {
-              showStatus("패스키를 삭제했습니다.", true);
-              refreshLoggedInView();
-            } else {
-              showStatus("삭제 실패: " + del.data.error, false);
-            }
-          });
-          passkeyList.appendChild(row);
-        });
       }
     }
 
-    // ---------- 버튼 연결 ----------
-    el("loginBtn").addEventListener("click", async () => {
-      const handle = el("loginHandle").value.trim();
-      if (!handle) return showStatus("계정 이름을 입력하세요.", false);
+    async function loadPrivateNotes(session) {
+      const { data, error } = await sb.from("private_notes").select("*");
+      const listEl = el("notesList");
+      if (error) {
+        listEl.innerHTML = `<p style="color:var(--bad)">자료 로드 실패: ${error.message}</p>`;
+        return;
+      }
+      if (!data || data.length === 0) {
+        listEl.innerHTML = "<p>저장된 비공개 자료가 없습니다.</p>";
+        return;
+      }
+      listEl.innerHTML = data.map(n => `
+        <div class="note-card">
+          <h4>${n.title || '제목 없음'}</h4>
+          <p>${n.content || ''}</p>
+        </div>
+      `).join("");
+    }
+
+    async function loadPasskeys(session) {
+      const { data, error } = await sb.from("passkeys").select("id, device_name, created_at");
+      const listEl = el("passkeyList");
+      if (error) {
+        listEl.innerHTML = `<p style="color:var(--bad)">패스키 목록 로드 실패: ${error.message}</p>`;
+        return;
+      }
+      if (!data || data.length === 0) {
+        listEl.innerHTML = "<p>등록된 패스키가 없습니다.</p>";
+        return;
+      }
+      listEl.innerHTML = data.map(p => `
+        <div class="passkey-row">
+          <span><strong>${p.device_name || '이름 없는 기기'}</strong> (등록일: ${new Date(p.created_at).toLocaleDateString()})</span>
+        </div>
+      `).join("");
+    }
+
+    // ---------- 이벤트 리스너 연결 ----------
+    el("registerBtn").addEventListener("click", async () => {
+      const handle = el("regHandle").value.trim();
+      const deviceName = el("regDeviceName").value.trim() || "내 기기";
+      if (!handle) return showStatus("계정 이름을 입력해 주세요.", false);
+
       try {
-        await loginWithPasskey(handle);
-        showStatus("로그인 성공.", true);
-        refreshLoggedInView();
-      } catch (e) {
-        showStatus(e.message, false);
+        showStatus("패스키 등록을 진행 중입니다...", true);
+        await registerNewAccount(handle, deviceName);
+        showStatus("등록이 완료되었습니다! 패스키로 로그인해 보세요.", true);
+      } catch (err) {
+        showStatus(err.message, false);
       }
     });
 
-    el("registerBtn").addEventListener("click", async () => {
-      const handle = el("regHandle").value.trim();
-      const deviceName = el("regDeviceName").value.trim() || "이름 없는 기기";
-      if (!handle) return showStatus("계정 이름을 입력하세요.", false);
+    el("loginBtn").addEventListener("click", async () => {
+      const handle = el("loginHandle").value.trim();
       try {
-        await registerNewAccount(handle, deviceName);
-        showStatus("계정을 만들고 패스키를 등록했습니다. 이제 로그인해보세요.", true);
-      } catch (e) {
-        showStatus(e.message, false);
+        showStatus("로그인을 진행 중입니다...", true);
+        await loginWithPasskey(handle);
+        showStatus("로그인 성공!", true);
+        await updateView();
+      } catch (err) {
+        showStatus(err.message, false);
       }
     });
 
     el("addPasskeyBtn").addEventListener("click", async () => {
-      const deviceName = el("addDeviceName").value.trim() || "이름 없는 기기";
+      const deviceName = el("addDeviceName").value.trim() || "추가 기기";
       try {
+        showStatus("패스키 추가를 진행 중입니다...", true);
         await addPasskeyToCurrentAccount(deviceName);
-        showStatus("패스키를 추가로 등록했습니다.", true);
-        refreshLoggedInView();
-      } catch (e) {
-        showStatus(e.message, false);
+        showStatus("패스키가 정상적으로 추가되었습니다.", true);
+        const { data: { session } } = await sb.auth.getSession();
+        loadPasskeys(session);
+      } catch (err) {
+        showStatus(err.message, false);
       }
     });
 
     el("logoutBtn").addEventListener("click", async () => {
-      await sb.auth.signOut({ scope: "global" });
-      showStatus("로그아웃했습니다.", true);
-      refreshLoggedInView();
+      await sb.auth.signOut();
+      showStatus("로그아웃되었습니다.", true);
+      updateView();
     });
 
     el("tryOtherBtn").addEventListener("click", async () => {
       const otherId = el("otherAccountId").value.trim();
-      const { data: { session } } = await sb.auth.getSession();
-      if (!session) return showStatus("로그인이 필요합니다.", false);
-      const res = await callFn("private-notes", { account_id: otherId }, session.access_token, "GET");
-      if (res.ok) {
-        showStatus(`요청한 계정 자료 대신 내 자료 ${res.data.count}건이 돌아왔습니다.`, true);
+      if (!otherId) return showStatus("테스트할 user_id를 입력하세요.", false);
+      
+      const { data, error } = await sb.from("private_notes").select("*").eq("user_id", otherId);
+      if (error) {
+        log("다른 계정 자료 접근 시도 (거절됨)", error);
+        showStatus(`접근 거절됨 (RLS 정책 정상 작동): ${error.message}`, false);
       } else {
-        showStatus(`거절됨 (${res.status}): ${res.data.error}`, false);
+        log("다른 계정 자료 접근 시도 결과", data);
+        showStatus(`결과: ${data.length}건 조회됨`, true);
       }
     });
 
-    // 최초 로드시 로그인 상태 반영
-    refreshLoggedInView();
+    // 초기 실행
+    updateView();
   </script>
-
 </body>
 </html>
