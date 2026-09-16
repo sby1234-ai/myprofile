@@ -229,7 +229,6 @@
     showStatus("패스키 등록을 진행 중입니다...");
 
     try {
-      // Step 1: 서버로부터 등록 옵션 받아오기
       const res = await fetch('/api/passkey', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -240,7 +239,6 @@
 
       if (!res.ok) throw new Error(startData.error || '등록 옵션 수신 실패');
 
-      // cross-platform 설정 강제 (USB 키 강제 방지, QR/스마트폰 유도)
       const options = startData.options;
       options.authenticatorSelection = {
         ...options.authenticatorSelection,
@@ -248,11 +246,9 @@
         userVerification: 'preferred'
       };
 
-      // Step 2: 브라우저 WebAuthn API 실행
       const attResp = await startRegistration(options);
       appendLog("1-2. WebAuthn Registration Credential", attResp);
 
-      // Step 3: 서버로 검증 및 완료 요청
       const verifyRes = await fetch('/api/passkey', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -285,7 +281,6 @@
     showStatus("패스키 인증을 진행 중입니다...");
 
     try {
-      // Step 1: 서버로부터 인증 옵션 받아오기
       const res = await fetch('/api/passkey', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -296,11 +291,16 @@
 
       if (!res.ok) throw new Error(startData.error || '인증 옵션 수신 실패');
 
-      // Step 2: 브라우저 WebAuthn API 실행 (로그인)
-      const asseResp = await startAuthentication(startData.options);
+      const authOptions = startData.options;
+      authOptions.authenticatorSelection = {
+        ...authOptions.authenticatorSelection,
+        authenticatorAttachment: 'cross-platform',
+        userVerification: 'preferred'
+      };
+
+      const asseResp = await startAuthentication(authOptions);
       appendLog("2-2. WebAuthn Auth Credential", asseResp);
 
-      // Step 3: 서버로 검증 및 완료 요청
       const verifyRes = await fetch('/api/passkey', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -312,13 +312,13 @@
       if (finishData.verified) {
         showStatus(`성공: '${username}' 계정 로그인 성공!`);
       } else {
-        throw new Error('인증 검증 실패');
+        throw new Error(finishData.error || '인증 서명 검증 실패');
       }
 
     } catch (err) {
       console.error(err);
       appendLog("Error (Login)", err.message || err);
-      showStatus(`오류 발생: ${err.message || '패스키 로그인 취소됨'}`);
+      showStatus(`오류 발생: ${err.message || '패스키 로그인 실패'}`);
     }
   }
 </script>
