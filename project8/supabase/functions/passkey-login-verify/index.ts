@@ -79,6 +79,7 @@ Deno.serve(async (req) => {
         counter: Number(storedCred.counter),
       },
     });
+       userVerificationRequired: false,
   } catch (e) {
     await admin.from("passkey_challenges").update({ used: true }).eq("id", challengeId);
     return jsonResponse({ error: "서명 검증 실패: " + (e as Error).message }, 401);
