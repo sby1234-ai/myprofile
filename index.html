@@ -1105,8 +1105,8 @@
       const start = await callFn("passkey-register-start", { handle, device_name: deviceName });
       if (!start.ok) throw new Error(start.data.error || "등록 시작 실패");
 
-      // ★ userVerification을 "discouraged"로 설정 (UV 플래그 요구 안 함)
-      start.data.options.authenticatorSelection.userVerification = "discouraged";
+      // ★ 등록 시 본인 확인(UV) 요구 — 서버 register-verify가 UV를 필수로 검사함
+      start.data.options.authenticatorSelection.userVerification = "required";
       // ★ USB 보안 키 전용 창이 뜨지 않도록: cross-platform 제한을 지우고,
       //   Google 비밀번호 관리자/Windows Hello에 저장될 수 있게 discoverable 패스키로 요청
       delete start.data.options.authenticatorSelection.authenticatorAttachment;
@@ -1138,8 +1138,8 @@
       const start = await callFn("passkey-register-start", { device_name: deviceName }, session.access_token);
       if (!start.ok) throw new Error(start.data.error || "등록 시작 실패");
 
-      // ★ userVerification을 "discouraged"로 설정 (UV 플래그 요구 안 함)
-      start.data.options.authenticatorSelection.userVerification = "discouraged";
+      // ★ 등록 시 본인 확인(UV) 요구 — 서버 register-verify가 UV를 필수로 검사함
+      start.data.options.authenticatorSelection.userVerification = "required";
       // ★ USB 보안 키 전용 창이 뜨지 않도록: cross-platform 제한을 지우고,
       //   Google 비밀번호 관리자/Windows Hello에 저장될 수 있게 discoverable 패스키로 요청
       delete start.data.options.authenticatorSelection.authenticatorAttachment;
