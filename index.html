@@ -1107,6 +1107,12 @@
 
       // ★ userVerification을 "discouraged"로 설정 (UV 플래그 요구 안 함)
       start.data.options.authenticatorSelection.userVerification = "discouraged";
+      // ★ USB 보안 키 전용 창이 뜨지 않도록: cross-platform 제한을 지우고,
+      //   Google 비밀번호 관리자/Windows Hello에 저장될 수 있게 discoverable 패스키로 요청
+      delete start.data.options.authenticatorSelection.authenticatorAttachment;
+      start.data.options.authenticatorSelection.residentKey = "required";
+      start.data.options.authenticatorSelection.requireResidentKey = true;
+      delete start.data.options.hints;
 
       let attResp;
       try {
@@ -1134,6 +1140,12 @@
 
       // ★ userVerification을 "discouraged"로 설정 (UV 플래그 요구 안 함)
       start.data.options.authenticatorSelection.userVerification = "discouraged";
+      // ★ USB 보안 키 전용 창이 뜨지 않도록: cross-platform 제한을 지우고,
+      //   Google 비밀번호 관리자/Windows Hello에 저장될 수 있게 discoverable 패스키로 요청
+      delete start.data.options.authenticatorSelection.authenticatorAttachment;
+      start.data.options.authenticatorSelection.residentKey = "required";
+      start.data.options.authenticatorSelection.requireResidentKey = true;
+      delete start.data.options.hints;
 
       let attResp;
       try {
