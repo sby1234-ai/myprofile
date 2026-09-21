@@ -4,7 +4,7 @@
 
 export const SUPABASE_URL = Deno.env.get("SUPABASE_URL")!;
 export const SERVICE_ROLE_KEY = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!;
-export const ANON_KEY = Deno.env.get("SUPABASE_ANON_KEY")!;
+export const ANON_KEY = Deno.env.get("ANON_KEY")!;
 
 // WebAuthn Relying Party 설정 — GitHub Pages 실제 배포 도메인과 정확히 일치해야 함.
 // 예: RP_ID = "sby1234-ai.github.io", EXPECTED_ORIGIN = "https://sby1234-ai.github.io"
