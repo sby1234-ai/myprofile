@@ -1171,6 +1171,8 @@
 
       let assertion;
       try {
+        // ★ 로그인 시 본인 확인(UV) 요구 — 서버 login-verify가 UV를 필수로 검사함
+        start.data.options.userVerification = "required";
         assertion = await startAuthentication({ optionsJSON: start.data.options });
       } catch (e) {
         log("로그인 취소/실패 (startAuthentication)", { message: e.message });
