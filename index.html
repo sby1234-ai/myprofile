@@ -1105,8 +1105,8 @@
       const start = await callFn("passkey-register-start", { handle, device_name: deviceName });
       if (!start.ok) throw new Error(start.data.error || "등록 시작 실패");
 
-      // ★ userVerification을 "required"로 강제 설정
-      start.data.options.authenticatorSelection.userVerification = "required";
+      // ★ userVerification을 "preferred"로 설정 (UV 플래그 시도, 없으면 진행)
+      start.data.options.authenticatorSelection.userVerification = "preferred";
 
       let attResp;
       try {
@@ -1132,8 +1132,8 @@
       const start = await callFn("passkey-register-start", { device_name: deviceName }, session.access_token);
       if (!start.ok) throw new Error(start.data.error || "등록 시작 실패");
 
-      // ★ userVerification을 "required"로 강제 설정
-      start.data.options.authenticatorSelection.userVerification = "required";
+      // ★ userVerification을 "preferred"로 설정 (UV 플래그 시도, 없으면 진행)
+      start.data.options.authenticatorSelection.userVerification = "preferred";
 
       let attResp;
       try {
