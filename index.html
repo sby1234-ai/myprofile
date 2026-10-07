@@ -777,6 +777,7 @@
             <a href="#about">소개</a>
             <a href="#strengths">강점</a>
             <a href="#process">만든 과정</a>
+            <a href="#labs">실습</a>
             <a href="#projects">프로젝트</a>
             <a href="#private">비공개</a>
           </div>
@@ -976,12 +977,100 @@
       </section>
 
 
+      <!-- 실습: 교육 과정에서 직접 구축한 인프라·보안 실습 -->
+      <section class="section" id="labs">
+        <div class="container">
+
+          <div class="section-head reveal">
+            <span class="idx">03</span>
+            <h2>직접 구축한 실습</h2>
+          </div>
+
+          <p class="proj-lead reveal">
+            교육 과정에서 방화벽부터 IDS/IPS, 모니터링까지 직접 구축한 실습입니다.
+            실제 IP와 계정 같은 환경 정보는 싣지 않았습니다.
+          </p>
+
+          <div class="cards">
+
+            <article class="card reveal">
+              <h3>네트워크·방화벽·VPN</h3>
+              <p class="sub">GNS3 · Cisco ASAv · pfSense</p>
+
+              <div class="proj">
+                <p><span class="k">구성</span>라우터 4대와 방화벽을 OSPF로 묶고, 외부망을 VLAN 3개(네트워크·시스템·침투 테스트)로 나눴습니다. 방화벽 규칙 5개와 pfSense OpenVPN을 구성했습니다.</p>
+                <p><span class="k">확인</span>규칙을 적용하기 전에 통신이 되는 것을 기준으로 남기고, 적용한 뒤 ACL 히트 카운트로 차단이 실제로 동작하는지 확인했습니다. 규칙마다 OSPF 허용을 맨 위에 넣어 이웃이 유지되는 것도 확인했습니다. OpenVPN은 윈도우 PC로 접속해 터널 주소 할당과 AES-256-GCM 암호화까지 확인했습니다.</p>
+                <p><span class="k">막힌 곳</span>pfSense에서 WAN에 잘못 넣은 고정 IP의 게이트웨이가 남아 기본 경로가 깨졌고, 패키지 저장소에 접속할 수 없었습니다. 원인을 찾아 VM을 다시 설치하고 WAN은 DHCP로 두는 것으로 해결했습니다.</p>
+              </div>
+            </article>
+
+
+            <article class="card reveal">
+              <h3>IDS/IPS</h3>
+              <p class="sub">Snort3 · Suricata · Kali</p>
+
+              <div class="proj">
+                <p><span class="k">구성</span>Snort3를 소스부터 빌드해 ICMP 탐지 룰로 IDS를 만들고, Rocky 서버에 Suricata를 올려 직접 쓴 룰과 공개 룰셋(ET Open)을 적용했습니다.</p>
+                <p><span class="k">확인</span>Kali에서 hping3로 ICMP 플러딩을 보내고, Snort의 알림과 Suricata의 실시간 알림(eve.json)으로 탐지되는 것을 확인했습니다. 라우터 ACL에는 log를 붙인 탐지 룰 3개(ICMP·SSH·HTTP)도 작성했습니다.</p>
+              </div>
+            </article>
+
+
+            <article class="card reveal">
+              <h3>모니터링·SIEM·로그</h3>
+              <p class="sub">Zabbix · OSSEC · Wazuh · PMM · LogAnalyzer</p>
+
+              <div class="proj">
+                <p><span class="k">구성</span>Zabbix 서버, OSSEC 서버와 에이전트, Wazuh 서버와 대시보드, Docker 기반 PMM(DB 모니터링), rsyslog와 MariaDB 기반 LogAnalyzer를 각각 구축했습니다. Zabbix와 OSSEC은 서로를 감시하도록 연결했습니다.</p>
+                <p><span class="k">확인</span>OSSEC에서 Zabbix가 Active로 올라오고, Zabbix 화면에서 OSSEC 호스트가 정상으로 보이는 것을 양쪽에서 확인했습니다. Wazuh 대시보드에서는 웹·DB 서버의 에이전트가 Active인 것을 확인했습니다.</p>
+                <p><span class="k">막힌 곳</span>LogAnalyzer가 DB 로그를 읽지 못했습니다. 설정 파일에 걸린 SELinux 읽기 전용 권한, 웹 서버의 DB 연결 허용, 설치 마법사에 잘못 넣은 DB 이름을 하나씩 찾아 고쳤습니다.</p>
+              </div>
+            </article>
+
+
+            <article class="card reveal">
+              <h3>리눅스 서버 구축</h3>
+              <p class="sub">Rocky Linux · VM 4대</p>
+
+              <div class="proj">
+                <p><span class="k">구성</span>DNS(BIND), 웹(Apache HTTPS)·DB(MariaDB)·Samba·로그 서버, NFS, FTP를 VM 4대로 나눠 구축하고 도메인으로 접속되게 했습니다.</p>
+                <p><span class="k">확인</span>서버 간 통신, 도메인 접속, 공유 디렉토리와 FTP 접속, 로그 확인이 요구사항대로 동작하는 것을 확인했습니다. DB는 기본 입출력, 계정과 권한 관리, 백업, Master-Slave 복제까지 실습했습니다.</p>
+              </div>
+            </article>
+
+
+            <article class="card reveal">
+              <h3>보안 점검 스크립트</h3>
+              <p class="sub">Shell · KISA 2026 가이드 · 팀 프로젝트</p>
+
+              <div class="proj">
+                <p><span class="k">구성</span>Unix 서버 보안 취약점 점검 스크립트를 팀원끼리 파트를 나눠 만들었고, 저는 '파일 및 디렉토리 관리' 파트(가이드 20개 항목)를 맡았습니다. 대상은 Rocky·RHEL 계열입니다.</p>
+                <p><span class="k">확인</span>항목마다 점검 내용, 현재 설정(증거), 판정(양호·취약·수동확인·해당 없음), 취약한 부분을 화면에 출력하는 점검 스크립트와, 취약 항목을 고치는 조치 스크립트를 완성했습니다.</p>
+              </div>
+            </article>
+
+
+            <article class="card reveal">
+              <h3>공격 관점 CTF</h3>
+              <p class="sub">VulnHub 부트투루트 · Kali</p>
+
+              <div class="proj">
+                <p><span class="k">구성</span>VulnHub 박스 8개를 완료했습니다(EvilBoxOne, Momentum, Momentum2, FALL, CHRONOS, Earth, doubletrouble, corrosion). 파일 읽기 취약점으로 키 탈취, 명령어 인젝션, 업로드 필터 우회, sudo·SUID를 이용한 권한 상승을 반복해서 익혔습니다.</p>
+                <p><span class="k">확인</span>공격을 해본 뒤에는 방어 쪽으로 넘어가 직접 CTF 머신을 제작하고 있습니다. 환경 구성은 끝났고, 공략이 의도대로 되는지 검증하는 단계가 남아 있습니다.</p>
+              </div>
+            </article>
+
+          </div>
+        </div>
+      </section>
+
+
       <!-- 프로젝트: AI와 함께 만든 과제 -->
       <section class="section" id="projects">
         <div class="container">
 
           <div class="section-head reveal">
-            <span class="idx">03</span>
+            <span class="idx">04</span>
             <h2>AI와 함께 만든 과제</h2>
           </div>
 
@@ -1091,7 +1180,7 @@
         <div class="container">
 
           <div class="section-head reveal">
-            <span class="idx">04</span>
+            <span class="idx">05</span>
             <h2>비공개 자리<span class="lock-badge">🔒 PASSKEY ONLY</span></h2>
           </div>
 
