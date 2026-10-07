@@ -860,6 +860,22 @@
       }
     }
 
+
+    /* 실습: 박스 대신 가로 목록 */
+    #labs .cards { display: block; }
+    #labs .card { background: none; border: 0; border-top: 1px solid var(--line); border-radius: 0; padding: 28px 0; transform: none; display: grid; grid-template-columns: minmax(0,1fr); column-gap: 36px; }
+    #labs .card:last-child { border-bottom: 1px solid var(--line); }
+    #labs .card:hover { border-color: var(--line); transform: none; }
+    #labs .card:has(.shot) { grid-template-columns: minmax(0,1fr) 340px; }
+    #labs .card:has(.shot) > * { grid-column: 1; }
+    #labs .card .shot { grid-column: 2; grid-row: 1 / span 5; margin: 0; align-self: start; }
+    #labs .card h3 { margin-bottom: 6px; font-size: 19px; }
+    #labs .card .shot img { height: 190px; }
+    @media (max-width: 760px) {
+      #labs .card:has(.shot) { grid-template-columns: minmax(0,1fr); }
+      #labs .card .shot { grid-column: 1; grid-row: auto; margin: 12px 0; }
+    }
+
     /* ── 좁은 화면 ─────────────────────────── */
     @media (max-width: 980px) {
       .hero-grid,
