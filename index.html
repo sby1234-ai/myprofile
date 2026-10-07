@@ -474,6 +474,80 @@
       letter-spacing: 0.06em;
     }
 
+    /* ── 프로젝트 (AI 과제) ─────────────────── */
+    .proj-lead {
+      color: var(--muted);
+      max-width: 62ch;
+      margin: -18px 0 28px;
+    }
+
+    .card .sub {
+      font-family: var(--mono);
+      font-size: 11.5px;
+      letter-spacing: 0.06em;
+      color: var(--signal);
+      margin: -10px 0 18px;
+    }
+
+    .proj {
+      padding: 16px 0;
+      border-top: 1px dashed var(--line);
+    }
+
+    .proj:first-of-type {
+      border-top: 0;
+      padding-top: 0;
+    }
+
+    .proj .tid {
+      font-family: var(--mono);
+      font-size: 11px;
+      letter-spacing: 0.1em;
+      color: var(--dim);
+    }
+
+    .proj h4 {
+      font-size: 15px;
+      font-weight: 600;
+      margin: 2px 0 8px;
+    }
+
+    .proj p {
+      margin: 0 0 7px;
+      font-size: 13.5px;
+      color: var(--muted);
+      word-break: keep-all;
+    }
+
+    .proj .k {
+      display: inline-block;
+      min-width: 3.4em;
+      font-size: 11.5px;
+      color: var(--dim);
+      margin-right: 6px;
+    }
+
+    .proj .links {
+      display: flex;
+      gap: 14px;
+      flex-wrap: wrap;
+      margin-top: 10px;
+      font-family: var(--mono);
+      font-size: 11.5px;
+      letter-spacing: 0.04em;
+    }
+
+    .proj .links a {
+      color: var(--signal);
+      text-decoration: none;
+      border-bottom: 1px solid transparent;
+    }
+
+    .proj .links a:hover,
+    .proj .links a:focus-visible {
+      border-bottom-color: var(--signal);
+    }
+
     /* ── 비공개 영역 ───────────────────────── */
     #private {
       background: linear-gradient(180deg, rgba(240,168,72,0.04), transparent 40%);
@@ -703,6 +777,7 @@
             <a href="#about">소개</a>
             <a href="#strengths">강점</a>
             <a href="#process">만든 과정</a>
+            <a href="#projects">프로젝트</a>
             <a href="#private">비공개</a>
           </div>
         </nav>
@@ -901,12 +976,122 @@
       </section>
 
 
+      <!-- 프로젝트: AI와 함께 만든 과제 -->
+      <section class="section" id="projects">
+        <div class="container">
+
+          <div class="section-head reveal">
+            <span class="idx">03</span>
+            <h2>AI와 함께 만든 과제</h2>
+          </div>
+
+          <p class="proj-lead reveal">
+            코드는 AI가 쓰고, 저는 무엇을 확인하고 무엇을 정할지 판단했습니다.
+            과제마다 제가 확인한 것을 중심으로 정리했습니다.
+          </p>
+
+          <div class="cards">
+
+            <article class="card reveal">
+              <h3>인증·접근 통제</h3>
+              <p class="sub">과제 6 → 7 → 8</p>
+
+              <div class="proj">
+                <div class="tid">과제 06</div>
+                <h4>플랜두씨 다이어리</h4>
+                <p><span class="k">문제</span>로그인 없이 쓰는 앱의 데이터를 실제 서버 DB에 저장해야 했습니다.</p>
+                <p><span class="k">확인</span>새로고침 뒤에도 값이 남는지, DB를 직접 조회해도 같은 값이 나오는지 확인했습니다. 직접 써보다가 회고 선택 위치가 헷갈리는 문제도 찾았습니다.</p>
+                <div class="links">
+                  <a href="https://github.com/sby1234-ai/t06-pds-diary/commit/a102d4fa86595e1c17e45e07f83ce7280229d818" target="_blank" rel="noopener">소스</a>
+                </div>
+              </div>
+
+              <div class="proj">
+                <div class="tid">과제 07</div>
+                <h4>로그인과 접근 통제</h4>
+                <p><span class="k">문제</span>누구나 열 수 있던 앱에 로그인을 달고, 남의 자료가 막히는지 증명해야 했습니다.</p>
+                <p><span class="k">확인</span>계정 두 개로 읽기·수정·삭제·사칭 요청이 막히는지 시험한 증거를 확보했습니다(실행은 AI, 계정 생성과 설정 변경은 직접). 5일 기록은 대신 채우지 않고 매일 직접 입력했습니다.</p>
+                <div class="links">
+                  <a href="https://sby1234-ai.github.io/t06-pds-diary/" target="_blank" rel="noopener">결과</a>
+                  <a href="https://github.com/sby1234-ai/t06-pds-diary/commit/2986c69daf72ac11dc78e19606dcfe82db72a365" target="_blank" rel="noopener">소스</a>
+                </div>
+              </div>
+
+              <div class="proj">
+                <div class="tid">과제 08</div>
+                <h4>패스키 로그인</h4>
+                <p><span class="k">문제</span>비밀번호 없이 기기 인증만으로 로그인하는 기능이 필요했습니다.</p>
+                <p><span class="k">확인</span>AI가 쓴 코드를 그대로 믿지 않고 실제 요청·응답 로그로 확인했습니다. 설정끼리 충돌한 4가지(USB 키 전용 창, 본인 확인 불일치, 세션 교환 오류, 사이트 주소 값 누락)를 찾아 고쳤습니다.</p>
+                <div class="links">
+                  <a href="#private">직접 써보기</a>
+                  <a href="https://github.com/sby1234-ai/myprofile/commit/95c98412e57823325f723e6ab9fc8901ec8bc10b" target="_blank" rel="noopener">소스</a>
+                </div>
+              </div>
+            </article>
+
+
+            <article class="card reveal">
+              <h3>자동화·장애 대응</h3>
+              <p class="sub">과제 4 · 5</p>
+
+              <div class="proj">
+                <div class="tid">과제 04</div>
+                <h4>오늘의 환율 정보판</h4>
+                <p><span class="k">문제</span>외부 값은 느려지거나 끊기는데, 그래도 화면이 비거나 값이 지워지면 안 됐습니다.</p>
+                <p><span class="k">확인</span>느린 응답·401·403·호출 제한·오프라인·형식 변경 6가지 실패마다 안내와 다시 시도 버튼이 뜨고, 마지막 정상값이 '오래된 값'으로 남게 했습니다(구현은 AI). 저장소 설정과 이틀치 자동 실행은 직접 하고, 서로 다른 값이 쌓이는 것을 눈으로 확인했습니다.</p>
+                <div class="links">
+                  <a href="https://sby1234-ai.github.io/t04-info-board/" target="_blank" rel="noopener">결과</a>
+                  <a href="https://github.com/sby1234-ai/t04-info-board/commit/a99f3396e518dddb8baeebc1c051d8d146a7e1d4" target="_blank" rel="noopener">소스</a>
+                </div>
+              </div>
+
+              <div class="proj">
+                <div class="tid">과제 05</div>
+                <h4>두 AI 릴레이</h4>
+                <p><span class="k">문제</span>한 AI와의 대화가 끊겨도 다른 AI가 이어서 작업할 수 있어야 했습니다.</p>
+                <p><span class="k">확인</span>Claude가 만든 기능을 Gemini로 넘겨 이어가게 하고, 고정 검사 10개로 확인했습니다. Gemini의 1·2차 결과는 회귀 검사에서 실패해 그대로 받지 않고 재수정을 요청했습니다.</p>
+                <div class="links">
+                  <a href="https://claude.ai/code/artifact/f652032f-305e-41bf-bdd3-4b6f97b5f6c4" target="_blank" rel="noopener">비교 리포트</a>
+                  <a href="https://github.com/sby1234-ai/t04-info-board/commit/2196a0326cd0d55913c79706baab4ee694a2fe3a" target="_blank" rel="noopener">소스</a>
+                </div>
+              </div>
+            </article>
+
+
+            <article class="card reveal">
+              <h3>근거 기반 판단</h3>
+              <p class="sub">과제 2 · 10</p>
+
+              <div class="proj">
+                <div class="tid">과제 02</div>
+                <h4>리듬 게임 난이도</h4>
+                <p><span class="k">문제</span>난이도 값을 바꿀지 정해야 했습니다. 실패 기준(미스 5회)은 제가 정했습니다.</p>
+                <p><span class="k">확인</span>값 하나만 바꿔 20회씩 비교했더니 성공률이 70%에서 40%로, 중앙값이 2425에서 50으로 떨어졌습니다. 이 근거로 기존 값(300)을 유지했습니다.</p>
+                <div class="links">
+                  <a href="https://sby1234-ai.github.io/game/" target="_blank" rel="noopener">결과</a>
+                  <a href="https://github.com/sby1234-ai/game/commit/ba8eea916cd72c8f230364526593461480d443d1" target="_blank" rel="noopener">소스</a>
+                </div>
+              </div>
+
+              <div class="proj">
+                <div class="tid">과제 10</div>
+                <h4>첫 논문: 보안 직무 공고 분석</h4>
+                <p><span class="k">문제</span>보안 직무 채용공고가 고졸·무경력에게 더 열려 있는지 사람인 공고 100건으로 확인했습니다.</p>
+                <p><span class="k">확인</span>결과는 제 믿음과 반대(보안 22%, 그 외 IT 38%, p=0.126)였고, 가설을 바꾸지 않고 기각으로 기록했습니다. 결과를 본 뒤 정한 분류 규칙은 사전 등록과 구분해 적고, 그 규칙을 끈 결과도 함께 실었습니다.</p>
+              </div>
+            </article>
+
+          </div>
+        </div>
+      </section>
+
+
       <!-- 과제 8: 비공개 영역 (패스키로 잠김) -->
       <section class="section" id="private">
         <div class="container">
 
           <div class="section-head reveal">
-            <span class="idx">03</span>
+            <span class="idx">04</span>
             <h2>비공개 자리<span class="lock-badge">🔒 PASSKEY ONLY</span></h2>
           </div>
 
