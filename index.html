@@ -512,14 +512,16 @@
       margin: 2px 0 8px;
     }
 
-    .proj p {
+    .proj p,
+    .more-body p {
       margin: 0 0 7px;
       font-size: 13.5px;
       color: var(--muted);
       word-break: keep-all;
     }
 
-    .proj .k {
+    .proj .k,
+    .more-body .k {
       display: inline-block;
       min-width: 3.4em;
       font-size: 11.5px;
@@ -546,6 +548,71 @@
     .proj .links a:hover,
     .proj .links a:focus-visible {
       border-bottom-color: var(--signal);
+    }
+
+    /* ── 접기/펼치기 (카드 간소화) ───────────── */
+    .card > p.sum {
+      margin: 0 0 14px;
+      font-size: 14px;
+      line-height: 1.65;
+      color: var(--text);
+      word-break: keep-all;
+    }
+
+    .proj p.sum {
+      margin: 0 0 4px;
+      font-size: 14px;
+      line-height: 1.65;
+      color: var(--text);
+    }
+
+    #labs .cards,
+    #projects .cards {
+      align-items: start;
+    }
+
+    details.more > summary {
+      display: inline-block;
+      list-style: none;
+      cursor: pointer;
+      padding: 2px 0;
+      font-family: var(--mono);
+      font-size: 11.5px;
+      letter-spacing: 0.04em;
+      color: var(--signal);
+      border-bottom: 1px solid transparent;
+    }
+
+    details.more > summary::-webkit-details-marker {
+      display: none;
+    }
+
+    details.more > summary::before {
+      content: "+ ";
+    }
+
+    details.more[open] > summary::before {
+      content: "− ";
+    }
+
+    details.more > summary:hover,
+    details.more > summary:focus-visible {
+      border-bottom-color: var(--signal);
+    }
+
+    details.more > summary:focus-visible {
+      outline: 2px solid var(--signal);
+      outline-offset: 3px;
+    }
+
+    .proj details.more {
+      margin-top: 10px;
+    }
+
+    .more-body {
+      margin-top: 12px;
+      padding-top: 12px;
+      border-top: 1px dashed var(--line);
     }
 
     /* ── 비공개 영역 ───────────────────────── */
@@ -997,11 +1064,16 @@
               <h3>네트워크·방화벽·VPN</h3>
               <p class="sub">GNS3 · Cisco ASAv · pfSense</p>
 
-              <div class="proj">
-                <p><span class="k">구성</span>라우터 4대와 방화벽을 OSPF로 묶고, 외부망을 VLAN 3개(네트워크·시스템·침투 테스트)로 나눴습니다. 방화벽 규칙 5개와 pfSense OpenVPN을 구성했습니다.</p>
+              <p class="sum">방화벽 규칙 5개와 OpenVPN을 구성하고, 차단이 실제로 동작하는 것을 확인했습니다.</p>
+
+              <details class="more">
+                <summary>자세히 보기</summary>
+                <div class="more-body">
+                  <p><span class="k">구성</span>라우터 4대와 방화벽을 OSPF로 묶고, 외부망을 VLAN 3개(네트워크·시스템·침투 테스트)로 나눴습니다. 방화벽 규칙 5개와 pfSense OpenVPN을 구성했습니다.</p>
                 <p><span class="k">확인</span>규칙을 적용하기 전에 통신이 되는 것을 기준으로 남기고, 적용한 뒤 ACL 히트 카운트로 차단이 실제로 동작하는지 확인했습니다. 규칙마다 OSPF 허용을 맨 위에 넣어 이웃이 유지되는 것도 확인했습니다. OpenVPN은 윈도우 PC로 접속해 터널 주소 할당과 AES-256-GCM 암호화까지 확인했습니다.</p>
                 <p><span class="k">막힌 곳</span>pfSense에서 WAN에 잘못 넣은 고정 IP의 게이트웨이가 남아 기본 경로가 깨졌고, 패키지 저장소에 접속할 수 없었습니다. 원인을 찾아 VM을 다시 설치하고 WAN은 DHCP로 두는 것으로 해결했습니다.</p>
-              </div>
+                </div>
+              </details>
             </article>
 
 
@@ -1009,10 +1081,15 @@
               <h3>IDS/IPS</h3>
               <p class="sub">Snort3 · Suricata · Kali</p>
 
-              <div class="proj">
-                <p><span class="k">구성</span>Snort3를 소스부터 빌드해 ICMP 탐지 룰로 IDS를 만들고, Rocky 서버에 Suricata를 올려 직접 쓴 룰과 공개 룰셋(ET Open)을 적용했습니다.</p>
+              <p class="sum">Snort3와 Suricata를 직접 구축하고, 공격 트래픽이 탐지되는 것을 확인했습니다.</p>
+
+              <details class="more">
+                <summary>자세히 보기</summary>
+                <div class="more-body">
+                  <p><span class="k">구성</span>Snort3를 소스부터 빌드해 ICMP 탐지 룰로 IDS를 만들고, Rocky 서버에 Suricata를 올려 직접 쓴 룰과 공개 룰셋(ET Open)을 적용했습니다.</p>
                 <p><span class="k">확인</span>Kali에서 hping3로 ICMP 플러딩을 보내고, Snort의 알림과 Suricata의 실시간 알림(eve.json)으로 탐지되는 것을 확인했습니다. 라우터 ACL에는 log를 붙인 탐지 룰 3개(ICMP·SSH·HTTP)도 작성했습니다.</p>
-              </div>
+                </div>
+              </details>
             </article>
 
 
@@ -1020,11 +1097,16 @@
               <h3>모니터링·SIEM·로그</h3>
               <p class="sub">Zabbix · OSSEC · Wazuh · PMM · LogAnalyzer</p>
 
-              <div class="proj">
-                <p><span class="k">구성</span>Zabbix 서버, OSSEC 서버와 에이전트, Wazuh 서버와 대시보드, Docker 기반 PMM(DB 모니터링), rsyslog와 MariaDB 기반 LogAnalyzer를 각각 구축했습니다. Zabbix와 OSSEC은 서로를 감시하도록 연결했습니다.</p>
+              <p class="sum">Zabbix·OSSEC·Wazuh·PMM·LogAnalyzer를 구축하고, Zabbix와 OSSEC은 서로를 감시하게 연결했습니다.</p>
+
+              <details class="more">
+                <summary>자세히 보기</summary>
+                <div class="more-body">
+                  <p><span class="k">구성</span>Zabbix 서버, OSSEC 서버와 에이전트, Wazuh 서버와 대시보드, Docker 기반 PMM(DB 모니터링), rsyslog와 MariaDB 기반 LogAnalyzer를 각각 구축했습니다. Zabbix와 OSSEC은 서로를 감시하도록 연결했습니다.</p>
                 <p><span class="k">확인</span>OSSEC에서 Zabbix가 Active로 올라오고, Zabbix 화면에서 OSSEC 호스트가 정상으로 보이는 것을 양쪽에서 확인했습니다. Wazuh 대시보드에서는 웹·DB 서버의 에이전트가 Active인 것을 확인했습니다.</p>
                 <p><span class="k">막힌 곳</span>LogAnalyzer가 DB 로그를 읽지 못했습니다. 설정 파일에 걸린 SELinux 읽기 전용 권한, 웹 서버의 DB 연결 허용, 설치 마법사에 잘못 넣은 DB 이름을 하나씩 찾아 고쳤습니다.</p>
-              </div>
+                </div>
+              </details>
             </article>
 
 
@@ -1032,10 +1114,15 @@
               <h3>리눅스 서버 구축</h3>
               <p class="sub">Rocky Linux · VM 4대</p>
 
-              <div class="proj">
-                <p><span class="k">구성</span>DNS(BIND), 웹(Apache HTTPS)·DB(MariaDB)·Samba·로그 서버, NFS, FTP를 VM 4대로 나눠 구축하고 도메인으로 접속되게 했습니다.</p>
+              <p class="sum">VM 4대로 DNS·웹·DB·NFS·FTP 서버를 나눠 구축하고 도메인으로 접속되게 했습니다.</p>
+
+              <details class="more">
+                <summary>자세히 보기</summary>
+                <div class="more-body">
+                  <p><span class="k">구성</span>DNS(BIND), 웹(Apache HTTPS)·DB(MariaDB)·Samba·로그 서버, NFS, FTP를 VM 4대로 나눠 구축하고 도메인으로 접속되게 했습니다.</p>
                 <p><span class="k">확인</span>서버 간 통신, 도메인 접속, 공유 디렉토리와 FTP 접속, 로그 확인이 요구사항대로 동작하는 것을 확인했습니다. DB는 기본 입출력, 계정과 권한 관리, 백업, Master-Slave 복제까지 실습했습니다.</p>
-              </div>
+                </div>
+              </details>
             </article>
 
 
@@ -1043,10 +1130,15 @@
               <h3>보안 점검 스크립트</h3>
               <p class="sub">Shell · KISA 2026 가이드 · 팀 프로젝트</p>
 
-              <div class="proj">
-                <p><span class="k">구성</span>Unix 서버 보안 취약점 점검 스크립트를 팀원끼리 파트를 나눠 만들었고, 저는 '파일 및 디렉토리 관리' 파트(가이드 20개 항목)를 맡았습니다. 대상은 Rocky·RHEL 계열입니다.</p>
+              <p class="sum">KISA 가이드 20개 항목의 점검·조치 스크립트를 팀 프로젝트에서 완성했습니다.</p>
+
+              <details class="more">
+                <summary>자세히 보기</summary>
+                <div class="more-body">
+                  <p><span class="k">구성</span>Unix 서버 보안 취약점 점검 스크립트를 팀원끼리 파트를 나눠 만들었고, 저는 '파일 및 디렉토리 관리' 파트(가이드 20개 항목)를 맡았습니다. 대상은 Rocky·RHEL 계열입니다.</p>
                 <p><span class="k">확인</span>항목마다 점검 내용, 현재 설정(증거), 판정(양호·취약·수동확인·해당 없음), 취약한 부분을 화면에 출력하는 점검 스크립트와, 취약 항목을 고치는 조치 스크립트를 완성했습니다.</p>
-              </div>
+                </div>
+              </details>
             </article>
 
 
@@ -1054,10 +1146,15 @@
               <h3>공격 관점 CTF</h3>
               <p class="sub">VulnHub 부트투루트 · Kali</p>
 
-              <div class="proj">
-                <p><span class="k">구성</span>VulnHub 박스 8개를 완료했습니다(EvilBoxOne, Momentum, Momentum2, FALL, CHRONOS, Earth, doubletrouble, corrosion). 파일 읽기 취약점으로 키 탈취, 명령어 인젝션, 업로드 필터 우회, sudo·SUID를 이용한 권한 상승을 반복해서 익혔습니다.</p>
+              <p class="sum">VulnHub 박스 8개를 완료하고, 직접 CTF 머신을 제작하고 있습니다.</p>
+
+              <details class="more">
+                <summary>자세히 보기</summary>
+                <div class="more-body">
+                  <p><span class="k">구성</span>VulnHub 박스 8개를 완료했습니다(EvilBoxOne, Momentum, Momentum2, FALL, CHRONOS, Earth, doubletrouble, corrosion). 파일 읽기 취약점으로 키 탈취, 명령어 인젝션, 업로드 필터 우회, sudo·SUID를 이용한 권한 상승을 반복해서 익혔습니다.</p>
                 <p><span class="k">확인</span>공격을 해본 뒤에는 방어 쪽으로 넘어가 직접 CTF 머신을 제작하고 있습니다. 환경 구성은 끝났고, 공략이 의도대로 되는지 검증하는 단계가 남아 있습니다.</p>
-              </div>
+                </div>
+              </details>
             </article>
 
           </div>
@@ -1088,33 +1185,51 @@
               <div class="proj">
                 <div class="tid">과제 06</div>
                 <h4>플랜두씨 다이어리</h4>
-                <p><span class="k">문제</span>로그인 없이 쓰는 앱의 데이터를 실제 서버 DB에 저장해야 했습니다.</p>
-                <p><span class="k">확인</span>새로고침 뒤에도 값이 남는지, DB를 직접 조회해도 같은 값이 나오는지 확인했습니다. 직접 써보다가 회고 선택 위치가 헷갈리는 문제도 찾았습니다.</p>
+                <p class="sum">실제 서버 DB에 저장하고, 새로고침 뒤에도 값이 남는지 직접 조회로 확인했습니다.</p>
                 <div class="links">
                   <a href="https://github.com/sby1234-ai/t06-pds-diary/commit/a102d4fa86595e1c17e45e07f83ce7280229d818" target="_blank" rel="noopener">소스</a>
                 </div>
+                <details class="more">
+                  <summary>자세히 보기</summary>
+                  <div class="more-body">
+                    <p><span class="k">문제</span>로그인 없이 쓰는 앱의 데이터를 실제 서버 DB에 저장해야 했습니다.</p>
+                    <p><span class="k">확인</span>새로고침 뒤에도 값이 남는지, DB를 직접 조회해도 같은 값이 나오는지 확인했습니다. 직접 써보다가 회고 선택 위치가 헷갈리는 문제도 찾았습니다.</p>
+                  </div>
+                </details>
               </div>
 
               <div class="proj">
                 <div class="tid">과제 07</div>
                 <h4>로그인과 접근 통제</h4>
-                <p><span class="k">문제</span>누구나 열 수 있던 앱에 로그인을 달고, 남의 자료가 막히는지 증명해야 했습니다.</p>
-                <p><span class="k">확인</span>계정 두 개로 읽기·수정·삭제·사칭 요청이 막히는지 시험한 증거를 확보했습니다(실행은 AI, 계정 생성과 설정 변경은 직접). 5일 기록은 대신 채우지 않고 매일 직접 입력했습니다.</p>
+                <p class="sum">계정 두 개로 읽기·수정·삭제·사칭 요청이 막히는 증거를 확보했습니다.</p>
                 <div class="links">
                   <a href="https://sby1234-ai.github.io/t06-pds-diary/" target="_blank" rel="noopener">결과</a>
                   <a href="https://github.com/sby1234-ai/t06-pds-diary/commit/2986c69daf72ac11dc78e19606dcfe82db72a365" target="_blank" rel="noopener">소스</a>
                 </div>
+                <details class="more">
+                  <summary>자세히 보기</summary>
+                  <div class="more-body">
+                    <p><span class="k">문제</span>누구나 열 수 있던 앱에 로그인을 달고, 남의 자료가 막히는지 증명해야 했습니다.</p>
+                    <p><span class="k">확인</span>계정 두 개로 읽기·수정·삭제·사칭 요청이 막히는지 시험한 증거를 확보했습니다(실행은 AI, 계정 생성과 설정 변경은 직접). 5일 기록은 대신 채우지 않고 매일 직접 입력했습니다.</p>
+                  </div>
+                </details>
               </div>
 
               <div class="proj">
                 <div class="tid">과제 08</div>
                 <h4>패스키 로그인</h4>
-                <p><span class="k">문제</span>비밀번호 없이 기기 인증만으로 로그인하는 기능이 필요했습니다.</p>
-                <p><span class="k">확인</span>AI가 쓴 코드를 그대로 믿지 않고 실제 요청·응답 로그로 확인했습니다. 설정끼리 충돌한 4가지(USB 키 전용 창, 본인 확인 불일치, 세션 교환 오류, 사이트 주소 값 누락)를 찾아 고쳤습니다.</p>
+                <p class="sum">AI가 쓴 코드를 로그로 검증해 설정 충돌 4가지를 찾아 고쳤습니다.</p>
                 <div class="links">
                   <a href="#private">직접 써보기</a>
                   <a href="https://github.com/sby1234-ai/myprofile/commit/95c98412e57823325f723e6ab9fc8901ec8bc10b" target="_blank" rel="noopener">소스</a>
                 </div>
+                <details class="more">
+                  <summary>자세히 보기</summary>
+                  <div class="more-body">
+                    <p><span class="k">문제</span>비밀번호 없이 기기 인증만으로 로그인하는 기능이 필요했습니다.</p>
+                    <p><span class="k">확인</span>AI가 쓴 코드를 그대로 믿지 않고 실제 요청·응답 로그로 확인했습니다. 설정끼리 충돌한 4가지(USB 키 전용 창, 본인 확인 불일치, 세션 교환 오류, 사이트 주소 값 누락)를 찾아 고쳤습니다.</p>
+                  </div>
+                </details>
               </div>
             </article>
 
@@ -1126,23 +1241,35 @@
               <div class="proj">
                 <div class="tid">과제 04</div>
                 <h4>오늘의 환율 정보판</h4>
-                <p><span class="k">문제</span>외부 값은 느려지거나 끊기는데, 그래도 화면이 비거나 값이 지워지면 안 됐습니다.</p>
-                <p><span class="k">확인</span>느린 응답·401·403·호출 제한·오프라인·형식 변경 6가지 실패마다 안내와 다시 시도 버튼이 뜨고, 마지막 정상값이 '오래된 값'으로 남게 했습니다(구현은 AI). 저장소 설정과 이틀치 자동 실행은 직접 하고, 서로 다른 값이 쌓이는 것을 눈으로 확인했습니다.</p>
+                <p class="sum">6가지 실패 상황에서도 마지막 정상값이 남도록 했고, 이틀치 기록을 직접 확인했습니다.</p>
                 <div class="links">
                   <a href="https://sby1234-ai.github.io/t04-info-board/" target="_blank" rel="noopener">결과</a>
                   <a href="https://github.com/sby1234-ai/t04-info-board/commit/a99f3396e518dddb8baeebc1c051d8d146a7e1d4" target="_blank" rel="noopener">소스</a>
                 </div>
+                <details class="more">
+                  <summary>자세히 보기</summary>
+                  <div class="more-body">
+                    <p><span class="k">문제</span>외부 값은 느려지거나 끊기는데, 그래도 화면이 비거나 값이 지워지면 안 됐습니다.</p>
+                    <p><span class="k">확인</span>느린 응답·401·403·호출 제한·오프라인·형식 변경 6가지 실패마다 안내와 다시 시도 버튼이 뜨고, 마지막 정상값이 '오래된 값'으로 남게 했습니다(구현은 AI). 저장소 설정과 이틀치 자동 실행은 직접 하고, 서로 다른 값이 쌓이는 것을 눈으로 확인했습니다.</p>
+                  </div>
+                </details>
               </div>
 
               <div class="proj">
                 <div class="tid">과제 05</div>
                 <h4>두 AI 릴레이</h4>
-                <p><span class="k">문제</span>한 AI와의 대화가 끊겨도 다른 AI가 이어서 작업할 수 있어야 했습니다.</p>
-                <p><span class="k">확인</span>Claude가 만든 기능을 Gemini로 넘겨 이어가게 하고, 고정 검사 10개로 확인했습니다. Gemini의 1·2차 결과는 회귀 검사에서 실패해 그대로 받지 않고 재수정을 요청했습니다.</p>
+                <p class="sum">Gemini의 결과가 검증에서 실패하자 그대로 받지 않고 재수정을 요청했습니다.</p>
                 <div class="links">
                   <a href="https://claude.ai/code/artifact/f652032f-305e-41bf-bdd3-4b6f97b5f6c4" target="_blank" rel="noopener">비교 리포트</a>
                   <a href="https://github.com/sby1234-ai/t04-info-board/commit/2196a0326cd0d55913c79706baab4ee694a2fe3a" target="_blank" rel="noopener">소스</a>
                 </div>
+                <details class="more">
+                  <summary>자세히 보기</summary>
+                  <div class="more-body">
+                    <p><span class="k">문제</span>한 AI와의 대화가 끊겨도 다른 AI가 이어서 작업할 수 있어야 했습니다.</p>
+                    <p><span class="k">확인</span>Claude가 만든 기능을 Gemini로 넘겨 이어가게 하고, 고정 검사 10개로 확인했습니다. Gemini의 1·2차 결과는 회귀 검사에서 실패해 그대로 받지 않고 재수정을 요청했습니다.</p>
+                  </div>
+                </details>
               </div>
             </article>
 
@@ -1154,19 +1281,31 @@
               <div class="proj">
                 <div class="tid">과제 02</div>
                 <h4>리듬 게임 난이도</h4>
-                <p><span class="k">문제</span>난이도 값을 바꿀지 정해야 했습니다. 실패 기준(미스 5회)은 제가 정했습니다.</p>
-                <p><span class="k">확인</span>값 하나만 바꿔 20회씩 비교했더니 성공률이 70%에서 40%로, 중앙값이 2425에서 50으로 떨어졌습니다. 이 근거로 기존 값(300)을 유지했습니다.</p>
+                <p class="sum">난이도 값을 20회씩 비교한 근거로 기존 값을 유지했습니다.</p>
                 <div class="links">
                   <a href="https://sby1234-ai.github.io/game/" target="_blank" rel="noopener">결과</a>
                   <a href="https://github.com/sby1234-ai/game/commit/ba8eea916cd72c8f230364526593461480d443d1" target="_blank" rel="noopener">소스</a>
                 </div>
+                <details class="more">
+                  <summary>자세히 보기</summary>
+                  <div class="more-body">
+                    <p><span class="k">문제</span>난이도 값을 바꿀지 정해야 했습니다. 실패 기준(미스 5회)은 제가 정했습니다.</p>
+                    <p><span class="k">확인</span>값 하나만 바꿔 20회씩 비교했더니 성공률이 70%에서 40%로, 중앙값이 2425에서 50으로 떨어졌습니다. 이 근거로 기존 값(300)을 유지했습니다.</p>
+                  </div>
+                </details>
               </div>
 
               <div class="proj">
                 <div class="tid">과제 10</div>
                 <h4>첫 논문: 보안 직무 공고 분석</h4>
-                <p><span class="k">문제</span>보안 직무 채용공고가 고졸·무경력에게 더 열려 있는지 사람인 공고 100건으로 확인했습니다.</p>
-                <p><span class="k">확인</span>결과는 제 믿음과 반대(보안 22%, 그 외 IT 38%, p=0.126)였고, 가설을 바꾸지 않고 기각으로 기록했습니다. 결과를 본 뒤 정한 분류 규칙은 사전 등록과 구분해 적고, 그 규칙을 끈 결과도 함께 실었습니다.</p>
+                <p class="sum">가설이 기각된 결과를 바꾸지 않고 그대로 기록했습니다.</p>
+                <details class="more">
+                  <summary>자세히 보기</summary>
+                  <div class="more-body">
+                    <p><span class="k">문제</span>보안 직무 채용공고가 고졸·무경력에게 더 열려 있는지 사람인 공고 100건으로 확인했습니다.</p>
+                    <p><span class="k">확인</span>결과는 제 믿음과 반대(보안 22%, 그 외 IT 38%, p=0.126)였고, 가설을 바꾸지 않고 기각으로 기록했습니다. 결과를 본 뒤 정한 분류 규칙은 사전 등록과 구분해 적고, 그 규칙을 끈 결과도 함께 실었습니다.</p>
+                  </div>
+                </details>
               </div>
             </article>
 
