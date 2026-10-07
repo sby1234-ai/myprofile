@@ -1050,6 +1050,28 @@ header nav{--navbg:rgba(7,26,43,.8);--navline:#12384f;border-radius:6px}
 .tabs-on .card .shots .shot img{width:100%;max-height:none}
 @media(max-width:860px){.tabs-on .card .shots{grid-template-columns:1fr}}
 </style>
+<style>
+/* ── 지그재그 타임라인 (기술·프로젝트·일하는 방식·만든 과정) ── */
+#skills .skills,#projects .cards,#strengths .ways,#process .process{display:grid!important;grid-template-columns:1fr 1fr;column-gap:88px;row-gap:56px;grid-auto-rows:auto;position:relative;max-width:1040px;margin-left:auto;margin-right:auto;background:none!important;border:0!important;border-radius:0!important;overflow:visible!important;padding:6px 0}
+#skills .skills::before,#projects .cards::before,#strengths .ways::before,#process .process::before{content:"";position:absolute;left:50%;top:0;bottom:0;width:1px;transform:translateX(-50%);background:linear-gradient(180deg,transparent,rgba(53,224,255,.28) 8%,rgba(53,224,255,.14) 85%,transparent)}
+#skills .skills>*,#projects .cards>*,#strengths .ways>*,#process .process>*{width:auto;position:relative;grid-column:1;align-self:start;box-sizing:border-box;margin-bottom:0}
+#skills .skills>:nth-child(1),#projects .cards>:nth-child(1),#strengths .ways>:nth-child(1),#process .process>:nth-child(1){grid-row:1}#skills .skills>:nth-child(2),#projects .cards>:nth-child(2),#strengths .ways>:nth-child(2),#process .process>:nth-child(2){grid-row:2}#skills .skills>:nth-child(3),#projects .cards>:nth-child(3),#strengths .ways>:nth-child(3),#process .process>:nth-child(3){grid-row:3}#skills .skills>:nth-child(4),#projects .cards>:nth-child(4),#strengths .ways>:nth-child(4),#process .process>:nth-child(4){grid-row:4}#skills .skills>:nth-child(5),#projects .cards>:nth-child(5),#strengths .ways>:nth-child(5),#process .process>:nth-child(5){grid-row:5}#skills .skills>:nth-child(6),#projects .cards>:nth-child(6),#strengths .ways>:nth-child(6),#process .process>:nth-child(6){grid-row:6}
+#skills .skills>:nth-child(even),#projects .cards>:nth-child(even),#strengths .ways>:nth-child(even),#process .process>:nth-child(even){grid-column:2}
+#skills .skills>*::before,#projects .cards>*::before,#strengths .ways>*::before,#process .process>*::before{content:"";position:absolute;top:28px;right:-48px;width:8px;height:8px;border-radius:50%;background:rgba(53,224,255,.55);box-shadow:0 0 12px 2px rgba(53,224,255,.25);z-index:1}
+#skills .skills>*::after,#projects .cards>*::after,#strengths .ways>*::after,#process .process>*::after{content:"";position:absolute;top:32px;right:-40px;width:34px;height:1px;background:linear-gradient(90deg,transparent,rgba(53,224,255,.3))}
+#skills .skills>:nth-child(even)::before,#projects .cards>:nth-child(even)::before,#strengths .ways>:nth-child(even)::before,#process .process>:nth-child(even)::before{right:auto;left:-48px}
+#skills .skills>:nth-child(even)::after,#projects .cards>:nth-child(even)::after,#strengths .ways>:nth-child(even)::after,#process .process>:nth-child(even)::after{right:auto;left:-40px;background:linear-gradient(270deg,transparent,rgba(53,224,255,.3))}
+#strengths .way,#process .phase{background:#071a2b;border:1px solid #12384f;border-radius:2px;padding:22px 24px}
+#process .phase .num,#strengths .way .n{color:var(--amber)}
+@media(max-width:760px){
+#skills .skills,#projects .cards,#strengths .ways,#process .process{grid-template-columns:1fr}
+#skills .skills::before,#projects .cards::before,#strengths .ways::before,#process .process::before{left:8px;transform:none}
+#skills .skills>*,#projects .cards>*,#strengths .ways>*,#process .process>*{grid-column:1!important;grid-row:auto!important;margin-left:32px}
+#skills .skills>*::before,#projects .cards>*::before,#strengths .ways>*::before,#process .process>*::before{right:auto!important;left:-28px!important}
+#skills .skills>*::after,#projects .cards>*::after,#strengths .ways>*::after,#process .process>*::after{right:auto!important;left:-20px!important;width:18px;background:linear-gradient(270deg,transparent,rgba(53,224,255,.3))!important}
+}
+footer a{color:var(--signal);text-decoration:none}footer a:hover{text-decoration:underline}
+</style>
 </head>
 
 <body>
@@ -1441,7 +1463,7 @@ header nav{--navbg:rgba(7,26,43,.8);--navline:#12384f;border-radius:6px}
 
     <footer>
       <div class="container">
-        개인 정보는 공개하지 않고 학습 결과와 관심 분야만 보여주는 포트폴리오입니다.
+        © 2026 SEO BOYEOB · <a href="https://github.com/sby1234-ai" target="_blank" rel="noopener">GitHub</a>
       </div>
     </footer>
 
