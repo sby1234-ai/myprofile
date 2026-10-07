@@ -1071,7 +1071,6 @@ header nav{--navbg:rgba(7,26,43,.8);--navline:#12384f;border-radius:6px}
             <a href="#labs">실습</a>
             <a href="#skills">기술</a>
             <a href="#projects">프로젝트</a>
-            <a href="#private">비공개</a>
           </div>
         </nav>
       </div>
@@ -1305,7 +1304,7 @@ header nav{--navbg:rgba(7,26,43,.8);--navline:#12384f;border-radius:6px}
                 <h4>패스키 로그인</h4>
                 <p class="sum">AI가 쓴 코드를 로그로 검증해 설정 충돌 4가지를 찾아 고쳤습니다.</p>
                 <div class="links">
-                  <a href="#private">직접 써보기</a>
+                  <a href="passkey.html">직접 써보기</a>
                   <a href="https://github.com/sby1234-ai/myprofile/commit/95c98412e57823325f723e6ab9fc8901ec8bc10b" target="_blank" rel="noopener">소스</a>
                 </div>
                 <details class="more">
@@ -1390,98 +1389,6 @@ header nav{--navbg:rgba(7,26,43,.8);--navline:#12384f;border-radius:6px}
         </div>
       </section>
 
-      <section class="section" id="private">
-        <div class="container">
-
-          <div class="section-head reveal">
-            <span class="idx">05</span>
-            <h2>비공개 자리<span class="lock-badge">🔒 PASSKEY ONLY</span></h2>
-          </div>
-
-          <p style="color: var(--muted); max-width: 60ch; margin-top: -18px; margin-bottom: 28px;">
-            여기부터는 저만 보는 자리입니다. 비밀번호는 없습니다 — 제 기기가 만든 패스키로만 열립니다.
-          </p>
-
-          <div id="statusMsg" class="status-msg"></div>
-
-          <!-- 로그아웃 상태 -->
-          <div id="loggedOutView">
-            <div class="auth-grid">
-
-              <div class="panel" style="padding: 20px;">
-                <h3 style="margin-top:0;">패스키로 로그인</h3>
-                <div class="field">
-                  <label for="loginHandle">계정 이름</label>
-                  <input id="loginHandle" type="text" placeholder="예: test-a" autocomplete="username webauthn">
-                </div>
-                <div class="btn-row">
-                  <button type="button" id="loginBtn">패스키로 로그인</button>
-                </div>
-              </div>
-
-              <div class="panel" style="padding: 20px;">
-                <h3 style="margin-top:0;">새 계정 만들기 (첫 패스키 등록)</h3>
-                <div class="field">
-                  <label for="regHandle">계정 이름</label>
-                  <input id="regHandle" type="text" placeholder="예: test-a">
-                </div>
-                <div class="field">
-                  <label for="regDeviceName">이 패스키의 이름</label>
-                  <input id="regDeviceName" type="text" placeholder="예: 내 노트북">
-                </div>
-                <div class="btn-row">
-                  <button type="button" id="registerBtn">패스키 등록하고 계정 만들기</button>
-                </div>
-              </div>
-
-            </div>
-          </div>
-
-          <!-- 로그인 상태 -->
-          <div id="loggedInView" hidden>
-            <div class="panel" style="padding: 20px; margin-bottom: 20px;">
-              <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap: wrap; gap: 10px;">
-                <div>로그인됨: <strong id="currentHandle" style="color: var(--signal);"></strong></div>
-                <button type="button" id="logoutBtn" class="secondary">로그아웃</button>
-              </div>
-            </div>
-
-            <h3>내 비공개 자료</h3>
-            <div id="notesList"></div>
-
-            <h3 style="margin-top: 28px;">등록된 패스키</h3>
-            <div class="panel" style="padding: 12px 20px;">
-              <div id="passkeyList"></div>
-            </div>
-
-            <div class="panel" style="padding: 20px; margin-top: 16px;">
-              <h3 style="margin-top:0;">패스키 추가 등록 (두 번째 기기 대비)</h3>
-              <div class="field">
-                <label for="addDeviceName">이 패스키의 이름</label>
-                <input id="addDeviceName" type="text" placeholder="예: 내 휴대폰">
-              </div>
-              <div class="btn-row">
-                <button type="button" id="addPasskeyBtn">패스키 추가</button>
-              </div>
-            </div>
-
-            <div class="panel" style="padding: 20px; margin-top: 16px;">
-              <h3 style="margin-top:0;">다른 계정 자료 요청해보기 (거절 확인용)</h3>
-              <div class="field">
-                <label for="otherAccountId">다른 계정의 user_id (아무 값이나 넣어도 됨)</label>
-                <input id="otherAccountId" type="text" placeholder="다른 계정 로그인 후 콘솔에 찍히는 user id 붙여넣기">
-              </div>
-              <div class="btn-row">
-                <button type="button" id="tryOtherBtn" class="secondary">이 계정 자료 요청해보기</button>
-              </div>
-            </div>
-          </div>
-
-          <h3 style="margin-top: 32px;">요청·응답 기록 (증거용 로그)</h3>
-          <pre id="evidenceLog">아직 기록 없음.</pre>
-
-        </div>
-      </section>
 
       <section class="section" id="process">
         <div class="container">
@@ -1535,15 +1442,12 @@ header nav{--navbg:rgba(7,26,43,.8);--navline:#12384f;border-radius:6px}
     <footer>
       <div class="container">
         개인 정보는 공개하지 않고 학습 결과와 관심 분야만 보여주는 포트폴리오입니다.
-        비공개 영역의 내용은 전부 만들어 넣은 예시이며 실제 개인정보가 아닙니다.
       </div>
     </footer>
 
   </div>
 
 
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/@simplewebauthn/browser@11/dist/bundle/index.umd.min.js"></script>
   <script>
     document.documentElement.classList.add("js");
 
@@ -1586,255 +1490,6 @@ header nav{--navbg:rgba(7,26,43,.8);--navline:#12384f;border-radius:6px}
     }
   </script>
 
-  <!-- ============ 과제 8: 패스키 인증 ============ -->
-  <script>
-    // ▼▼▼ 배포 가이드(T08-SETUP.md) 대로 아래 두 값을 실제 값으로 바꾸세요 ▼▼▼
-    const SUPABASE_URL = "https://yrqnaccncelcwrpjcpeu.supabase.co";
-    const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InlycW5hY2NuY2VsY3dycGpjcGV1Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODk1MjI3MjgsImV4cCI6MjEwNTA5ODcyOH0.xjt6ONrmhnCMb2URbyjP6OiBqX_ZFX9HuGe_SBtpMk0";
-    // ▲▲▲ ---------------------------------------------------------- ▲▲▲
-
-    const FN = (name) => `${SUPABASE_URL}/functions/v1/${name}`;
-    const sb = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
-    const { startRegistration, startAuthentication } = SimpleWebAuthnBrowser;
-
-    // ---------- 화면 요소 ----------
-    const el = (id) => document.getElementById(id);
-    const loggedOutView = el("loggedOutView");
-    const loggedInView = el("loggedInView");
-    const statusMsg = el("statusMsg");
-    const evidenceLog = el("evidenceLog");
-
-    // ---------- 증거 로그 ----------
-    let logStarted = false;
-    function log(label, extra) {
-      if (!logStarted) {
-        evidenceLog.textContent = "";
-        logStarted = true;
-      }
-      const time = new Date().toISOString();
-      const line = `[${time}] ${label}` + (extra ? `\n${JSON.stringify(extra, null, 2)}` : "");
-      evidenceLog.textContent += line + "\n\n";
-      evidenceLog.scrollTop = evidenceLog.scrollHeight;
-    }
-
-    function showStatus(message, ok) {
-      statusMsg.textContent = message;
-      statusMsg.className = "status-msg show " + (ok ? "ok" : "err");
-    }
-
-    async function callFn(name, body, token, method = "POST") {
-      const headers = { "Content-Type": "application/json" };
-      if (token) headers["Authorization"] = "Bearer " + token;
-      const opts = { method, headers };
-      if (method !== "GET") opts.body = JSON.stringify(body ?? {});
-      const url = method === "GET" && body ? FN(name) + "?" + new URLSearchParams(body) : FN(name);
-      const res = await fetch(url, opts);
-      const data = await res.json().catch(() => ({}));
-      log(`${method} ${name} -> ${res.status}`, { request: body ?? null, response: data });
-      return { ok: res.ok, status: res.status, data };
-    }
-
-    // ---------- 등록 ----------
-    async function registerNewAccount(handle, deviceName) {
-      const start = await callFn("passkey-register-start", { handle, device_name: deviceName });
-      if (!start.ok) throw new Error(start.data.error || "등록 시작 실패");
-
-      // ★ 등록 시 본인 확인(UV) 요구 — 서버 register-verify가 UV를 필수로 검사함
-      start.data.options.authenticatorSelection.userVerification = "required";
-      // ★ USB 보안 키 전용 창이 뜨지 않도록: cross-platform 제한을 지우고,
-      //   Google 비밀번호 관리자/Windows Hello에 저장될 수 있게 discoverable 패스키로 요청
-      delete start.data.options.authenticatorSelection.authenticatorAttachment;
-      start.data.options.authenticatorSelection.residentKey = "required";
-      start.data.options.authenticatorSelection.requireResidentKey = true;
-      delete start.data.options.hints;
-
-      let attResp;
-      try {
-        attResp = await startRegistration({ optionsJSON: start.data.options });
-      } catch (e) {
-        log("등록 취소/실패 (startRegistration)", { message: e.message });
-        throw new Error("등록이 취소되었습니다. 서버에는 아무것도 저장되지 않습니다.");
-      }
-
-      const verify = await callFn("passkey-register-verify", {
-        challengeId: start.data.challengeId,
-        credential: attResp,
-        device_name: deviceName,
-      });
-      if (!verify.ok) throw new Error(verify.data.error || "등록 검증 실패");
-      return verify.data;
-    }
-
-    async function addPasskeyToCurrentAccount(deviceName) {
-      const { data: { session } } = await sb.auth.getSession();
-      if (!session) throw new Error("로그인이 필요합니다.");
-
-      const start = await callFn("passkey-register-start", { device_name: deviceName }, session.access_token);
-      if (!start.ok) throw new Error(start.data.error || "등록 시작 실패");
-
-      // ★ 등록 시 본인 확인(UV) 요구 — 서버 register-verify가 UV를 필수로 검사함
-      start.data.options.authenticatorSelection.userVerification = "required";
-      // ★ USB 보안 키 전용 창이 뜨지 않도록: cross-platform 제한을 지우고,
-      //   Google 비밀번호 관리자/Windows Hello에 저장될 수 있게 discoverable 패스키로 요청
-      delete start.data.options.authenticatorSelection.authenticatorAttachment;
-      start.data.options.authenticatorSelection.residentKey = "required";
-      start.data.options.authenticatorSelection.requireResidentKey = true;
-      delete start.data.options.hints;
-
-      let attResp;
-      try {
-        attResp = await startRegistration({ optionsJSON: start.data.options });
-      } catch (e) {
-        log("추가 등록 취소/실패", { message: e.message });
-        throw new Error("등록이 취소되었습니다.");
-      }
-
-      const verify = await callFn("passkey-register-verify", {
-        challengeId: start.data.challengeId,
-        credential: attResp,
-        device_name: deviceName,
-      }, session.access_token);
-      if (!verify.ok) throw new Error(verify.data.error || "등록 검증 실패");
-      return verify.data;
-    }
-
-    // ---------- 로그인 ----------
-    async function loginWithPasskey(handle) {
-      const start = await callFn("passkey-login-start", { handle });
-      if (!start.ok) throw new Error(start.data.error || "로그인할 수 없습니다.");
-
-      let assertion;
-      try {
-        // ★ 로그인 시 본인 확인(UV) 요구 — 서버 login-verify가 UV를 필수로 검사함
-        start.data.options.userVerification = "required";
-        assertion = await startAuthentication({ optionsJSON: start.data.options });
-      } catch (e) {
-        log("로그인 취소/실패 (startAuthentication)", { message: e.message });
-        throw new Error("로그인이 취소되었습니다.");
-      }
-
-      const verify = await callFn("passkey-login-verify", {
-        challengeId: start.data.challengeId,
-        credential: assertion,
-      });
-      if (!verify.ok) throw new Error(verify.data.error || "로그인 실패");
-
-      await sb.auth.setSession({
-        access_token: verify.data.access_token,
-        refresh_token: verify.data.refresh_token,
-      });
-      return verify.data;
-    }
-
-    // ---------- 화면 갱신 ----------
-    async function refreshLoggedInView() {
-      const { data: { session } } = await sb.auth.getSession();
-      if (!session) {
-        loggedOutView.hidden = false;
-        loggedInView.hidden = true;
-        return;
-      }
-      loggedOutView.hidden = true;
-      loggedInView.hidden = false;
-
-      el("currentHandle").textContent = session.user?.user_metadata?.handle ?? session.user?.id ?? "";
-      console.log("현재 로그인된 user_id (다른 계정에서 이 값으로 조회 시도해볼 수 있음):", session.user.id);
-
-      const notesRes = await callFn("private-notes", null, session.access_token, "GET");
-      const notesList = el("notesList");
-      notesList.innerHTML = "";
-      if (notesRes.ok) {
-        (notesRes.data.notes ?? []).forEach((n) => {
-          const div = document.createElement("div");
-          div.className = "note-card";
-          div.innerHTML = `<h4></h4><p></p>`;
-          div.querySelector("h4").textContent = n.title;
-          div.querySelector("p").textContent = n.content;
-          notesList.appendChild(div);
-        });
-      }
-
-      const listRes = await callFn("passkey-list", null, session.access_token, "GET");
-      const passkeyList = el("passkeyList");
-      passkeyList.innerHTML = "";
-      if (listRes.ok) {
-        (listRes.data.passkeys ?? []).forEach((p) => {
-          const row = document.createElement("div");
-          row.className = "passkey-row";
-          const date = new Date(p.created_at).toLocaleString("ko-KR");
-          row.innerHTML = `<span></span><button type="button" class="danger" style="padding:5px 10px;font-size:12px;">삭제</button>`;
-          row.querySelector("span").textContent = `${p.device_name} · 등록일 ${date}`;
-          row.querySelector("button").addEventListener("click", async () => {
-            const del = await callFn("passkey-delete", { id: p.id }, session.access_token);
-            if (del.ok) {
-              showStatus("패스키를 삭제했습니다.", true);
-              refreshLoggedInView();
-            } else {
-              showStatus("삭제 실패: " + del.data.error, false);
-            }
-          });
-          passkeyList.appendChild(row);
-        });
-      }
-    }
-
-    // ---------- 버튼 연결 ----------
-    el("loginBtn").addEventListener("click", async () => {
-      const handle = el("loginHandle").value.trim();
-      if (!handle) return showStatus("계정 이름을 입력하세요.", false);
-      try {
-        await loginWithPasskey(handle);
-        showStatus("로그인 성공.", true);
-        refreshLoggedInView();
-      } catch (e) {
-        showStatus(e.message, false);
-      }
-    });
-
-    el("registerBtn").addEventListener("click", async () => {
-      const handle = el("regHandle").value.trim();
-      const deviceName = el("regDeviceName").value.trim() || "이름 없는 기기";
-      if (!handle) return showStatus("계정 이름을 입력하세요.", false);
-      try {
-        await registerNewAccount(handle, deviceName);
-        showStatus("계정을 만들고 패스키를 등록했습니다. 이제 로그인해보세요.", true);
-      } catch (e) {
-        showStatus(e.message, false);
-      }
-    });
-
-    el("addPasskeyBtn").addEventListener("click", async () => {
-      const deviceName = el("addDeviceName").value.trim() || "이름 없는 기기";
-      try {
-        await addPasskeyToCurrentAccount(deviceName);
-        showStatus("패스키를 추가로 등록했습니다.", true);
-        refreshLoggedInView();
-      } catch (e) {
-        showStatus(e.message, false);
-      }
-    });
-
-    el("logoutBtn").addEventListener("click", async () => {
-      await sb.auth.signOut({ scope: "global" });
-      showStatus("로그아웃했습니다.", true);
-      refreshLoggedInView();
-    });
-
-    el("tryOtherBtn").addEventListener("click", async () => {
-      const otherId = el("otherAccountId").value.trim();
-      const { data: { session } } = await sb.auth.getSession();
-      if (!session) return showStatus("로그인이 필요합니다.", false);
-      const res = await callFn("private-notes", { account_id: otherId }, session.access_token, "GET");
-      if (res.ok) {
-        showStatus(`요청한 계정 자료 대신 내 자료 ${res.data.count}건이 돌아왔습니다.`, true);
-      } else {
-        showStatus(`거절됨 (${res.status}): ${res.data.error}`, false);
-      }
-    });
-
-    // 최초 로드시 로그인 상태 반영
-    refreshLoggedInView();
-  </script>
 
 <script>
 (function(){var lb=document.createElement('div');lb.className='lb';var im=document.createElement('img');lb.appendChild(im);document.body.appendChild(lb);
