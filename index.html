@@ -861,19 +861,78 @@
     }
 
 
-    /* 실습: 박스 대신 가로 목록 */
-    #labs .cards { display: block; }
-    #labs .card { background: none; border: 0; border-top: 1px solid var(--line); border-radius: 0; padding: 28px 0; transform: none; display: grid; grid-template-columns: minmax(0,1fr); column-gap: 36px; }
-    #labs .card:last-child { border-bottom: 1px solid var(--line); }
-    #labs .card:hover { border-color: var(--line); transform: none; }
-    #labs .card:has(.shot) { grid-template-columns: minmax(0,1fr) 340px; }
-    #labs .card:has(.shot) > * { grid-column: 1; }
-    #labs .card .shot { grid-column: 2; grid-row: 1 / span 5; margin: 0; align-self: start; }
-    #labs .card h3 { margin-bottom: 6px; font-size: 19px; }
-    #labs .card .shot img { height: 190px; }
-    @media (max-width: 760px) {
-      #labs .card:has(.shot) { grid-template-columns: minmax(0,1fr); }
-      #labs .card .shot { grid-column: 1; grid-row: auto; margin: 12px 0; }
+    /* 실습: 탭 뷰어 */
+    #labs .stats { background: none; border: 0; gap: 0; margin-bottom: 40px; }
+    #labs .stat { background: none; border: 0; padding: 0 28px 0 0; }
+    #labs .stat .num { font-size: 44px; line-height: 1; }
+    #labs .cards.tabs-on { display: grid; grid-template-columns: 240px minmax(0,1fr); gap: 48px; align-items: start; }
+    .labtabs { display: flex; flex-direction: column; gap: 4px; position: sticky; top: 90px; }
+    .labtabs button { all: unset; box-sizing: border-box; cursor: pointer; display: flex; gap: 12px; align-items: baseline; padding: 12px 14px; border-left: 2px solid var(--line); color: var(--muted, #8b95a3); font-size: 15px; transition: .15s; }
+    .labtabs button i { font-style: normal; font-family: var(--mono); font-size: 11px; opacity: .7; }
+    .labtabs button:hover { color: var(--text); }
+    .labtabs button[aria-selected="true"] { color: var(--text); border-left-color: var(--signal); background: linear-gradient(90deg, rgba(240,168,72,.10), transparent); font-weight: 600; }
+    .labtabs button:focus-visible { outline: 2px solid var(--signal); outline-offset: 2px; }
+    .tabs-on > .card { display: none; background: none; border: 0; padding: 0; transform: none; border-radius: 0; }
+    .tabs-on > .card.on { display: block; animation: labin .25s ease; }
+    .tabs-on > .card:hover { transform: none; }
+    @keyframes labin { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
+    .tabs-on .card h3 { font-size: 26px; margin: 0 0 4px; }
+    .tabs-on .card .shot { margin: 20px 0 18px; border-radius: 12px; }
+    .tabs-on .card .shot img { height: auto; max-height: 420px; object-fit: contain; background: #000; }
+    .tabs-on .card .more-body { display: block; }
+    .tabs-on details.more > summary { display: none; }
+    .tabs-on .card > p.sum { font-size: 17px; margin: 18px 0 10px; }
+    @media (max-width: 860px) {
+      #labs .cards.tabs-on { grid-template-columns: minmax(0,1fr); gap: 20px; }
+      .labtabs { flex-direction: row; overflow-x: auto; position: static; gap: 8px; padding-bottom: 6px; }
+      .labtabs button { flex: none; border: 1px solid var(--line); border-radius: 999px; padding: 8px 14px; white-space: nowrap; }
+      .labtabs button i { display: none; }
+      .labtabs button[aria-selected="true"] { border-color: var(--signal); background: rgba(240,168,72,.12); }
+      #labs .stat .num { font-size: 34px; }
+    }
+
+
+    /* ── 리디자인 ─────────────────────────── */
+    .hero { padding-top: 72px; padding-bottom: 40px; position: relative; }
+    .hero::before { content: ""; position: absolute; left: 50%; top: -80px; width: 900px; height: 520px; transform: translateX(-60%); background: radial-gradient(closest-side, rgba(240,168,72,.16), transparent 70%); pointer-events: none; }
+    .hero-grid2 { display: grid; grid-template-columns: 1.15fr 1fr; gap: 56px; align-items: center; position: relative; }
+    .hero h1 { font-size: clamp(38px, 5.6vw, 66px); line-height: 1.12; letter-spacing: -0.035em; margin: 18px 0 22px; font-weight: 700; }
+    .hero .accent { background: linear-gradient(90deg, #f0a848, #f6d08a); -webkit-background-clip: text; background-clip: text; color: transparent; }
+    .cta { display: flex; gap: 12px; margin-top: 30px; flex-wrap: wrap; }
+    .btn { display: inline-block; padding: 12px 22px; border-radius: 999px; border: 1px solid var(--line); color: var(--text); text-decoration: none; font-weight: 600; font-size: 14.5px; transition: .15s; }
+    .btn:hover { border-color: var(--signal); }
+    .btn.primary { background: var(--signal); color: #1a1205; border-color: var(--signal); }
+    .btn.primary:hover { filter: brightness(1.08); }
+    .bento-stats { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+    .bt { background: linear-gradient(160deg, var(--panel-2), var(--panel)); border: 1px solid var(--line); border-radius: 18px; padding: 22px 22px 20px; }
+    .bt.big { grid-column: 1 / -1; }
+    .bt.wide { grid-column: 1 / -1; display: flex; align-items: center; gap: 18px; }
+    .bt .num { font-family: var(--mono); font-size: 48px; line-height: 1; color: var(--signal); font-weight: 600; }
+    .bt .lbl { color: var(--text); font-size: 14px; margin-top: 10px; line-height: 1.5; }
+    .bt.wide .lbl { margin-top: 0; }
+    .bt small { display: block; color: var(--muted); font-size: 12px; margin-top: 4px; }
+    .section { padding: 84px 0; }
+    .section-head h2 { font-size: clamp(26px, 3.4vw, 38px); letter-spacing: -0.03em; }
+    .skills { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
+    .sk { background: linear-gradient(160deg, var(--panel-2), var(--panel)); border: 1px solid var(--line); border-radius: 18px; padding: 22px; }
+    .sk.soft { border-style: dashed; background: none; }
+    .sk h3 { margin: 0 0 14px; font-size: 14px; color: var(--muted); font-weight: 500; letter-spacing: .02em; }
+    .tags { display: flex; flex-wrap: wrap; gap: 8px; }
+    .tags span { font-family: var(--mono); font-size: 12.5px; padding: 5px 11px; border-radius: 999px; background: rgba(255,255,255,.05); border: 1px solid var(--line); }
+    .ways { display: grid; grid-template-columns: repeat(3, 1fr); gap: 36px; }
+    .way .n { font-family: var(--mono); color: var(--signal); font-size: 12px; }
+    .way h3 { margin: 8px 0 8px; font-size: 20px; }
+    .way p { margin: 0; color: var(--muted); font-size: 14.5px; }
+    .process-foot { margin-top: 24px; color: var(--muted); }
+    .process-foot p { margin: 0 0 10px; }
+    #projects .cards { gap: 14px; }
+    #projects .card { border-radius: 18px; background: linear-gradient(160deg, var(--panel-2), var(--panel)); }
+    @media (max-width: 860px) {
+      .hero-grid2 { grid-template-columns: 1fr; gap: 36px; }
+      .hero { padding-top: 40px; }
+      .skills, .ways { grid-template-columns: 1fr; }
+      .section { padding: 56px 0; }
+      .bt .num { font-size: 40px; }
     }
 
     /* ── 좁은 화면 ─────────────────────────── */
@@ -915,6 +974,74 @@
       }
     }
   </style>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700;900&family=Chakra+Petch:wght@500;700&display=swap" rel="stylesheet">
+<style>
+/* ── 스타트업 랜딩 구조 ── */
+header{position:sticky;top:12px;background:none!important;border:0!important;backdrop-filter:none!important;padding:0 0}
+header .container{width:min(980px,calc(100% - 32px))}
+header nav{height:52px;padding:0 10px 0 20px;border-radius:999px;background:var(--navbg,rgba(255,255,255,.06));border:1px solid var(--navline,var(--line));backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px)}
+.nav-links{gap:6px}.nav-links a{padding:7px 14px;border-radius:999px;border:0!important;color:var(--muted)}
+.nav-links a:hover,.nav-links a:focus-visible{background:rgba(127,127,127,.15);color:var(--text);border:0}
+.hero{padding-top:96px;padding-bottom:64px;text-align:center}
+.hero-grid2{display:block}
+.hero-grid2>div:first-child{max-width:860px;margin:0 auto}
+.badge{display:inline-flex;align-items:center;gap:9px;padding:7px 16px;border-radius:999px;border:1px solid var(--line);background:rgba(127,127,127,.08);font-size:13px;color:var(--muted)}
+.badge i{width:7px;height:7px;border-radius:50%;background:var(--good);box-shadow:0 0 10px var(--good)}
+.hero h1{font-size:clamp(40px,7vw,84px);line-height:1.08;letter-spacing:-.045em;margin:26px auto 24px;word-break:keep-all}
+.hero-lead{word-break:keep-all;max-width:50ch;margin:0 auto;font-size:17px}
+.hero .cta{justify-content:center;margin-top:34px}
+.hero .btn{padding:14px 26px;font-size:15px}
+.bento-stats{grid-template-columns:repeat(4,1fr);gap:14px;margin-top:72px;text-align:left}
+.bt.big,.bt.wide{grid-column:auto;display:block}
+.bt .num{font-size:44px}
+.bt.wide .lbl{margin-top:10px}
+.marquee{overflow:hidden;padding:26px 0;border-block:1px solid var(--line);-webkit-mask-image:linear-gradient(90deg,transparent,#000 12%,#000 88%,transparent);mask-image:linear-gradient(90deg,transparent,#000 12%,#000 88%,transparent)}
+.marquee .track{display:flex;gap:44px;width:max-content;animation:mq 38s linear infinite}
+.marquee span{font-family:var(--mono);font-size:15px;color:var(--dim);white-space:nowrap;letter-spacing:.02em}
+@keyframes mq{to{transform:translateX(-50%)}}
+@media (prefers-reduced-motion:reduce){.marquee .track{animation:none}}
+.section{padding:120px 0}
+.section-head{display:block;text-align:center;margin-bottom:22px}
+.section-head .idx{display:inline-block;padding:5px 14px;border-radius:999px;border:1px solid var(--line);background:rgba(127,127,127,.08);font-size:12.5px;letter-spacing:.04em;color:var(--signal);margin-bottom:18px}
+.section-head h2{display:block;font-size:clamp(32px,4.6vw,56px)!important;letter-spacing:-.04em!important;line-height:1.12;word-break:keep-all}
+.proj-lead{word-break:keep-all;margin:0 auto 52px!important;text-align:center;max-width:52ch;font-size:16.5px}
+#labs .cards.tabs-on{gap:56px}
+.labtabs button{border-left:0;border-radius:12px;padding:13px 16px}
+.labtabs button[aria-selected="true"]{background:rgba(127,127,127,.14);border-left:0}
+@media (max-width:860px){
+ header .container{width:calc(100% - 20px)}.nav-links a{padding:6px 9px;font-size:12.5px}header nav{padding:0 8px 0 14px}.logo{display:none}
+ .hero{padding-top:56px}.bento-stats{grid-template-columns:1fr 1fr;margin-top:48px}.section{padding:72px 0}
+}
+
+:root{--void:#04101b;--panel:#071a2b;--panel-2:#0a2236;--line:#12384f;--line-soft:#0d2a3d;--text:#dff6ff;--muted:#7fb2c7;--dim:#5e93aa;--signal:#35e0ff;--good:#41f0a0;--bad:#ff5a5f;--amber:#ffb020;--sans:"Noto Sans KR",sans-serif;--mono:"Chakra Petch","Noto Sans KR",sans-serif}
+.grid-bg{opacity:.6}.hero::before{background:radial-gradient(closest-side,rgba(53,224,255,.14),transparent 70%)}
+.hero h1{font-family:"Chakra Petch","Noto Sans KR",sans-serif;font-weight:700;letter-spacing:-.01em}
+.hero .accent{background:none;-webkit-text-fill-color:#ffb020;color:#ffb020}
+.btn{border-radius:2px;border-color:#35e0ff;color:#35e0ff;background:transparent}.btn.primary{background:#35e0ff;color:#04101b}
+.bt,.sk,.card,#projects .card{background:#071a2b!important;border:1px solid #12384f!important;border-radius:2px!important;box-shadow:none;position:relative;
+background-image:linear-gradient(#35e0ff,#35e0ff),linear-gradient(#35e0ff,#35e0ff),linear-gradient(#35e0ff,#35e0ff),linear-gradient(#35e0ff,#35e0ff),linear-gradient(#35e0ff,#35e0ff),linear-gradient(#35e0ff,#35e0ff),linear-gradient(#35e0ff,#35e0ff),linear-gradient(#35e0ff,#35e0ff)!important;
+background-size:12px 2px,2px 12px,12px 2px,2px 12px,12px 2px,2px 12px,12px 2px,2px 12px!important;
+background-position:left top,left top,right top,right top,left bottom,left bottom,right bottom,right bottom!important;background-repeat:no-repeat!important}
+.bt .num{color:#ffb020;font-family:"Chakra Petch",sans-serif}
+.bt::after{content:"";position:absolute;right:16px;top:16px;width:8px;height:8px;border-radius:50%;background:#41f0a0;box-shadow:0 0 10px #41f0a0}
+.tags span{border-radius:2px;border-color:#12384f;background:#0a2236;color:#9fe9ff}
+.chip{border-radius:2px!important}
+.shot{border-radius:2px!important;border:1px solid #35e0ff}
+.section-head h2{font-family:"Chakra Petch","Noto Sans KR",sans-serif}
+.tabs-on .card{background:none!important;border:0!important;background-image:none!important}
+.labtabs button[aria-selected="true"]{background:rgba(53,224,255,.1);border-left-color:#35e0ff}
+.sk.soft{border-style:dashed!important}
+header nav{--navbg:rgba(7,26,43,.8);--navline:#12384f;border-radius:6px}
+.nav-links a{border-radius:4px}
+.badge{border-radius:2px;border-color:#12384f;background:rgba(53,224,255,.06);color:#9fe9ff}
+.hero{background:radial-gradient(700px 360px at 50% 0,rgba(53,224,255,.12),transparent 70%)}
+.hero::before{display:none}
+.section-head .idx{border-radius:2px;background:rgba(53,224,255,.08);border-color:#12384f;text-transform:none}
+.marquee{border-color:#12384f}.marquee span{color:#5e93aa}
+#private .section-head h2 .lock-badge{display:block;width:max-content;margin:16px auto 0;font-size:12px}
+#private .container>p{margin:0 auto 40px!important;text-align:center;word-break:keep-all}
+#private .section-head{margin-bottom:22px}
+</style>
 </head>
 
 <body>
@@ -928,14 +1055,13 @@
         <nav aria-label="주요 메뉴">
           <div class="logo">
             <span class="dot"></span>
-            PORTFOLIO
+            SEO BOYEOB
           </div>
 
           <div class="nav-links">
             <a href="#about">소개</a>
-            <a href="#strengths">강점</a>
-            <a href="#process">만든 과정</a>
             <a href="#labs">실습</a>
+            <a href="#skills">기술</a>
             <a href="#projects">프로젝트</a>
             <a href="#private">비공개</a>
           </div>
@@ -946,201 +1072,35 @@
 
     <main>
 
-      <!-- 첫 화면: 소개 · 강점 · 근거를 스크롤 없이 함께 보여줍니다 -->
       <section class="hero" id="about">
         <div class="container">
-          <div class="hero-grid">
-
+          <div class="hero-grid2">
             <div>
-              <div class="eyebrow">SERVER · NETWORK · LINUX · WEB</div>
-
-              <h1>
-                배우고 <span class="accent">직접 해결하는</span><br>
-                IT 학습자입니다.
-              </h1>
-
-              <p class="hero-lead">
-                새로운 기술을 직접 실습하고, 문제가 생기면 원인을 찾아
-                해결하는 과정을 중요하게 생각합니다.
-              </p>
-
-              <div class="purpose">
-                <strong>WHO IS THIS FOR</strong>
-                IT 분야에서 함께 배우고 일할 사람에게 저의 관심 분야와
-                문제 해결 방식, 학습 결과를 보여주기 위한 페이지입니다.
+              <div class="badge"><i></i>인프라 · 네트워크 · 보안 직무 지원</div>
+              <h1>직접 구축하고,<br><span class="accent">확인한 것만</span> 보여드립니다.</h1>
+              <p class="hero-lead">인프라·네트워크·보안 직무를 준비하는 서보엽입니다. GNS3와 VM으로 방화벽·IDS·모니터링을 구축하고, 단계마다 결과 화면을 남겼습니다.</p>
+              <div class="cta">
+                <a class="btn primary" href="#labs">실습 결과 보기 →</a>
+                <a class="btn" href="https://github.com/sby1234-ai" target="_blank" rel="noopener">GitHub</a>
               </div>
             </div>
-
-            <div class="panel">
-              <div class="panel-bar">
-                <span>STATUS</span>
-                <span class="ok">LEARNING</span>
-              </div>
-
-              <h2>한눈에 보기</h2>
-
-              <ul class="stat-list">
-                <li>
-                  <span class="key">01</span>
-                  <span>오류의 원인을 좁혀 해결합니다</span>
-                </li>
-                <li>
-                  <span class="key">02</span>
-                  <span>읽기보다 직접 설치하고 확인합니다</span>
-                </li>
-                <li>
-                  <span class="key">03</span>
-                  <span>작은 기능부터 범위를 넓힙니다</span>
-                </li>
-              </ul>
-
-              <div class="panel-foot">
-                <p>이 페이지는 HTML과 CSS를 직접 작성해 만들었습니다.</p>
-
-                <button
-                  type="button"
-                  id="detailButton"
-                  aria-expanded="false"
-                  aria-controls="detail"
-                >
-                  만든 과정 자세히 보기
-                </button>
-
-                <div id="detail" hidden>
-                  구조 작성 → 화면 구성 → 공개 → 브라우저 검사 → 문제 수정
-                </div>
-              </div>
+            <div class="bento-stats">
+              <div class="bt big"><div class="num">8</div><div class="lbl">통합 구축한 기술<br><small>VLAN · 라우팅 · 방화벽 · IDS/IPS · 서버 · SIEM · 로그 · VPN</small></div></div>
+              <div class="bt"><div class="num">8</div><div class="lbl">완료한 CTF 박스</div></div>
+              <div class="bt"><div class="num">20</div><div class="lbl">점검·조치 스크립트 항목</div></div>
+              <div class="bt wide"><div class="num">2</div><div class="lbl">직접 구성한 방화벽 <small>Cisco ASAv · pfSense</small></div></div>
             </div>
-
           </div>
         </div>
       </section>
 
+<div class="marquee" aria-hidden="true"><div class="track"><span>GNS3</span><span>Cisco ASAv</span><span>pfSense</span><span>OpenVPN</span><span>OSPF</span><span>VLAN</span><span>Snort3</span><span>Suricata</span><span>OSSEC</span><span>Wazuh</span><span>Zabbix</span><span>PMM</span><span>Rocky Linux</span><span>BIND</span><span>Apache</span><span>MariaDB</span><span>Kali</span><span>Shell</span><span>GNS3</span><span>Cisco ASAv</span><span>pfSense</span><span>OpenVPN</span><span>OSPF</span><span>VLAN</span><span>Snort3</span><span>Suricata</span><span>OSSEC</span><span>Wazuh</span><span>Zabbix</span><span>PMM</span><span>Rocky Linux</span><span>BIND</span><span>Apache</span><span>MariaDB</span><span>Kali</span><span>Shell</span></div></div>
 
-      <!-- 강점 3가지 -->
-      <section class="section" id="strengths">
-        <div class="container">
-
-          <div class="section-head reveal">
-            <span class="idx">01</span>
-            <h2>제가 보여주고 싶은 3가지</h2>
-          </div>
-
-          <div class="cards">
-
-            <article class="card reveal">
-              <h3>문제 해결</h3>
-
-              <div class="step">
-                <div class="label">상황</div>
-                <p>서버나 웹페이지를 직접 구성하면서 예상하지 못한 오류를 만나는 상황이 있습니다.</p>
-              </div>
-
-              <div class="step">
-                <div class="label">행동</div>
-                <p>설정을 하나씩 확인하고 오류 메시지와 동작 결과를 비교하면서 원인을 좁혀갑니다.</p>
-              </div>
-
-              <div class="step">
-                <div class="label">결과</div>
-                <p>문제가 발생한 지점을 찾아 수정하고 정상적으로 동작하는지 다시 확인합니다.</p>
-              </div>
-            </article>
-
-
-            <article class="card reveal">
-              <h3>직접 실습</h3>
-
-              <div class="step">
-                <div class="label">상황</div>
-                <p>새로운 IT 기술이나 도구를 처음 접했을 때가 있습니다.</p>
-              </div>
-
-              <div class="step">
-                <div class="label">행동</div>
-                <p>설명만 읽는 것보다 직접 설치하고 설정하면서 기능을 확인합니다.</p>
-              </div>
-
-              <div class="step">
-                <div class="label">결과</div>
-                <p>단순히 개념을 아는 것에서 끝나지 않고 실제 동작 과정을 경험합니다.</p>
-              </div>
-            </article>
-
-
-            <article class="card reveal">
-              <h3>꾸준한 학습</h3>
-
-              <div class="step">
-                <div class="label">상황</div>
-                <p>익숙하지 않은 기술을 배우면서 모르는 부분이 생깁니다.</p>
-              </div>
-
-              <div class="step">
-                <div class="label">행동</div>
-                <p>작은 기능부터 직접 따라 하고 결과를 확인하면서 하나씩 범위를 넓힙니다.</p>
-              </div>
-
-              <div class="step">
-                <div class="label">결과</div>
-                <p>학습한 내용을 실제 페이지와 서버 구성 같은 결과물로 연결하려고 합니다.</p>
-              </div>
-            </article>
-
-          </div>
-        </div>
-      </section>
-
-
-      <!-- 만든 과정 -->
-      <section class="section" id="process">
-        <div class="container">
-
-          <div class="section-head reveal">
-            <span class="idx">02</span>
-            <h2>만든 과정</h2>
-          </div>
-
-          <div class="process reveal">
-
-            <div class="phase">
-              <div class="num">STEP 01</div>
-              <h3>구조 작성</h3>
-              <p>HTML로 문서의 뼈대와 제목 단계를 잡았습니다.</p>
-            </div>
-
-            <div class="phase">
-              <div class="num">STEP 02</div>
-              <h3>화면 구성</h3>
-              <p>CSS로 배치와 색을 정하고 좁은 화면까지 맞췄습니다.</p>
-            </div>
-
-            <div class="phase">
-              <div class="num">STEP 03</div>
-              <h3>공개</h3>
-              <p>GitHub Pages에 올려 링크만으로 열리게 했습니다.</p>
-            </div>
-
-            <div class="phase">
-              <div class="num">STEP 04</div>
-              <h3>검사와 수정</h3>
-              <p>링크·키보드 이동·제목 구조·글자 대비를 확인하고 고쳤습니다.</p>
-            </div>
-
-          </div>
-
-          <div class="stack-note reveal">BUILT WITH HTML · CSS · GITHUB PAGES · SUPABASE(패스키)</div>
-
-        </div>
-      </section>
-
-
-      <!-- 실습: 교육 과정에서 직접 구축한 인프라·보안 실습 -->
       <section class="section" id="labs">
         <div class="container">
 
           <div class="section-head reveal">
-            <span class="idx">03</span>
+            <span class="idx">Labs</span>
             <h2>직접 구축한 실습</h2>
           </div>
 
@@ -1149,12 +1109,6 @@
             화면은 실습용 사설망 주소만 보이며, 계정·비밀번호는 싣지 않았습니다.
           </p>
 
-          <div class="stats reveal">
-            <div class="stat"><div class="num">8</div><div class="lbl">통합한 기술<br>VLAN·라우팅·방화벽·IDS/IPS·서버·SIEM·로그·VPN</div></div>
-            <div class="stat"><div class="num">8</div><div class="lbl">완료한 CTF 박스</div></div>
-            <div class="stat"><div class="num">20</div><div class="lbl">점검·조치 스크립트 항목</div></div>
-            <div class="stat"><div class="num">2</div><div class="lbl">직접 구성한 방화벽<br>Cisco ASAv · pfSense</div></div>
-          </div>
 
           <div class="cards">
 
@@ -1269,13 +1223,27 @@
         </div>
       </section>
 
+      <!-- 기술 스택 -->
+      <section class="section" id="skills">
+        <div class="container">
+          <div class="section-head reveal"><span class="idx">Stack</span><h2>다뤄본 기술</h2></div>
+          <p class="proj-lead reveal">실습을 하며 직접 설치하고 설정해 본 도구들입니다.</p>
+          <div class="skills reveal">
+            <div class="sk"><h3>네트워크</h3><div class="tags"><span>GNS3</span><span>Cisco ASAv</span><span>OSPF</span><span>VLAN</span><span>ACL</span><span>pfSense</span><span>OpenVPN</span></div></div>
+            <div class="sk"><h3>탐지·보안</h3><div class="tags"><span>Snort3</span><span>Suricata</span><span>OSSEC</span><span>Wazuh</span><span>Kali</span></div></div>
+            <div class="sk"><h3>모니터링·로그</h3><div class="tags"><span>Zabbix</span><span>PMM</span><span>rsyslog</span><span>LogAnalyzer</span></div></div>
+            <div class="sk"><h3>서버</h3><div class="tags"><span>Rocky Linux</span><span>BIND</span><span>Apache</span><span>MariaDB</span><span>NFS</span><span>FTP</span><span>Samba</span></div></div>
+            <div class="sk"><h3>자동화</h3><div class="tags"><span>Shell</span><span>KISA 점검 가이드</span></div></div>
+            <div class="sk soft"><h3>준비 중인 자격증</h3><div class="tags"><span>네트워크관리사 2급</span><span>리눅스마스터 2급</span></div></div>
+          </div>
+        </div>
+      </section>
 
-      <!-- 프로젝트: AI와 함께 만든 과제 -->
       <section class="section" id="projects">
         <div class="container">
 
           <div class="section-head reveal">
-            <span class="idx">04</span>
+            <span class="idx">Projects</span>
             <h2>AI와 함께 만든 과제</h2>
           </div>
 
@@ -1408,8 +1376,14 @@
         </div>
       </section>
 
+      <section class="section" id="strengths">
+        <div class="container">
+          <div class="section-head reveal"><span class="idx">Approach</span><h2>일하는 방식</h2></div>
+          <p class="proj-lead reveal">실습 중 문제가 생겼을 때 제가 움직이는 순서입니다.</p>
+          <div class="ways reveal"><div class="way"><span class="n">01</span><h3>문제 해결</h3><p>설정을 하나씩 확인하고 오류 메시지와 동작 결과를 비교하면서 원인을 좁혀갑니다.</p></div><div class="way"><span class="n">02</span><h3>직접 실습</h3><p>설명만 읽는 것보다 직접 설치하고 설정하면서 기능을 확인합니다.</p></div><div class="way"><span class="n">03</span><h3>꾸준한 학습</h3><p>작은 기능부터 직접 따라 하고 결과를 확인하면서 하나씩 범위를 넓힙니다.</p></div></div>
+        </div>
+      </section>
 
-      <!-- 과제 8: 비공개 영역 (패스키로 잠김) -->
       <section class="section" id="private">
         <div class="container">
 
@@ -1500,6 +1474,52 @@
           <h3 style="margin-top: 32px;">요청·응답 기록 (증거용 로그)</h3>
           <pre id="evidenceLog">아직 기록 없음.</pre>
 
+        </div>
+      </section>
+
+      <section class="section" id="process">
+        <div class="container">
+
+          <div class="section-head reveal">
+            <span class="idx">About</span>
+            <h2>이 페이지를 만든 과정</h2>
+          </div>
+
+          <div class="process reveal">
+
+            <div class="phase">
+              <div class="num">STEP 01</div>
+              <h3>구조 작성</h3>
+              <p>HTML로 문서의 뼈대와 제목 단계를 잡았습니다.</p>
+            </div>
+
+            <div class="phase">
+              <div class="num">STEP 02</div>
+              <h3>화면 구성</h3>
+              <p>CSS로 배치와 색을 정하고 좁은 화면까지 맞췄습니다.</p>
+            </div>
+
+            <div class="phase">
+              <div class="num">STEP 03</div>
+              <h3>공개</h3>
+              <p>GitHub Pages에 올려 링크만으로 열리게 했습니다.</p>
+            </div>
+
+            <div class="phase">
+              <div class="num">STEP 04</div>
+              <h3>검사와 수정</h3>
+              <p>링크·키보드 이동·제목 구조·글자 대비를 확인하고 고쳤습니다.</p>
+            </div>
+
+          </div>
+
+          <div class="stack-note reveal">BUILT WITH HTML · CSS · GITHUB PAGES · SUPABASE(패스키)</div>
+
+          <div class="process-foot reveal">
+            <p>이 페이지는 HTML과 CSS를 직접 작성해 만들었습니다.</p>
+            <button type="button" id="detailButton" aria-expanded="false" aria-controls="detail">만든 과정 자세히 보기</button>
+            <div id="detail" hidden>구조 작성 → 화면 구성 → 공개 → 브라우저 검사 → 문제 수정</div>
+          </div>
         </div>
       </section>
 
@@ -1814,6 +1834,13 @@
 (function(){var lb=document.createElement('div');lb.className='lb';var im=document.createElement('img');lb.appendChild(im);document.body.appendChild(lb);
 document.addEventListener('click',function(e){var f=e.target.closest&&e.target.closest('.shot');if(f){im.src=f.querySelector('img').src;lb.classList.add('on');}else if(lb.classList.contains('on')){lb.classList.remove('on');}});
 document.addEventListener('keydown',function(e){if(e.key==='Escape')lb.classList.remove('on');});})();
+</script>
+<script>
+(function(){var c=document.querySelector('#labs .cards');if(!c)return;var cards=[].slice.call(c.querySelectorAll(':scope > .card'));if(!cards.length)return;
+var nav=document.createElement('div');nav.className='labtabs';nav.setAttribute('role','tablist');
+function show(i){cards.forEach(function(x,j){x.classList.toggle('on',i===j);x.classList.add('on-ready');});[].forEach.call(nav.children,function(b,j){b.setAttribute('aria-selected',i===j?'true':'false');});}
+cards.forEach(function(x,i){var b=document.createElement('button');b.type='button';b.setAttribute('role','tab');b.innerHTML='<i>0'+(i+1)+'</i>'+x.querySelector('h3').textContent;b.addEventListener('click',function(){show(i);});nav.appendChild(b);x.classList.add('shown');var d=x.querySelector('details');if(d)d.open=true;});
+c.insertBefore(nav,c.firstChild);c.classList.add('tabs-on');show(0);})();
 </script>
 </body>
 </html>
