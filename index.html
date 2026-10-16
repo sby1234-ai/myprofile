@@ -1531,5 +1531,21 @@ function show(i){cards.forEach(function(x,j){x.classList.toggle('on',i===j);x.cl
 cards.forEach(function(x,i){var b=document.createElement('button');b.type='button';b.setAttribute('role','tab');b.innerHTML='<i>0'+(i+1)+'</i>'+x.querySelector('h3').textContent;b.addEventListener('click',function(){show(i);});nav.appendChild(b);x.classList.add('shown');var d=x.querySelector('details');if(d)d.open=true;});
 c.insertBefore(nav,c.firstChild);c.classList.add('tabs-on');show(0);})();
 </script>
+<script>
+/* 내부 앵커 메뉴가 방문기록을 쌓지 않게: 뒤로가기 한 번에 이전 페이지로 나가짐 */
+(function(){
+  document.querySelectorAll('a[href^="#"]').forEach(function(a){
+    a.addEventListener('click', function(e){
+      var h = a.getAttribute('href');
+      if(h === '#' || h.length < 2) return;
+      var t = document.getElementById(h.slice(1));
+      if(!t) return;
+      e.preventDefault();
+      t.scrollIntoView({block:'start'});
+      if(history.replaceState) history.replaceState(null, '', h);
+    });
+  });
+})();
+</script>
 </body>
 </html>
