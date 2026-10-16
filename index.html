@@ -1291,6 +1291,29 @@ footer a{color:var(--signal);text-decoration:none}footer a:hover{text-decoration
           <div class="cards">
 
             <article class="card reveal">
+              <h3>보안 실습 · 취약점 설계</h3>
+              <p class="sub">직접 만든 CTF 공격 실습 머신</p>
+
+              <div class="proj">
+                <h4>CTF 머신 &ldquo;Vault&rdquo;</h4>
+                <p class="sum">공격 실습용 취약 서버를 직접 설계하고, 의도한 경로로 끝까지 풀리는지 솔브 테스트로 검증했습니다.</p>
+                <div class="links">
+                  <span>워크스루 · 소스 공개 준비 중</span>
+                </div>
+                <details class="more">
+                  <summary>자세히 보기</summary>
+                  <div class="more-body">
+                    <p><span class="k">문제</span>그동안 풀어 온 VulnHub 부트투루트 머신들을 참고해, 공격 실습용 취약 서버(난이도 medium)를 직접 하나 설계해야 했습니다.</p>
+                    <p><span class="k">설계</span>정찰 → 초기 침투 → 내부 이동 → 권한 상승의 네 단계를 한 번씩 거치도록 시나리오를 잡았습니다. 메인 사이트 뒤에 숨긴 dev 영역을 먼저 찾아야 공격 지점이 보이게 하고, 단계마다 다음 단서를 얻어 넘어가는 구조로 연결했습니다.</p>
+                    <p><span class="k">확인</span>공격자 입장에서 처음부터 끝까지 직접 풀어, 각 단계가 의도대로 통과하는지 실제 출력으로 확인했습니다. 화면(스토리·CSS)을 입힌 뒤에도 초기 침투 경로가 그대로 작동하는지 다시 검증했습니다.</p>
+                    <p><span class="k">정리</span>명령마다 &lsquo;왜 실행하는지&rsquo;와 출력의 의미까지 적는 평소 실습 정리 방식으로 워크스루를 문서화했습니다.</p>
+                  </div>
+                </details>
+              </div>
+            </article>
+
+
+            <article class="card reveal">
               <h3>인증·접근 통제</h3>
               <p class="sub">다이어리 → 로그인 → 패스키</p>
 
