@@ -1077,6 +1077,19 @@ footer a{color:var(--signal);text-decoration:none}footer a:hover{text-decoration
 .tabs-on .card .shot figcaption{background:none!important;padding:9px 2px 10px}
 .tabs-on .card .shots{gap:22px;align-items:start}
 </style>
+<style id="carousel-css">
+.tabs-on .card .carousel{position:relative;margin:20px 0 18px}
+.carousel .slide{display:none}
+.carousel .slide.active{display:block}
+.carousel .cnav{position:absolute;top:50%;transform:translateY(-50%);z-index:6;width:42px;height:42px;border-radius:50%;background:rgba(7,26,43,.82);border:1px solid #35e0ff;color:#35e0ff;font-size:24px;line-height:38px;text-align:center;cursor:pointer;padding:0}
+.carousel .cprev{left:10px}.carousel .cnext{right:10px}
+.carousel .cnav:hover{background:#35e0ff;color:#071a2b}
+.carousel .ccount{position:absolute;top:22px;right:24px;z-index:6;font-size:12.5px;color:#d7edf8;background:rgba(7,26,43,.72);padding:3px 10px;border-radius:12px}
+.carousel .cdots{display:flex;gap:9px;justify-content:center;margin-top:12px}
+.carousel .cdots button{width:9px;height:9px;padding:0;border-radius:50%;border:1px solid #35e0ff;background:transparent;cursor:pointer}
+.carousel .cdots button.on{background:#35e0ff}
+@media(max-width:860px){.carousel .cnav{width:36px;height:36px;line-height:32px;font-size:20px}}
+</style>
 </head>
 
 <body>
@@ -1151,7 +1164,7 @@ footer a{color:var(--signal);text-decoration:none}footer a:hover{text-decoration
               <p class="sub">GNS3 · Cisco ASAv · pfSense</p>
 
               <div class="chips"><span class="chip">방화벽 규칙 5개 · 차단 확인</span><span class="chip">OpenVPN 접속 확인</span><span class="chip">OSPF 이웃 유지</span></div>
-              <figure class="shot"><img src="board-netfw.jpg" alt="네트워크·방화벽·VPN 구성 검증 — ASAv ACL·OSPF, pfSense OpenVPN 접속" loading="lazy"><figcaption>ASAv 방화벽·OSPF · pfSense OpenVPN 구성·동작 검증 <span>(눌러서 크게 보기)</span></figcaption></figure>
+              <div class="carousel"><figure class="shot slide"><img src="netfw-1.jpg" alt="ASAv 방화벽 — ACL 히트카운트·OSPF 이웃 상태" loading="lazy"></figure><figure class="shot slide"><img src="netfw-2.jpg" alt="pfSense OpenVPN — 윈도우 PC 접속 성공" loading="lazy"></figure><button class="cnav cprev" type="button" aria-label="이전 사진">‹</button><button class="cnav cnext" type="button" aria-label="다음 사진">›</button><div class="ccount"></div><div class="cdots"></div></div>
               <p class="sum">GNS3에서 라우터·방화벽·VLAN을 구성하고 pfSense OpenVPN까지 연결했습니다.</p>
 
               <details class="more">
@@ -1170,7 +1183,7 @@ footer a{color:var(--signal);text-decoration:none}footer a:hover{text-decoration
               <p class="sub">Snort3 · Suricata · Kali</p>
 
               <div class="chips"><span class="chip">경계 ACL + 센서 Suricata 2계층</span><span class="chip">ICMP·SSH·HTTP 3종 탐지 확인</span></div>
-              <figure class="shot"><img src="board-ids.jpg" alt="IDS/IPS 침입 탐지 — R3 ACL 탐지 로그, Suricata fast.log 실시간 탐지" loading="lazy"><figcaption>ACL 로깅 · Suricata NIDS로 ICMP·SSH·HTTP 탐지 대조 <span>(눌러서 크게 보기)</span></figcaption></figure>
+              <div class="carousel"><figure class="shot slide"><img src="ids-1.jpg" alt="R3 ACL 탐지 로그 — ICMP·SSH·HTTP 일치" loading="lazy"></figure><figure class="shot slide"><img src="ids-2.jpg" alt="Suricata fast.log — 실시간 탐지" loading="lazy"></figure><button class="cnav cprev" type="button" aria-label="이전 사진">‹</button><button class="cnav cnext" type="button" aria-label="다음 사진">›</button><div class="ccount"></div><div class="cdots"></div></div>
               <p class="sum">Snort3와 Suricata를 직접 구축하고 공격 트래픽으로 시험했습니다.</p>
 
               <details class="more">
@@ -1188,7 +1201,7 @@ footer a{color:var(--signal);text-decoration:none}footer a:hover{text-decoration
               <p class="sub">Zabbix · OSSEC · Wazuh · PMM · LogAnalyzer</p>
 
               <div class="chips"><span class="chip">Zabbix↔OSSEC 상호 감시 확인</span><span class="chip">Wazuh 에이전트 Active</span><span class="chip">PMM 등록 확인</span><span class="chip">LogAnalyzer 로그 조회</span></div>
-              <figure class="shot"><img src="board-mon.jpg" alt="모니터링·SIEM·로그 — Zabbix, Wazuh, LogAnalyzer, PMM 구축" loading="lazy"><figcaption>Zabbix·OSSEC·Wazuh·PMM·LogAnalyzer 모니터링/SIEM 스택 구축 <span>(눌러서 크게 보기)</span></figcaption></figure>
+              <div class="carousel"><figure class="shot slide"><img src="mon-1.jpg" alt="Zabbix — 서버 정상" loading="lazy"></figure><figure class="shot slide"><img src="mon-2.jpg" alt="Wazuh — SSH 실패 경보" loading="lazy"></figure><figure class="shot slide"><img src="mon-3.jpg" alt="LogAnalyzer — 로그 조회" loading="lazy"></figure><figure class="shot slide"><img src="mon-4.jpg" alt="PMM — MariaDB 등록" loading="lazy"></figure><button class="cnav cprev" type="button" aria-label="이전 사진">‹</button><button class="cnav cnext" type="button" aria-label="다음 사진">›</button><div class="ccount"></div><div class="cdots"></div></div>
               <p class="sum">Zabbix·OSSEC·Wazuh·PMM·LogAnalyzer를 각각 구축했습니다.</p>
 
               <details class="more">
@@ -1243,7 +1256,7 @@ footer a{color:var(--signal);text-decoration:none}footer a:hover{text-decoration
               <p class="sub">VulnHub 부트투루트 · Kali · 자작 머신</p>
 
               <div class="chips"><span class="chip">박스 8개 완료</span><span class="chip">자작 CTF 머신 &ldquo;VaultCorp&rdquo; 제작 완료</span></div>
-              <figure class="shot"><img src="vaultcorp-ctf.jpg" alt="공격 관점 CTF — 자작 머신 VaultCorp 웹앱 설계, VulnHub Earth root 획득" loading="lazy"><figcaption>자작 머신 VaultCorp 설계 · VulnHub Earth root 획득 <span>(눌러서 크게 보기)</span></figcaption></figure>
+              <div class="carousel"><figure class="shot slide"><img src="ctf-1.jpg" alt="자작 머신 VaultCorp — 취약 웹앱 설계" loading="lazy"></figure><figure class="shot slide"><img src="ctf-2.jpg" alt="VulnHub Earth — root 권한 획득" loading="lazy"></figure><button class="cnav cprev" type="button" aria-label="이전 사진">‹</button><button class="cnav cnext" type="button" aria-label="다음 사진">›</button><div class="ccount"></div><div class="cdots"></div></div>
               <p class="sum">VulnHub 박스로 침투·권한 상승을 익힌 뒤, 직접 다단계 CTF 머신을 설계·제작하고 공격 체인 전체를 검증했습니다.</p>
 
               <details class="more">
@@ -1545,6 +1558,26 @@ c.insertBefore(nav,c.firstChild);c.classList.add('tabs-on');show(0);})();
       t.scrollIntoView({block:'start'});
       if(history.replaceState) history.replaceState(null, '', h);
     });
+  });
+})();
+</script>
+<script>
+(function(){
+  document.querySelectorAll('.carousel').forEach(function(car){
+    var slides=[].slice.call(car.querySelectorAll('.slide'));
+    if(!slides.length)return;
+    var dots=car.querySelector('.cdots'), count=car.querySelector('.ccount'), idx=0;
+    slides.forEach(function(s,i){var d=document.createElement('button');d.type='button';d.setAttribute('aria-label',(i+1)+'번 사진');
+      d.addEventListener('click',function(e){e.stopPropagation();go(i);});dots.appendChild(d);});
+    function go(i){idx=(i+slides.length)%slides.length;
+      slides.forEach(function(s,j){s.classList.toggle('active',j===idx);});
+      [].forEach.call(dots.children,function(d,j){d.classList.toggle('on',j===idx);});
+      if(count)count.textContent=(idx+1)+' / '+slides.length;}
+    var pv=car.querySelector('.cprev'),nx=car.querySelector('.cnext');
+    if(slides.length<2){if(pv)pv.style.display='none';if(nx)nx.style.display='none';}
+    if(pv)pv.addEventListener('click',function(e){e.stopPropagation();go(idx-1);});
+    if(nx)nx.addEventListener('click',function(e){e.stopPropagation();go(idx+1);});
+    go(0);
   });
 })();
 </script>
