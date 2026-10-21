@@ -1086,8 +1086,6 @@ footer a{color:var(--signal);text-decoration:none}footer a:hover{text-decoration
 .tabs-on .card .carousel .winbar{position:relative;z-index:7;display:flex;align-items:center;gap:11px;height:40px;padding:0 14px;background:linear-gradient(180deg,#132236,#0e1a28);border-bottom:1px solid #1d3346}
 .tabs-on .card .carousel .wprompt{font-family:var(--mono);font-weight:600;color:#35e0ff;font-size:14px;flex:none;text-shadow:0 0 8px rgba(53,224,255,.5)}
 .tabs-on .card .carousel .wttl{font-family:var(--mono);font-size:12.5px;font-weight:600;color:#cfeaf6;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;flex:1}
-.tabs-on .card .carousel .wexp{all:unset;cursor:pointer;color:#7fb6ca;font-size:15px;line-height:1;padding:4px 6px;border-radius:6px;flex:none}
-.tabs-on .card .carousel .wexp:hover{color:#35e0ff;background:rgba(53,224,255,.12)}
 .tabs-on .card .carousel .slide img{display:block;width:100%!important;max-width:100%!important;height:min(40vh,300px)!important;object-fit:cover!important;object-position:top center!important;margin:0!important;border:0!important;border-radius:0!important;background:#0a0f16;cursor:zoom-in;box-sizing:border-box}
 .tabs-on .card .carousel .cnav{position:absolute;top:0;bottom:0;width:24%;z-index:6;border:0;color:#aeecff;font-size:64px;line-height:1;font-family:inherit;cursor:pointer;padding:0;display:flex;align-items:center;opacity:.5;text-shadow:0 0 16px rgba(53,224,255,.55)}
 .tabs-on .card .carousel .cprev{left:0;justify-content:flex-start;padding-left:14px;background:none;animation:cnavp 2.6s ease-in-out infinite}
@@ -1584,7 +1582,7 @@ c.insertBefore(nav,c.firstChild);c.classList.add('tabs-on');show(0);})();
       var ttl=img.getAttribute('alt')||'';
       var fr=document.createElement('div');fr.className='winframe';
       var bar=document.createElement('div');bar.className='winbar';
-      bar.innerHTML='<span class="wprompt">❯_</span><span class="wttl"></span><button class="wexp" type="button" title="크게 보기" aria-label="크게 보기">⤢</button>';
+      bar.innerHTML='<span class="wprompt">❯_</span><span class="wttl"></span>';
       bar.querySelector('.wttl').textContent=ttl;
       fr.appendChild(bar);fr.appendChild(img);s.appendChild(fr);
     });
