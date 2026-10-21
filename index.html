@@ -1597,5 +1597,15 @@ c.insertBefore(nav,c.firstChild);c.classList.add('tabs-on');show(0);})();
   });
 })();
 </script>
+<script>
+/* 실습 사진 미리 로드 — 탭/캐러셀 넘길 때 사진이 '팍' 튀며 로딩되지 않게 */
+window.addEventListener('load',function(){
+  var seen={};
+  document.querySelectorAll('#labs .card img').forEach(function(img){
+    var s=img.getAttribute('src'); if(!s||seen[s])return; seen[s]=1;
+    var p=new Image(); p.decoding='async'; p.src=s;
+  });
+});
+</script>
 </body>
 </html>
