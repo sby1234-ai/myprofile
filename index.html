@@ -1082,7 +1082,13 @@ footer a{color:var(--signal);text-decoration:none}footer a:hover{text-decoration
 .tabs-on .card .carousel .ctrack{display:flex;transition:transform .5s cubic-bezier(.22,.61,.36,1);will-change:transform}
 .tabs-on .card .carousel .slide{flex:0 0 82%!important;box-sizing:border-box;padding:0 7px!important;margin:0!important;width:auto!important;min-width:0!important;max-width:none!important;border:0!important;background:transparent!important;opacity:.3;transition:opacity .5s;display:block!important}
 .tabs-on .card .carousel .slide.active{opacity:1}
-.tabs-on .card .carousel .slide img{display:block;width:100%!important;max-width:100%!important;height:min(42vh,320px)!important;object-fit:contain!important;object-position:top center!important;margin:0!important;border-radius:10px;border:1px solid #1d4257;background:#000;cursor:zoom-in;box-sizing:border-box}
+.tabs-on .card .carousel .winframe{background:linear-gradient(180deg,#0e1826,#0a1017);border:1px solid #20374a;border-radius:12px;overflow:hidden;box-shadow:0 16px 40px rgba(0,0,0,.5)}
+.tabs-on .card .carousel .winbar{position:relative;z-index:7;display:flex;align-items:center;gap:11px;height:40px;padding:0 14px;background:linear-gradient(180deg,#132236,#0e1a28);border-bottom:1px solid #1d3346}
+.tabs-on .card .carousel .wprompt{font-family:var(--mono);font-weight:600;color:#35e0ff;font-size:14px;flex:none;text-shadow:0 0 8px rgba(53,224,255,.5)}
+.tabs-on .card .carousel .wttl{font-family:var(--mono);font-size:12.5px;font-weight:600;color:#cfeaf6;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;flex:1}
+.tabs-on .card .carousel .wexp{all:unset;cursor:pointer;color:#7fb6ca;font-size:15px;line-height:1;padding:4px 6px;border-radius:6px;flex:none}
+.tabs-on .card .carousel .wexp:hover{color:#35e0ff;background:rgba(53,224,255,.12)}
+.tabs-on .card .carousel .slide img{display:block;width:100%!important;max-width:100%!important;height:min(40vh,300px)!important;object-fit:cover!important;object-position:top center!important;margin:0!important;border:0!important;border-radius:0!important;background:#0a0f16;cursor:zoom-in;box-sizing:border-box}
 .tabs-on .card .carousel .cnav{position:absolute;top:0;bottom:0;width:24%;z-index:6;border:0;color:#aeecff;font-size:64px;line-height:1;font-family:inherit;cursor:pointer;padding:0;display:flex;align-items:center;opacity:.5;text-shadow:0 0 16px rgba(53,224,255,.55)}
 .tabs-on .card .carousel .cprev{left:0;justify-content:flex-start;padding-left:14px;background:linear-gradient(90deg,rgba(53,224,255,.13),rgba(53,224,255,0) 80%);animation:cnavp 2.6s ease-in-out infinite}
 .tabs-on .card .carousel .cnext{right:0;justify-content:flex-end;padding-right:14px;background:linear-gradient(270deg,rgba(53,224,255,.13),rgba(53,224,255,0) 80%);animation:cnavp 2.6s ease-in-out infinite}
@@ -1090,9 +1096,9 @@ footer a{color:var(--signal);text-decoration:none}footer a:hover{text-decoration
 @keyframes cnavp{0%,100%{opacity:.36}50%{opacity:.78}}
 .tabs-on .card .carousel .czoom{position:absolute;left:50%;transform:translateX(-50%);bottom:12px;z-index:5;font-size:11px;color:#cfe6f2;background:rgba(7,26,43,.55);border:1px solid rgba(42,80,106,.6);padding:3px 11px;border-radius:12px;pointer-events:none}
 .tabs-on .card .carousel .ccount{display:none!important}
-.tabs-on .card .carousel .cdots{display:flex;gap:9px;justify-content:center;margin-top:13px;position:relative;z-index:7}
-.tabs-on .card .carousel .cdots button{width:9px;height:9px;padding:0;border-radius:50%;border:1px solid #35e0ff;background:transparent;cursor:pointer}
-.tabs-on .card .carousel .cdots button.on{background:#35e0ff}
+.tabs-on .card .carousel .cdots{display:flex;gap:6px;justify-content:center;margin-top:14px;position:relative;z-index:7}
+.tabs-on .card .carousel .cdots button{width:26px;height:3px;padding:0;border-radius:3px;border:0;background:#22384a;cursor:pointer;transition:.3s}
+.tabs-on .card .carousel .cdots button.on{background:#35e0ff;width:34px;box-shadow:0 0 8px rgba(53,224,255,.6)}
 @media(max-width:860px){.tabs-on .card .carousel .slide{flex-basis:88%!important}.tabs-on .card .carousel .cnav{font-size:50px;width:28%}}
 @media(prefers-reduced-motion:reduce){.tabs-on .card .carousel .cnav{animation:none}.tabs-on .card .carousel .ctrack{transition:none}}
 @media(min-width:861px){#labs .cards.tabs-on > .card.on{min-height:540px;max-width:780px}}
@@ -1573,13 +1579,21 @@ c.insertBefore(nav,c.firstChild);c.classList.add('tabs-on');show(0);})();
   document.querySelectorAll('.carousel').forEach(function(car){
     var slides=[].slice.call(car.querySelectorAll('.slide'));
     if(!slides.length)return;
+    slides.forEach(function(s){
+      var img=s.querySelector('img'); if(!img||s.querySelector('.winframe'))return;
+      var ttl=img.getAttribute('alt')||'';
+      var fr=document.createElement('div');fr.className='winframe';
+      var bar=document.createElement('div');bar.className='winbar';
+      bar.innerHTML='<span class="wprompt">❯_</span><span class="wttl"></span><button class="wexp" type="button" title="크게 보기" aria-label="크게 보기">⤢</button>';
+      bar.querySelector('.wttl').textContent=ttl;
+      fr.appendChild(bar);fr.appendChild(img);s.appendChild(fr);
+    });
     var track=document.createElement('div');track.className='ctrack';
     slides.forEach(function(s){track.appendChild(s);});
     car.insertBefore(track,car.firstChild);
     var dots=car.querySelector('.cdots');
     var pv=car.querySelector('.cprev'),nx=car.querySelector('.cnext');
     if(pv)pv.textContent='«';if(nx)nx.textContent='»';
-    if(!car.querySelector('.czoom')){var z=document.createElement('div');z.className='czoom';z.textContent='🔍 사진을 누르면 크게';car.appendChild(z);}
     var idx=0;
     if(dots)slides.forEach(function(s,i){var d=document.createElement('button');d.type='button';d.setAttribute('aria-label',(i+1)+'번 사진');
       d.addEventListener('click',function(e){e.stopPropagation();go(i);});dots.appendChild(d);});
