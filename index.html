@@ -1489,14 +1489,6 @@ footer a{color:var(--signal);text-decoration:none}footer a:hover{text-decoration
             </div>
 
           </div>
-
-          <div class="stack-note reveal">BUILT WITH HTML · CSS · GITHUB PAGES · SUPABASE(패스키)</div>
-
-          <div class="process-foot reveal">
-            <p>이 페이지는 HTML과 CSS를 직접 작성해 만들었습니다.</p>
-            <button type="button" id="detailButton" aria-expanded="false" aria-controls="detail">만든 과정 자세히 보기</button>
-            <div id="detail" hidden>구조 작성 → 화면 구성 → 공개 → 브라우저 검사 → 문제 수정</div>
-          </div>
         </div>
       </section>
 
@@ -1504,8 +1496,9 @@ footer a{color:var(--signal);text-decoration:none}footer a:hover{text-decoration
 
 
     <footer>
-      <div class="container">
-        © 2026 SEO BOYEOB · <a href="https://github.com/sby1234-ai" target="_blank" rel="noopener">GitHub</a>
+      <div class="container" style="display:flex;justify-content:space-between;align-items:center;gap:14px;flex-wrap:wrap">
+        <span>© 2026 SEO BOYEOB · <a href="https://github.com/sby1234-ai" target="_blank" rel="noopener">GitHub</a></span>
+        <span class="stack-note" style="margin:0">BUILT WITH HTML · CSS · GITHUB PAGES · SUPABASE(패스키)</span>
       </div>
     </footer>
 
@@ -1514,20 +1507,6 @@ footer a{color:var(--signal);text-decoration:none}footer a:hover{text-decoration
 
   <script>
     document.documentElement.classList.add("js");
-
-    // 만든 과정 펼치기 · 접기
-    const button = document.getElementById("detailButton");
-    const detail = document.getElementById("detail");
-
-    button.addEventListener("click", function () {
-      const isHidden = detail.hidden;
-
-      detail.hidden = !isHidden;
-      button.setAttribute("aria-expanded", String(isHidden));
-      button.textContent = isHidden
-        ? "만든 과정 닫기"
-        : "만든 과정 자세히 보기";
-    });
 
     // 스크롤 등장 (움직임 줄이기를 켠 경우에는 바로 표시)
     const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
