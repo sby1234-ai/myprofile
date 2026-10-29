@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>경력기술서 · 서보엽</title><style>
+:root{--bg:#0b1220;--panel:#111a2e;--line:#25324d;--text:#e8eef9;--muted:#9db0cc;--teal:#2dd4bf;--orange:#fb923c}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--text);font-family:"Pretendard","Apple SD Gothic Neo","Malgun Gothic","Noto Sans KR",system-ui,sans-serif;line-height:1.8;font-size:17px;word-break:keep-all;overflow-wrap:break-word;-webkit-text-size-adjust:100%}
+a{color:var(--teal)}
+a:focus-visible{outline:3px solid var(--orange);outline-offset:3px;border-radius:4px}
+.wrap{max-width:760px;margin:0 auto;padding:0 16px}
+.top{padding:28px 0 8px}
+.top a{font-weight:700;text-decoration:none}
+h1{margin:12px 0 4px;font-size:clamp(28px,6vw,38px);letter-spacing:-.02em}
+.sub{color:var(--muted);margin:0 0 24px;font-size:15px}
+h2{margin:36px 0 12px;font-size:22px;padding-bottom:8px;border-bottom:1px solid var(--line)}
+.kv{display:grid;grid-template-columns:110px 1fr;gap:6px 14px;margin:0}
+.kv dt{color:var(--muted)} .kv dd{margin:0}
+@media(max-width:520px){.kv{grid-template-columns:1fr}.kv dd{margin-bottom:8px}}
+.item{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:16px 18px;margin:0 0 12px}
+.item .when{color:var(--orange);font-size:14px;font-weight:700;margin:0}
+.item .what{margin:2px 0 6px;font-weight:700}
+.item ul{margin:6px 0 0;padding-left:20px}
+.item li{margin:2px 0}
+.story p,.sec p{margin:0 0 18px}
+.chip{display:inline-block;padding:2px 10px;border-radius:999px;font-size:13px;font-weight:700;border:1px solid var(--teal);color:var(--teal)}
+.chip.b{border-color:var(--orange);color:var(--orange)} .chip.c{border-color:#a5b4fc;color:#a5b4fc}
+.row{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:18px;margin:0 0 14px}
+.row h3{margin:0 0 4px;font-size:19px}
+.row .meta{margin:0 0 10px;color:var(--muted);font-size:14px}
+.row dl{margin:0;display:grid;grid-template-columns:56px 1fr;gap:6px 12px}
+.row dt{color:var(--teal);font-weight:700} .row dd{margin:0}
+.foot{padding:36px 0 64px;color:var(--muted);font-size:14px}
+</style></head>
+<body><div class="wrap">
+<div class="top"><a href="../index.html">← 서보엽 소개 사이트로</a></div>
+<h1>경력기술서</h1><p class="sub">생산관리 경력과 IT 교육 과정의 과제를 능력별로 정리했습니다.</p>
+<p class="sub" style="margin-top:-8px">과제마다 해당하는 능력과 상황·행동·결과를 한 건씩 적었습니다. <span class="chip">자기조절력</span> <span class="chip b">대인관계력</span> <span class="chip c">자기동기력</span></p>
+<div class="row"><h3>신협 납품 물량 납기 만회</h3><p class="meta"><span class="chip b">대인관계력</span> · 생산관리 재직 중 (2020.12~2025.12)</p><dl><dt>상황</dt><dd>약 1만 장 규모의 전국 신협 납품 물량이 납기 2주 전인데도 외주 생산이 절반도 진행되지 않았습니다.</dd><dt>행동</dt><dd>외주 생산이 끝난 물량의 검수·포장을 사내 인력이 맡도록 바꾸고, 인근 공장과 컨테이너 임대 업체의 비용과 기간을 비교한 견적을 보고했습니다. 인력이 필요한 타 부서에는 협조를 요청해 후공정을 병행했습니다.</dd><dt>결과</dt><dd>납기를 지켰습니다. 문제를 보고할 때는 해결안과 근거를 함께 가져가는 습관이 생겼습니다.</dd></dl></div>
+<div class="row"><h3>Rocky Linux 서버 4대 구축 개인 과제</h3><p class="meta"><span class="chip">자기조절력</span> · 2026.08.26 첫 구축 → 재구축</p><dl><dt>상황</dt><dd>DNS, Web·DB·Samba·로그 분석, NFS, FTP 서버 4대를 하루 만에 동작시켰지만 각 설정이 왜 필요한지 설명하지 못했습니다.</dd><dt>행동</dt><dd>도메인과 IP 대역, 서버별 주소를 기준값으로 고정하고, 서버마다 사용한 명령어와 설정 파일 경로를 정리하며 처음부터 다시 구축했습니다.</dd><dt>결과</dt><dd>재구축한 서버의 각 서비스에 접속되는 것을 확인했고, &quot;동작한다&quot;가 아니라 &quot;설명할 수 있다&quot;를 완료 기준으로 삼게 되었습니다.</dd></dl></div>
+<div class="row"><h3>GNS3 ACL 통신 차단 원인 확인</h3><p class="meta"><span class="chip">자기조절력</span> · 교육 과정 중 (2026.08~)</p><dl><dt>상황</dt><dd>허용 규칙을 넣었는데도 통신이 막혔습니다.</dd><dt>행동</dt><dd>패킷이 규칙을 통과하는 과정을 다이어그램으로 그려, 규칙이 위에서 아래로 검사되고 처음 일치한 규칙이 적용되는 순서 때문에 결과가 달라진다는 것을 확인하고 순서를 바로잡았습니다.</dd><dt>결과</dt><dd>ping과 telnet 테스트로 정상 동작을 확인했습니다. 설정을 바꿀 때마다 현재 상태부터 확인하는 습관이 생겼습니다.</dd></dl></div>
+<div class="row"><h3>Full-Security Labs: 보안 인프라 통합 구축</h3><p class="meta"><span class="chip c">자기동기력</span> · 2026.09 (약 1주, 개인 과제)</p><dl><dt>상황</dt><dd>개별 실습에서 따로 구축한 네트워크·보안 기술이 하나의 망에서 실제로 연동되는지 확인해야 했습니다.</dd><dt>행동</dt><dd>진행계획서와 주소표를 먼저 문서화한 뒤, GNS3 토폴로지 하나에 VLAN, 라우팅, ASAv 방화벽(규칙 5개), 라우터 ACL 기반 IDS/IPS, 리눅스 서버, SIEM, Log Analyzer, pfSense OpenVPN 8개 기술을 통합하고 ping·telnet과 로그로 연동을 검증했습니다.</dd><dt>결과</dt><dd>라우터 ACL의 탐지 규칙 3개(ICMP·SSH·HTTP)에서 ICMP 5회, SSH 2회, HTTP 2회가 걸리는 것까지 확인했고, 결과보고서를 직접 작성했습니다. 팀이 구축한 XDR에는 제가 구축한 서버를 에이전트로 연동했습니다.</dd></dl></div>
+<div class="row"><h3>관제 에이전트 연결 복구</h3><p class="meta"><span class="chip">자기조절력</span> · 교육 과정 중 (2026.09~10)</p><dl><dt>상황</dt><dd>VM을 다시 켜자 주소가 바뀌어 OSSEC와 Zabbix 에이전트 연결이 끊겼습니다.</dd><dt>행동</dt><dd>매니저 IP를 다시 확인해 설정을 맞췄고, OSSEC는 키를 다시 등록했습니다.</dd><dt>결과</dt><dd>두 에이전트의 연결을 복구했고, 관제 대상은 고정 IP로 두는 것이 운영에 유리하다는 점을 체감했습니다.</dd></dl></div>
+<div class="row"><h3>AI 연결 단계 401 응답 원인 구분과 보고</h3><p class="meta"><span class="chip b">대인관계력</span> · 2026.10</p><dl><dt>상황</dt><dd>교육 과정에서 만든 보안 화면이 AI 연결 단계에서 막혔습니다.</dd><dt>행동</dt><dd>화면에 뜬 오류 상태와 네트워크 요청의 401 응답을 근거로 제 코드가 아니라 운영 쪽 서버 문제라고 구분해 담당 강사님께 보고했습니다.</dd><dt>결과</dt><dd>이후 해당 단계를 통과해 22단계까지 이어 만들었고, 새 빈 폴더에서 안내문 그대로 실행해 본 기록을 남긴 뒤 10월 28일 마무리 자료를 제출했습니다.</dd></dl></div>
+<div class="row"><h3>KISA 가이드 점검·조치 스크립트 (팀 프로젝트)</h3><p class="meta"><span class="chip b">대인관계력</span> · 교육 과정 중 (2026.09)</p><dl><dt>상황</dt><dd>서버 보안 점검 항목을 사람이 반복해서 확인해야 했고, 팀 프로젝트에서 파일·디렉토리 관리 20개 항목이 제 담당이었습니다.</dd><dt>행동</dt><dd>맡은 20개 항목을 점검하고 조치하는 Bash 스크립트를 작성했습니다.</dd><dt>결과</dt><dd>Rocky 서버에서 점검, 조치, 재점검 순서로 실행해 취약 1건을 0건으로 만들었습니다.</dd></dl></div>
+<div class="row"><h3>CTF 머신 10개 공략</h3><p class="meta"><span class="chip c">자기동기력</span> · 교육 과정 중 (2026.09~10)</p><dl><dt>상황</dt><dd>방어 설정을 점검하려면 공격자 관점도 익혀야 했습니다.</dd><dt>행동</dt><dd>VulnHub 계열 실습 머신을 직접 공략하며 명령어마다 왜 입력하는지와 출력의 의미를 정리했습니다.</dd><dt>결과</dt><dd>10개 머신을 완료했습니다.</dd></dl></div>
+<div class="row"><h3>환율 정보판 자동 수집과 두 AI 교차 검증</h3><p class="meta"><span class="chip c">자기동기력</span> · 2026.09 ~</p><dl><dt>상황</dt><dd>AI가 만든 기능을 믿을 수 있는지 확인하고, 외부 데이터가 끊겨도 화면이 멈추지 않게 해야 했습니다.</dd><dt>행동</dt><dd>Claude가 만든 기능을 Gemini가 이어받게 하고 미리 정한 검사 10개로 판정했으며, 응답 지연·인증 실패·접근 거절·호출 제한·오프라인·형식 변경 6가지 장애에서도 마지막 정상값이 남도록 만들었습니다.</dd><dt>결과</dt><dd>두 번 실패한 뒤 세 번째에 검사 10개를 모두 통과했고, 2026년 9월 10일부터 하루 한 번 자동으로 기록하도록 설정했습니다.</dd></dl></div>
+<div class="foot">연락: <a href="mailto:akrrkt56@gmail.com">akrrkt56@gmail.com</a></div>
+</div></body></html>
