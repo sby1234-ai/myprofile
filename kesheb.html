@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" href="data:,">
+  <title>케셰브 · 나만의 보안 관제 Agent</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700&family=Chakra+Petch:wght@500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="defense.css">
+</head>
+<body>
+<div class="grid-bg"></div>
+<div class="wrap">
+
+  <div class="top">
+    <a href="index.html#defense">← 포트폴리오로 돌아가기</a>
+    <a href="byteback.html">이전 방어전: BYTE BACK →</a>
+  </div>
+
+  <header class="hero">
+    <span class="eyebrow">DEFENSE 02 · 13~22단계 · 2026.10</span>
+    <h1>케셰브<br><span class="accent">나만의 보안 관제 Agent</span></h1>
+    <p class="lead">제로 트러스트 보안 Agent의 화면을 단계별로 설계하고 구현했습니다. 사용자·기기·세션 확인, 업무 앱 접근 판정, 접속 기록과 XDR 경보, AI 사건 설명, 조치 결과, 라이브러리 취약점 대조, 내 PC 관제 대시보드를 한 앱에 모았습니다.</p>
+    <div class="meta"><span>Node.js 로컬 앱</span><span>ZTNA 접근 판정</span><span>XDR 경보</span><span>AI 사건 설명</span><span>OSV 취약점 대조</span><span>PC 상태 모니터링</span></div>
+    <div class="links">
+      <a class="btn primary" href="https://github.com/sby1234-ai/kesheb-defense" target="_blank" rel="noopener">GitHub 저장소 ↗</a>
+      <a class="btn" href="https://github.com/sby1234-ai/kesheb-defense/blob/master/on-client/docs/RUN_GUIDE.md" target="_blank" rel="noopener">실행 안내 ↗</a>
+      <a class="btn" href="https://github.com/sby1234-ai/kesheb-defense/blob/master/on-client/docs/DEMO_AND_LIMITS.md" target="_blank" rel="noopener">시연 순서·한계 ↗</a>
+    </div>
+    <div class="stats">
+      <div class="stat"><div class="num">10 / 10</div><div class="lbl">13~22단계<br>모두 통과(포털 기록)</div></div>
+      <div class="stat"><div class="num">6</div><div class="lbl">내 PC 실측 항목<br>CPU·메모리·디스크 외</div></div>
+      <div class="stat"><div class="num">8 / 8</div><div class="lbl">18단계 AI 사건 설명<br>확인 항목 통과</div></div>
+      <div class="stat"><div class="num">6 / 6</div><div class="lbl">22단계 재현·인수인계<br>확인 항목 통과</div></div>
+    </div>
+  </header>
+
+  <section>
+    <h2><span class="idx">DASHBOARD</span>내 PC 관제 대시보드</h2>
+    <p class="sub">이 PC의 상태를 읽기만 하는 화면입니다(관리자 권한 없음, 설정 변경 없음). 아래는 2026-11-07 집 PC에서 실제로 켜서 조회한 값입니다. 회사 서버에 연결하지 않은 기본 실행이라 SDP는 "미연결"로 나오며, 이는 정상 표시입니다.</p>
+    <div class="shots">
+      <figure><div class="bar">종합 상태 · 사용률과 보호 설정</div><img src="img/kesheb-1.jpg" alt="내 PC 관제 대시보드 종합 상태 정상, CPU·메모리 카드" loading="lazy"><figcaption><b>판정 기준을 화면에 함께 적었습니다.</b> 예: CPU 사용률 85% 이상이면 주의. "정상"이어도 보호 전체가 안전하다는 뜻은 아니라고 밝힙니다.</figcaption></figure>
+      <figure><div class="bar">연결과 기록 · 출처 구분</div><img src="img/kesheb-2.jpg" alt="네트워크·Windows 기록·SDP 미연결 카드" loading="lazy"><figcaption><b>PC 실측과 SDP 연결 상태는 출처가 다르다고 나눠 표시합니다.</b> Windows 기록은 건수만 읽으며 침해 탐지 결과가 아니라고 적었습니다.</figcaption></figure>
+      <figure><div class="bar">추이와 기록 · 10초 자동 조회</div><img src="img/kesheb-3.jpg" alt="CPU·메모리 추이 그래프와 최근 기록 표" loading="lazy"><figcaption><b>조회할 때마다 기록이 쌓입니다.</b> 주의 기준선과 직전 측정 대비 변화량을 함께 보여 주고, 주의·확인 불가만 걸러 볼 수 있습니다.</figcaption></figure>
+      <figure><div class="bar">ALEPH 포털 · 22단계 판정 기록</div><img src="img/kesheb-judge22.jpg" alt="22단계 재현 가능한 최종 인수인계 통과, 확인 항목 6개 통과" loading="lazy"><figcaption><b>22단계 확인 항목 6개 통과.</b> 서버의 AI가 커밋 원문(코드·문서·재현 기록)을 읽고 서로 맞는지 판정한 기록입니다.</figcaption></figure>
+    </div>
+  </section>
+
+  <section>
+    <h2><span class="idx">STAGES</span>단계별로 만든 것</h2>
+    <p class="sub">판정은 서버의 AI가 제출한 커밋의 코드를 읽고 항목별로 확인하는 방식입니다. 코드를 실행하거나 회사 서버에 실제로 연결해 본 판정은 아닙니다.</p>
+    <div class="tablewrap">
+      <table>
+        <thead><tr><th>단계</th><th>내용</th><th>판정</th><th>커밋</th></tr></thead>
+        <tbody>
+          <tr><td>13</td><td>세 메뉴, 로그인·기기·세션 표시</td><td><span class="ok">통과</span></td><td><a href="https://github.com/sby1234-ai/kesheb-defense/commit/da98e78" target="_blank" rel="noopener"><code>da98e78</code></a></td></tr>
+          <tr><td>14</td><td>업무 앱 접근 판정 — 판정이 불확실하거나 실패하면 허용으로 보이지 않게</td><td><span class="ok">통과</span></td><td><a href="https://github.com/sby1234-ai/kesheb-defense/commit/c110d20" target="_blank" rel="noopener"><code>c110d20</code></a></td></tr>
+          <tr><td>15</td><td>접속 기록과 XDR 경보 목록·필터·상세</td><td><span class="ok">통과</span></td><td><a href="https://github.com/sby1234-ai/kesheb-defense/commit/8be2798" target="_blank" rel="noopener"><code>8be2798</code></a></td></tr>
+          <tr><td>16</td><td>알림·빈 화면·오류 안내·도움정보 복사</td><td><span class="ok">통과</span></td><td><a href="https://github.com/sby1234-ai/kesheb-defense/commit/9959b0c" target="_blank" rel="noopener"><code>9959b0c</code></a></td></tr>
+          <tr><td>17</td><td>AI 연결 상태 표시</td><td><span class="ok">통과</span></td><td><a href="https://github.com/sby1234-ai/kesheb-defense/commit/4927d0e" target="_blank" rel="noopener"><code>4927d0e</code></a></td></tr>
+          <tr><td>18</td><td>근거가 있는 AI 사건 설명 — 근거가 없거나 다른 사건이면 설명을 받지 않음</td><td><span class="ok">통과 (8항목)</span></td><td><a href="https://github.com/sby1234-ai/kesheb-defense/commit/57e18c4" target="_blank" rel="noopener"><code>57e18c4</code></a></td></tr>
+          <tr><td>19</td><td>AI 조치 제안과 서버 처리 결과를 구분해 표시</td><td><span class="ok">통과</span></td><td><a href="https://github.com/sby1234-ai/kesheb-defense/commit/2486843" target="_blank" rel="noopener"><code>2486843</code></a></td></tr>
+          <tr><td>20</td><td>사용 라이브러리의 정확한 버전으로 취약점 정보(OSV) 대조</td><td><span class="ok">통과</span></td><td><a href="https://github.com/sby1234-ai/kesheb-defense/commit/deaa9cf" target="_blank" rel="noopener"><code>deaa9cf</code></a></td></tr>
+          <tr><td>21</td><td>다른 사람이 이해할 수 있는 학생 문서</td><td><span class="ok">통과</span></td><td><a href="https://github.com/sby1234-ai/kesheb-defense/commit/c31ed8b" target="_blank" rel="noopener"><code>c31ed8b</code></a></td></tr>
+          <tr><td>22</td><td>재현 가능한 최종 인수인계(재현 기록·백업 계획)</td><td><span class="ok">통과 (6항목)</span></td><td><a href="https://github.com/sby1234-ai/kesheb-defense/commit/75e0719" target="_blank" rel="noopener"><code>75e0719</code></a></td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="shots one" style="margin:18px auto 0;max-width:560px">
+      <figure><div class="bar">ALEPH 포털 · 18단계 판정 기록</div><img src="img/kesheb-judge18.jpg" alt="18단계 근거가 있는 AI 사건 설명 통과, 확인 항목 8개 통과" loading="lazy"><figcaption><b>18단계 확인 항목 8개 통과.</b> 근거 연결, 근거 부족·알 수 없는 근거 처리, 다른 사건 설명 거부, 제안을 실행으로 착각하지 않기 등입니다. 사진을 누르면 크게 보입니다.</figcaption></figure>
+    </div>
+  </section>
+
+  <section>
+    <h2><span class="idx">PRINCIPLES</span>상태를 부풀리지 않는 세 가지 원칙</h2>
+    <div class="rules">
+      <div class="rule"><b>확인 불가 ≠ 정상</b><p>값을 읽지 못한 항목은 정상으로 보이지 않게 "확인 불가"로 따로 표시하고, 다음에 할 일을 함께 적습니다.</p></div>
+      <div class="rule"><b>접수 ≠ 성공</b><p>조치 요청이 접수됐다는 응답만으로 성공이라 하지 않습니다. 서버가 실제 효과가 적용됐다고 알려 줄 때만 성공으로 표시합니다.</p></div>
+      <div class="rule"><b>조회 실패 ≠ 취약점 없음</b><p>취약점 정보를 조회하지 못했거나 아직 조회하지 않았다면 "알려진 항목 없음"으로 표시하지 않습니다.</p></div>
+    </div>
+  </section>
+
+  <section>
+    <h2><span class="idx">TROUBLESHOOTING</span>막혔던 곳과 해결</h2>
+
+    <div class="case">
+      <span class="tag">17단계 · AI 연결</span>
+      <h3>계정 연결 실패를 "내 코드 문제가 아님"으로 분리해 보고</h3>
+      <dl class="star">
+        <dt>상황</dt><dd>AI 게이트에 계정을 연결하는 단계에서, 다시 로그인하고 다른 브라우저로 바꿔도 연결이 계속 막혔습니다.</dd>
+        <dt>확인</dt><dd>앱 화면에 나온 상태 코드와 브라우저 네트워크 요청을 확인했더니, AI 게이트 서버가 <b>401(인증 실패)</b>로 응답하고 있었습니다. 제가 고칠 수 있는 학생 코드가 아니라 운영 측 서버 인증 단계에서 막힌 것이었습니다.</dd>
+        <dt>행동</dt><dd>추측으로 코드를 바꾸지 않고, 상태 코드와 401 응답을 근거로 붙여 담당 강사에게 서버 쪽 문제로 보고했습니다.</dd>
+        <dt>결과</dt><dd>17단계 통과. 같은 코드인데 판정 항목 하나가 통과와 확인 불가 사이를 오간 것도 관찰해, 판정이 매번 같지는 않다는 점을 기록했습니다.</dd>
+      </dl>
+    </div>
+
+    <div class="case">
+      <span class="tag">22단계 · 재현 가능한 인수인계</span>
+      <h3>문서와 저장소가 어긋난 세 곳을 찾아 맞춤</h3>
+      <dl class="star">
+        <dt>상황</dt><dd>첫 제출에서 세 항목이 미충족이었습니다. 모두 "문서에 적은 것과 저장소에 실제로 올라간 것이 다르다"는 문제였습니다.</dd>
+        <dt>원인·해결</dt><dd><b>① 버전 불일치:</b> 문서 버전을 PC 작업본 기준으로 적어, 커밋된 설정 파일과 달랐습니다 → 커밋 기준으로 정정.<br><b>② 백업 계획 없음:</b> 백업 명령에 대상 목록이 빠져 있었습니다 → 백업 문서에 전체 경로와 사전 확인 절차 추가.<br><b>③ 파일 지문 불일치:</b> Windows 작업본(CRLF 줄바꿈) 기준으로 해시를 적어 저장소(LF)와 달랐습니다 → Git 지문과 LF 기준 해시를 함께 기록.</dd>
+        <dt>결과</dt><dd>새 빈 폴더에 저장소를 받아 실행 → 종료 → 재실행이 되는 것을 로그로 남기고 통과했습니다. 21단계도 문서의 지원 버전 표(Node 24 미만 미지원)가 실제 실행 도구(22~24 허용)와 달라 한 번 막혔고, 도구 기준으로 고쳐 통과했습니다.</dd>
+      </dl>
+    </div>
+  </section>
+
+  <section>
+    <h2><span class="idx">SCOPE</span>어디까지 만들었나</h2>
+    <p class="sub">완성된 보안 제품이 아니라, 관제 화면과 판정 표시를 단계별로 구현한 과제입니다.</p>
+    <div class="scope">
+      <div class="yes"><h3>만든 것</h3><ul>
+        <li>저장된 경보와 접속 기록을 내 권한 범위에서 보여 주는 화면</li>
+        <li>업무 앱 접근 판정과 그 이유 표시</li>
+        <li>근거가 연결된 AI 사건 설명, 사람이 확인하는 조치 제안과 서버 처리 결과</li>
+        <li>라이브러리 취약점 대조, 내 PC 상태 대시보드</li>
+        <li>실행 안내·학생 설명서·재현 기록·백업 계획 문서</li>
+      </ul></div>
+      <div class="no"><h3>만들지 않은 것</h3><ul>
+        <li>실시간 탐지 엔진, 실제 차단·조치를 실행하는 장치</li>
+        <li>회사 서버와의 실제 연결 — 접근 제어 서버·연결 어댑터·개인 인증서가 필요하며 과정에서 발급하지 않음</li>
+        <li>설치 프로그램 포장(이번 과정에서 하지 않음)</li>
+      </ul></div>
+    </div>
+    <p class="note">작업 방식: 코드는 AI(Claude)로 작성했습니다. 저는 단계마다 요구 조건을 정리하고, 정해진 학생 영역(student 폴더)만 고치도록 범위를 지키고, 화면과 네트워크 응답으로 동작을 확인하고, 판정 결과를 보고 무엇을 고칠지 판단했습니다. 마무리 자료는 2026-10-28에 제출했습니다.</p>
+  </section>
+
+  <footer>
+    <span>© 2026 SEO BOYEOB</span>
+    <a href="index.html#defense">포트폴리오로 돌아가기 ↑</a>
+  </footer>
+</div>
+<div class="lb" id="lb"><img alt=""></div>
+<script>
+(function(){var lb=document.getElementById('lb'),im=lb.querySelector('img');
+document.addEventListener('click',function(e){var t=e.target;if(t.tagName==='IMG'&&t.closest('figure')){im.src=t.src;im.alt=t.alt;lb.classList.add('on');}else if(lb.classList.contains('on')){lb.classList.remove('on');}});
+document.addEventListener('keydown',function(e){if(e.key==='Escape')lb.classList.remove('on');});})();
+</script>
+</body>
+</html>

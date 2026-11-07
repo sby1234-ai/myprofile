@@ -1112,6 +1112,32 @@ footer a{color:var(--signal);text-decoration:none}footer a:hover{text-decoration
 @media(prefers-reduced-motion:reduce){.tabs-on .card .carousel .cnav{animation:none}.tabs-on .card .carousel .ctrack{transition:none}}
 @media(min-width:861px){#labs .cards.tabs-on > .card.on{min-height:540px;max-width:780px}}
 </style>
+<style id="defense-css">
+/* ── 보안 방어전 ── */
+#defense .dcards{display:grid;grid-template-columns:1fr 1fr;gap:22px;align-items:start}
+#defense .dcard{background:#071a2b;border:1px solid #12384f;border-radius:2px;overflow:hidden;display:flex;flex-direction:column;transition:border-color .2s ease,transform .2s ease}
+#defense .dcard:hover{border-color:#35e0ff;transform:translateY(-2px)}
+#defense .dthumb{display:block;height:250px;overflow:hidden;border-bottom:1px solid #12384f;background:#05070a;position:relative}
+#defense .dthumb img{display:block;width:100%;height:100%;object-fit:cover;object-position:top center;transition:transform .4s ease}
+#defense .dcard:hover .dthumb img{transform:scale(1.03)}
+#defense .dthumb::after{content:"";position:absolute;left:0;right:0;bottom:0;height:60px;background:linear-gradient(transparent,#071a2b)}
+#defense .dbody{padding:22px 24px 24px}
+#defense .dtag{font-family:var(--mono);font-size:12px;letter-spacing:.06em;color:var(--amber)}
+#defense h3{font-size:22px;margin:4px 0 2px;letter-spacing:-.01em}
+#defense .sub{margin:0 0 14px;font-family:var(--mono);font-size:12px;letter-spacing:.04em;color:#9fe9ff}
+#defense .sum{margin:0 0 14px;font-size:14.5px;line-height:1.7;color:var(--text);word-break:keep-all}
+#defense .dlist{list-style:none;margin:0 0 16px;padding:12px 0 0;border-top:1px dashed #12384f}
+#defense .dlist li{font-size:13.5px;color:var(--muted);line-height:1.65;margin:0 0 8px;word-break:keep-all}
+#defense .dlist b{display:inline-block;min-width:3.6em;margin-right:6px;font-size:12px;color:var(--signal);font-weight:600}
+#defense .dlinks{display:flex;gap:16px;flex-wrap:wrap;align-items:center;font-family:var(--mono);font-size:13px}
+#defense .dlinks a{color:var(--signal);text-decoration:none;border-bottom:1px solid transparent}
+#defense .dlinks a:hover,#defense .dlinks a:focus-visible{border-bottom-color:var(--signal)}
+#defense .dlinks a.dmain{padding:8px 16px;background:#35e0ff;color:#04101b;border:0;border-radius:2px;font-weight:700}
+#defense .dlinks a.dmain:hover{filter:brightness(1.08)}
+#defense .dnote{max-width:70ch;margin:26px auto 0;text-align:center;font-size:13.5px;color:var(--dim);word-break:keep-all}
+@media(max-width:860px){#defense .dcards{grid-template-columns:1fr}#defense .dthumb{height:210px}}
+@media(prefers-reduced-motion:reduce){#defense .dcard:hover,#defense .dcard:hover .dthumb img{transform:none}}
+</style>
 </head>
 
 <body>
@@ -1131,6 +1157,7 @@ footer a{color:var(--signal);text-decoration:none}footer a:hover{text-decoration
           <div class="nav-links">
             <a href="#about">소개</a>
             <a href="#labs">실습</a>
+            <a href="#defense">방어전</a>
             <a href="#skills">기술</a>
             <a href="#projects">프로젝트</a>
           </div>
@@ -1297,6 +1324,71 @@ footer a{color:var(--signal);text-decoration:none}footer a:hover{text-decoration
             </article>
 
           </div>
+        </div>
+      </section>
+
+      <!-- 보안 방어전 -->
+      <section class="section" id="defense">
+        <div class="container">
+
+          <div class="section-head reveal">
+            <span class="idx">Defense</span>
+            <h2>보안 방어전</h2>
+          </div>
+
+          <p class="proj-lead reveal">
+            교육 과정의 단계별 방어 과제입니다. 단계마다 포털의 판정을 받아 모두 통과했고,
+            판정 기록과 실제로 켠 화면을 함께 정리했습니다.
+          </p>
+
+          <div class="dcards">
+
+            <article class="dcard reveal">
+              <a class="dthumb" href="byteback.html" aria-label="BYTE BACK 방어전 자세히 보기">
+                <img src="img/byteback-score3.jpg" alt="ALEPH 포털 3차 침공 판정 기록 — 700/700점" loading="lazy">
+              </a>
+              <div class="dbody">
+                <span class="dtag">DEFENSE 01 · 1~12단계</span>
+                <h3>BYTE BACK 방어전</h3>
+                <p class="sub">점령된 웹 자료실 탈환 · Vercel · Supabase</p>
+                <div class="chips"><span class="chip">12단계 모두 제때 통과</span><span class="chip">1,200 / 1,200점</span><span class="chip">평가 공격 41종 차단</span><span class="chip">XDR 보너스 6/6</span></div>
+                <p class="sum">외부에 노출된 자료실을 접근 통제 → 기기 승인·이상 접속 판정 → 탐지·권한 회수 → 백업 복원 → 관제 화면 순서로 한 겹씩 다시 지켰습니다.</p>
+                <ul class="dlist">
+                  <li><b>막힌 곳</b>복원 결과 불일치 — 복원 전후를 다시 조회해 번호·소유자·내용 지문을 대조하게 바꿔 해결</li>
+                  <li><b>원칙</b>화면 문구가 아니라 서버 기록으로 증명하고, 확인하지 못한 항목은 "미실행"으로 구분</li>
+                </ul>
+                <div class="dlinks">
+                  <a class="dmain" href="byteback.html">자세히 보기 →</a>
+                  <a href="https://choi-bujang-secret-vault-eight-psi.vercel.app/" target="_blank" rel="noopener">배포 사이트</a>
+                  <a href="https://github.com/sby1234-ai/choi-bujang-secret-vault" target="_blank" rel="noopener">소스</a>
+                </div>
+              </div>
+            </article>
+
+            <article class="dcard reveal">
+              <a class="dthumb" href="kesheb.html" aria-label="케셰브 자세히 보기">
+                <img src="img/kesheb-1.jpg" alt="케셰브 내 PC 관제 대시보드 — 종합 상태 정상" loading="lazy">
+              </a>
+              <div class="dbody">
+                <span class="dtag">DEFENSE 02 · 13~22단계</span>
+                <h3>케셰브 · 보안 관제 Agent</h3>
+                <p class="sub">ZTNA 접근 판정 · XDR 경보 · AI 사건 설명</p>
+                <div class="chips"><span class="chip">13~22단계 10/10 통과</span><span class="chip">내 PC 실측 6항목</span><span class="chip">재현 기록 완료</span></div>
+                <p class="sum">로그인·기기·세션 확인, 업무 앱 접근 판정, 경보와 AI 사건 설명, 조치 결과, 라이브러리 취약점 대조, 내 PC 관제 대시보드를 한 앱으로 만들었습니다.</p>
+                <ul class="dlist">
+                  <li><b>막힌 곳</b>AI 연결 실패 — 화면 상태 코드와 네트워크 401 응답으로 서버 측 문제임을 분리해 근거와 함께 보고</li>
+                  <li><b>범위</b>경보 표시·AI 설명·조치 결과 확인까지 구현. 실시간 탐지 엔진과 실제 조치 실행은 만들지 않음</li>
+                </ul>
+                <div class="dlinks">
+                  <a class="dmain" href="kesheb.html">자세히 보기 →</a>
+                  <a href="https://github.com/sby1234-ai/kesheb-defense" target="_blank" rel="noopener">소스</a>
+                </div>
+              </div>
+            </article>
+
+          </div>
+
+          <p class="dnote reveal">코드는 AI(Claude)로 작성했고, 저는 단계별 요구 조건 정리, 판정 결과·서버 로그·네트워크 응답 확인, 원인 분리와 재제출 판단을 맡았습니다.</p>
         </div>
       </section>
 
