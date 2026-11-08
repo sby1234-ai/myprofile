@@ -224,91 +224,6 @@
     deferred.userChoice.finally(function () { deferred = null; e.target.hidden = true; });
   });
 
-  // ---- 2024년 탐지 데이터 분석: 그래프와 날짜 고르기
-  var WEEK = ["일", "월", "화", "수", "목", "금", "토"];
-  var P = window.BT_PAPER;
-  var bars = [];
-  function inWindow(d) {
-    for (var i = 0; i < P.windows.length; i++) {
-      var r = P.windows[i].range.split("~");
-      if (d >= r[0] && d <= r[1]) return P.windows[i].name;
-    }
-    return "";
-  }
-  function drawChart() {
-    var NS = "http://www.w3.org/2000/svg";
-    // 화면 폭에 맞춰 실제 픽셀 크기로 그려 글자가 작아지지 않게 합니다
-    var box = $("chart");
-    box.textContent = ""; bars = [];
-    var W = Math.max(280, Math.round(box.clientWidth || 600)), H = W < 480 ? 190 : 220, L = 40, R = 6, T = 24, B = 24;
-    var narrow = W < 520;
-    var max = 0;
-    P.daily.forEach(function (d) { if (d[1] > max) max = d[1]; });
-    var yMax = Math.ceil(max / 200) * 200;
-    var bw = (W - L - R) / P.daily.length;
-    var y = function (v) { return T + (H - T - B) * (1 - v / yMax); };
-    var svg = document.createElementNS(NS, "svg");
-    svg.setAttribute("viewBox", "0 0 " + W + " " + H);
-    svg.setAttribute("width", W); svg.setAttribute("height", H);
-    function add(tag, attrs, text) {
-      var e = document.createElementNS(NS, tag);
-      for (var k in attrs) e.setAttribute(k, attrs[k]);
-      if (text != null) e.textContent = text;
-      svg.appendChild(e); return e;
-    }
-    var idx = {};
-    P.daily.forEach(function (d, i) { idx[d[0]] = i; });
-    P.windows.forEach(function (w) {
-      var r = w.range.split("~"), a = idx[r[0]], b = idx[r[1]];
-      add("rect", { "class": "w", x: L + a * bw, y: T, width: (b - a + 1) * bw, height: H - T - B });
-      add("text", { "class": "wl", x: L + a * bw, y: T - 8 }, w.name + " 직전");
-    });
-    [0, yMax / 2, yMax].forEach(function (v) {
-      add("text", { x: L - 6, y: y(v) + 4, "text-anchor": "end" }, v.toLocaleString("ko-KR"));
-    });
-    P.daily.forEach(function (d, i) {
-      bars.push(add("rect", { "class": "b", x: L + i * bw, y: y(d[1]), width: Math.max(bw - 0.4, 0.8), height: y(0) - y(d[1]) }));
-    });
-    add("line", { "class": "m", x1: L, x2: W - R, y1: y(P.base_mean), y2: y(P.base_mean) });
-    for (var m = 1; m <= 12; m += narrow ? 2 : 1) {
-      var key = "2024-" + (m < 10 ? "0" : "") + m + "-01";
-      add("text", { x: L + idx[key] * bw, y: H - 6 }, m + "월");
-    }
-    box.appendChild(svg);
-  }
-  function readout() {
-    var v = $("day").value, out = $("readout");
-    var i = -1;
-    for (var k = 0; k < P.daily.length; k++) if (P.daily[k][0] === v) { i = k; break; }
-    bars.forEach(function (b, k) { b.setAttribute("class", k === i ? "b sel" : "b"); });
-    if (i < 0) { out.textContent = "2024년 1월 1일부터 12월 31일 사이의 날짜를 골라 주세요."; return; }
-    var n = P.daily[i][1], dt = new Date(v + "T00:00:00");
-    var ratio = (n / P.base_mean).toFixed(2);
-    var w = inWindow(v);
-    out.textContent = (dt.getMonth() + 1) + "월 " + dt.getDate() + "일(" + WEEK[dt.getDay()] + ")에는 피싱 주소 " +
-      n.toLocaleString("ko-KR") + "개가 탐지됐습니다. 평소 하루 평균 " + P.base_mean + "개의 " + ratio + "배입니다." +
-      (w ? " 이날은 " + w + " 연휴 직전 2주에 들어갑니다." : "");
-  }
-  function table() {
-    var tb = $("win-table");
-    var tr = el("tr");
-    ["평소 (" + P.n_base_days + "일)", P.base_mean.toFixed(1) + "개", "1.00배", "—"].forEach(function (t) { tr.appendChild(el("td", null, t)); });
-    tb.appendChild(tr);
-    P.windows.forEach(function (w) {
-      var r = el("tr");
-      var a = w.range.split("~").map(function (s) { return Number(s.slice(5, 7)) + "/" + Number(s.slice(8, 10)); });
-      [w.name + " 직전 2주 (" + a[0] + "~" + a[1] + ")", w.mean.toFixed(1) + "개", w.ratio.toFixed(2) + "배", w.rank + "위"]
-        .forEach(function (t) { r.appendChild(el("td", null, t)); });
-      tb.appendChild(r);
-    });
-    $("base-mean").textContent = P.base_mean.toFixed(1);
-  }
-  var resizeTimer = null;
-  window.addEventListener("resize", function () {
-    clearTimeout(resizeTimer);
-    resizeTimer = setTimeout(function () { try { drawChart(); readout(); } catch (e) {} }, 150);
-  });
-
   // ---- 시작
   try {
     db = BTChecker.createDb(window.BT_LOOKUP);
@@ -316,8 +231,6 @@
   } catch (e) {
     setStatus("피싱 주소 목록을 불러오지 못했습니다. 페이지를 새로 고치거나, 묶음은 README대로 실행해 주세요.");
   }
-  try { drawChart(); table(); readout(); $("day").addEventListener("input", readout); $("day").addEventListener("change", readout); }
-  catch (e) { $("readout").textContent = "분석 결과를 불러오지 못했습니다."; }
   if (db && !fromShare()) check(SAMPLE, true);
 
   if ("serviceWorker" in navigator && (location.protocol === "https:" || /^(localhost|127\.0\.0\.1)$/.test(location.hostname))) {

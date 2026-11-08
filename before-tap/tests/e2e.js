@@ -67,19 +67,12 @@ const check = (n, c, x) => { console.log((c ? 'PASS ' : 'FAIL ') + n + (x ? '  �
   check('공유하기 → 바로 판정', (await p.getAttribute('.result', 'class')).includes('match'));
   check('공유 후 주소창에서 링크 지움', !p.url().includes('text='), p.url());
 
-  // 할 일 3: 날짜 고르기
-  await p.fill('#day', '2024-02-01'); await p.dispatchEvent('#day', 'change');
-  const ro = await p.textContent('#readout');
-  check('날짜 → 탐지 수와 평소 대비', /피싱 주소 [\d,]+개/.test(ro) && ro.includes('배입니다') && ro.includes('설 연휴 직전'), ro);
-  await p.fill('#day', ''); await p.dispatchEvent('#day', 'change');
-  check('빈 날짜에도 멈추지 않음', (await p.textContent('#readout')).includes('날짜를 골라'));
-  check('표: 평소·설·추석 3줄', (await p.$$('#win-table tr')).length === 3);
+  // 날짜 분석은 한 줄 안내로만
+  check('날짜 안내 한 줄(그래프·표 없음)', (await p.textContent('#paper')).includes('293.7') && (await p.$$('#paper svg, #paper table, #day')).length === 0);
 
   // 휴대폰 화면 넘침
   const ov = await p.evaluate(() => document.documentElement.scrollWidth - window.innerWidth);
   check('390px 화면 가로 넘침 없음', ov <= 0, String(ov));
-  await p.evaluate(() => document.getElementById('paper').scrollIntoView());
-  await p.screenshot({ path: SHOT + '/e2e_paper.png' });
 
   // 오프라인
   await p.goto(BASE); await p.evaluate(() => navigator.serviceWorker && navigator.serviceWorker.ready);
