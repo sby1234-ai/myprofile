@@ -1,5 +1,5 @@
 // 누르기 전에 — 오프라인에서도 열리도록 앱 파일을 기기에 저장해 둡니다. 입력한 내용은 저장하지 않습니다.
-const CACHE = "before-tap-v4";
+const CACHE = "before-tap-v5";
 const FILES = ["./", "index.html", "style.css", "app.js", "checker.js", "data/lookup.js", "data/paper.js",
   "manifest.webmanifest", "fonts/seal-subset.woff", "icons/icon-192.png", "icons/icon-512.png", "icons/icon-maskable-512.png"];
 self.addEventListener("install", (e) => {

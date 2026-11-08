@@ -16,8 +16,8 @@
 <div class="page">
   <header class="top">
     <h1>누르기 전에</h1>
-    <p class="thesis">이 앱은 문자나 메신저로 링크를 받은 사람이 누르기 전에, 2024년 KISA가 탐지한 피싱 주소 131,752건과 대조해 위험 신호를 알려 줍니다.</p>
-    <a class="paper-chip" href="#paper">논문 「명절 연휴 직전 피싱사이트 탐지량의 변화」의 결과로 만들었습니다</a>
+    <p class="thesis">문자나 메신저로 받은 링크를 누르기 전에, KISA가 2024년에 탐지한 피싱 주소 131,752건과 대조해 위험 신호를 알려 주는 앱입니다.</p>
+    <a class="paper-chip" href="#paper">공공데이터로 본 2024년 피싱 탐지 현황 보기</a>
   </header>
 
   <section class="compose" aria-label="받은 문자 넣기">
@@ -30,6 +30,7 @@
       <button type="button" id="btn-check" class="go" disabled>확인하기</button>
     </div>
     <p class="status" id="status" role="status"></p>
+    <p class="limit">알아 두세요: 목록과 대조하는 방식이라 실시간 탐지는 아닙니다. 2024년 목록이라 그 뒤에 새로 생긴 피싱 주소는 확인하지 못합니다.</p>
     <p class="privacy">입력한 내용은 이 기기 안에서만 확인하고 어디에도 보내지 않습니다.</p>
     <p class="tapped"><b>이미 눌렀다면</b> 열린 화면에 개인정보나 인증번호를 넣지 말고, 설치된 앱이 있으면 지운 뒤 국번 없이 <b>118</b>(KISA 상담센터)에 상담하세요.</p>
     <p class="share-tip" id="way-share">안드로이드는 이 앱을 홈 화면에 추가하면 문자에서 링크를 길게 눌러 <b>공유 → 누르기 전에</b>로 바로 확인할 수 있습니다. <button type="button" id="btn-install" class="inline" hidden>홈 화면에 추가</button></p>
@@ -53,7 +54,7 @@
   </section>
 
   <section class="paper" id="paper" aria-labelledby="paper-h">
-    <h2 id="paper-h">피싱은 날짜를 가리지 않습니다</h2>
+    <h2 id="paper-h">피싱은 날짜를 가리지 않습니다 <small>2024년 KISA 탐지 데이터 분석</small></h2>
     <p class="lead">2024년 KISA 자료를 보면 366일 하루도 빠짐없이 피싱 주소가 탐지됐고, 평소에는 하루 평균 293.7개씩 새로 나왔습니다. "명절 직전이 특히 위험하다"는 경고도 자료에서는 확인되지 않았습니다. 날짜를 골라 그날 탐지된 수를 평소와 비교해 보세요.</p>
     <figure class="chart">
       <div id="chart" class="chart-box" role="img" aria-label="2024년 일별 피싱 주소 탐지 수. 366일 모두 탐지됐고 설과 추석 직전 2주는 평소보다 낮습니다."></div>
@@ -77,7 +78,7 @@
   <footer class="foot">
     <p class="call">이미 눌렀거나 정보를 입력했다면 국번 없이 <b>118</b>(KISA 상담센터)에 상담하세요.</p>
     <p>자료: 한국인터넷진흥원_피싱사이트_20241231(공공데이터포털). 2024년에 탐지된 주소라 그 뒤에 새로 생긴 주소는 들어 있지 않습니다. 결과는 참고용입니다.</p>
-    <p>논문과 분석 코드: <a href="https://github.com/sby1234-ai/t10-holiday-phishing">t10-holiday-phishing</a> · 만든 사람: <a href="https://sby1234-ai.github.io/myprofile/">서보엽</a></p>
+    <p>분석 코드: <a href="https://github.com/sby1234-ai/t10-holiday-phishing">t10-holiday-phishing</a> · 만든 사람: <a href="https://sby1234-ai.github.io/myprofile/">서보엽</a></p>
   </footer>
 </div>
 
