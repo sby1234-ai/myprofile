@@ -6,7 +6,8 @@
   var $ = function (id) { return document.getElementById(id); };
   var input = $("input"), btnCheck = $("btn-check"), statusEl = $("status");
   var bubble = $("bubble"), results = $("results"), threadLabel = $("thread-label");
-  var db = null;
+  var summary = $("summary"), after = $("after");
+  var db = null, last = null;
 
   var SAMPLE = "[Web발신] 고객님 택배가 주소 불일치로 보관 중입니다. 주소 확인: http://xgo.kr/5ni\n" +
     "[국외발신] 모바일 청첩장이 도착했어요 https://bit.ly/3WeddingK\n" +
@@ -69,12 +70,46 @@
       r.reasons.forEach(function (x) { ul.appendChild(el("li", x.level, x.text)); });
       if (ul.childNodes.length) card.appendChild(ul);
       card.appendChild(el("p", "todo", c.todo));
+      if (r.verdict === "match") {
+        var call = el("a", "tel-btn", "이미 눌렀다면 118에 전화하기");
+        call.href = "tel:118";
+        card.appendChild(call);
+      }
       results.appendChild(card);
     });
     var msg = [];
     if (notes.indexOf("long") >= 0) msg.push("글이 너무 길어 앞부분 " + BTChecker.MAX_INPUT.toLocaleString("ko-KR") + "자만 확인했습니다.");
     if (notes.indexOf("many") >= 0) msg.push("링크가 많아 앞의 " + BTChecker.MAX_LINKS + "개만 확인했습니다.");
     if (msg.length) results.appendChild(el("p", "note", msg.join(" ")));
+  }
+
+
+  // 결과 맨 위 한 줄 요약: 가장 위험한 판정을 먼저 크게 보여 줍니다
+  function drawSummary(list, isSample) {
+    var n = { match: 0, caution: 0, unlisted: 0, invalid: 0 };
+    list.forEach(function (r) { n[r.verdict]++; });
+    summary.className = "summary";
+    summary.textContent = "";
+    if (!list.length) { summary.hidden = true; return n; }
+    var kind, head, body;
+    if (n.match) {
+      kind = "match"; head = "위험한 링크가 " + n.match + "개 있습니다";
+      body = "누르지 말고 문자를 지우세요. 이미 눌렀다면 개인정보를 넣지 말고 118에 상담하세요.";
+    } else if (n.caution) {
+      kind = "caution"; head = "주의할 링크가 " + n.caution + "개 있습니다";
+      body = "목록에는 없지만 피싱 주소에서 자주 보인 특징이 있습니다. 보낸 사람에게 다른 방법으로 먼저 확인하세요.";
+    } else {
+      kind = "unlisted"; head = "목록에 있는 링크는 없습니다";
+      body = "안전하다는 뜻은 아닙니다. 모르는 번호에서 왔다면 누르지 마세요.";
+    }
+    summary.classList.add(kind);
+    if (isSample) summary.appendChild(el("span", "tag", "예시"));
+    summary.appendChild(el("strong", null, head));
+    summary.appendChild(el("span", "body", body));
+    var counts = "링크 " + list.length + "개 · 위험 " + n.match + " · 주의 " + n.caution + " · 미확인 " + (n.unlisted + n.invalid);
+    summary.appendChild(el("span", "counts", counts));
+    summary.hidden = false;
+    return n;
   }
 
   function check(text, isSample) {
@@ -86,11 +121,11 @@
       drawBubble(shown, list);
       drawResults(list, ex.notes);
       threadLabel.textContent = isSample ? "예시: 이런 문자를 받았다면" : "받은 문자";
+      drawSummary(list, isSample);
+      last = isSample ? null : list;
+      after.hidden = isSample || !list.length;
       if (isSample) { setStatus(""); return; }
-      var n = { match: 0, caution: 0, unlisted: 0, invalid: 0 };
-      list.forEach(function (r) { n[r.verdict]++; });
-      setStatus(list.length ? "링크 " + list.length + "개를 확인했습니다. 위험 " + n.match + ", 주의 " + n.caution +
-        ", 미확인 " + (n.unlisted + n.invalid) : "");
+      setStatus(list.length ? "확인했습니다. 아래 결과를 보세요." : "");
       document.querySelector(".thread").scrollIntoView({ behavior: "smooth", block: "start" });
     } catch (e) {
       results.textContent = "";
@@ -104,7 +139,49 @@
 
   // ---- 입력 방법
   btnCheck.addEventListener("click", run);
-  $("btn-clear").addEventListener("click", function () { input.value = ""; setStatus(""); input.focus(); });
+  function reset(focus) {
+    input.value = ""; setStatus("");
+    check(SAMPLE, true);
+    if (focus) {
+      document.querySelector(".compose").scrollIntoView({ behavior: "smooth", block: "start" });
+      try { input.focus({ preventScroll: true }); } catch (e) { input.focus(); }
+    }
+  }
+  $("btn-clear").addEventListener("click", function () { reset(true); });
+  $("btn-again").addEventListener("click", function () { reset(true); });
+  // 붙여 넣으면 버튼을 누르지 않아도 바로 확인합니다
+  input.addEventListener("paste", function () { setTimeout(function () { if (input.value.trim()) run(); }, 0); });
+
+  // 결과를 가족·지인에게 보낼 수 있게 글로 복사합니다. 주소는 실수로 눌리지 않게 바꿔 적습니다(http → hxxp, . → [.])
+  function defang(u) { return u.replace(/^http/i, "hxxp").replace(/\./g, "[.]"); }
+  function resultText(list) {
+    var lines = ["[누르기 전에] 받은 문자의 링크를 확인했습니다."];
+    list.forEach(function (r, i) {
+      var c = COPY[r.verdict];
+      lines.push((NUM[i] || (i + 1)) + " " + c.seal + " · " + c.title + " — " + defang(r.raw));
+    });
+    lines.push("");
+    lines.push("※ 주소는 실수로 눌리지 않게 바꿔 적었습니다. 이미 눌렀다면 국번 없이 118(KISA 상담센터)에 상담하세요.");
+    lines.push("확인한 곳: " + location.origin + location.pathname);
+    return lines.join("\n");
+  }
+  function copyText(t) {
+    if (navigator.clipboard && navigator.clipboard.writeText) return navigator.clipboard.writeText(t);
+    return new Promise(function (ok, fail) {
+      var ta = el("textarea"); ta.value = t; ta.setAttribute("readonly", ""); ta.style.position = "fixed"; ta.style.opacity = "0";
+      document.body.appendChild(ta); ta.select();
+      try { document.execCommand("copy") ? ok() : fail(); } catch (e) { fail(e); }
+      document.body.removeChild(ta);
+    });
+  }
+  $("btn-copy").addEventListener("click", function () {
+    if (!last || !last.length) return;
+    var b = this;
+    copyText(resultText(last)).then(function () {
+      b.textContent = "복사했습니다 ✓";
+      setTimeout(function () { b.textContent = "결과 복사해서 알려 주기"; }, 2000);
+    }).catch(function () { setStatus("복사하지 못했습니다. 결과 화면을 캡처해서 보내 주세요."); });
+  });
   $("btn-sample").addEventListener("click", function () { check(SAMPLE, true); });
   input.addEventListener("keydown", function (e) { if (e.key === "Enter" && (e.ctrlKey || e.metaKey)) run(); });
   $("btn-paste").addEventListener("click", function () {
@@ -147,7 +224,7 @@
     deferred.userChoice.finally(function () { deferred = null; e.target.hidden = true; });
   });
 
-  // ---- 논문 결과: 그래프와 날짜 고르기
+  // ---- 2024년 탐지 데이터 분석: 그래프와 날짜 고르기
   var WEEK = ["일", "월", "화", "수", "목", "금", "토"];
   var P = window.BT_PAPER;
   var bars = [];
@@ -240,7 +317,7 @@
     setStatus("피싱 주소 목록을 불러오지 못했습니다. 페이지를 새로 고치거나, 묶음은 README대로 실행해 주세요.");
   }
   try { drawChart(); table(); readout(); $("day").addEventListener("input", readout); $("day").addEventListener("change", readout); }
-  catch (e) { $("readout").textContent = "논문 결과를 불러오지 못했습니다."; }
+  catch (e) { $("readout").textContent = "분석 결과를 불러오지 못했습니다."; }
   if (db && !fromShare()) check(SAMPLE, true);
 
   if ("serviceWorker" in navigator && (location.protocol === "https:" || /^(localhost|127\.0\.0\.1)$/.test(location.hostname))) {

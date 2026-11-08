@@ -22,7 +22,7 @@
 
   <section class="compose" aria-label="받은 문자 넣기">
     <p class="calm-line">아직 누르지 않았다면 괜찮습니다. 천천히 확인해 보세요.</p>
-    <label class="compose-label" for="input">받은 문자를 통째로 붙여 넣으세요. 안의 링크를 모두 찾아 확인합니다.</label>
+    <label class="compose-label" for="input">받은 문자를 통째로 붙여 넣으세요. 붙여 넣는 순간 안의 링크를 모두 찾아 확인합니다.</label>
     <textarea id="input" rows="3" spellcheck="false" autocomplete="off" placeholder="예) [Web발신] 고객님 택배가 주소 불일치로 보관 중입니다. 확인: http://…"></textarea>
     <div class="actions">
       <button type="button" id="btn-paste" class="quiet">붙여넣기</button>
@@ -30,9 +30,8 @@
       <button type="button" id="btn-check" class="go" disabled>확인하기</button>
     </div>
     <p class="status" id="status" role="status"></p>
-    <p class="limit">알아 두세요: 목록과 대조하는 방식이라 실시간 탐지는 아닙니다. 2024년 목록이라 그 뒤에 새로 생긴 피싱 주소는 확인하지 못합니다.</p>
-    <p class="privacy">입력한 내용은 이 기기 안에서만 확인하고 어디에도 보내지 않습니다.</p>
-    <p class="tapped"><b>이미 눌렀다면</b> 열린 화면에 개인정보나 인증번호를 넣지 말고, 설치된 앱이 있으면 지운 뒤 국번 없이 <b>118</b>(KISA 상담센터)에 상담하세요.</p>
+    <p class="limit">입력한 내용은 이 기기 안에서만 확인하고 어디에도 보내지 않습니다. 다만 목록과 대조하는 방식이라 실시간 탐지는 아닙니다. 지금 목록은 2024년 것이라 그 뒤에 새로 생긴 피싱 주소는 확인하지 못합니다. <a href="#source">목록 정보·업데이트 확인</a></p>
+    <p class="tapped"><b>이미 눌렀다면</b> 열린 화면에 개인정보나 인증번호를 넣지 말고, 설치된 앱이 있으면 지운 뒤 국번 없이 <a class="tel" href="tel:118">118</a>(KISA 상담센터)에 상담하세요.</p>
     <p class="share-tip" id="way-share">안드로이드는 이 앱을 홈 화면에 추가하면 문자에서 링크를 길게 눌러 <b>공유 → 누르기 전에</b>로 바로 확인할 수 있습니다. <button type="button" id="btn-install" class="inline" hidden>홈 화면에 추가</button></p>
   </section>
 
@@ -41,8 +40,13 @@
       <span id="thread-label">예시 · 이런 문자를 받았을 때</span>
       <button type="button" id="btn-sample" class="inline">예시 다시 보기</button>
     </div>
+    <div class="summary" id="summary" role="status" hidden></div>
     <div class="bubble" id="bubble"></div>
     <div id="results" aria-live="polite"></div>
+    <div class="after" id="after" hidden>
+      <button type="button" id="btn-copy" class="quiet">결과 복사해서 알려 주기</button>
+      <button type="button" id="btn-again" class="go">다른 문자 확인하기</button>
+    </div>
     <details class="legend">
       <summary>도장 세 가지의 뜻</summary>
       <dl>
@@ -75,8 +79,19 @@
     <p class="conclusion">날짜로 위험을 가려낼 수 없습니다. 2024년에는 평소에도 하루 평균 <b id="base-mean">293.7</b>개의 피싱 주소가 새로 탐지됐습니다. 그래서 이 앱은 날짜와 상관없이 링크를 받을 때마다 확인하게 합니다.</p>
   </section>
 
+  <section class="source" id="source" aria-labelledby="source-h">
+    <h2 id="source-h">대조하는 목록</h2>
+    <dl class="src-grid">
+      <div><dt>목록</dt><dd>KISA 피싱사이트 주소 <b>131,752건</b></dd></div>
+      <div><dt>기준일</dt><dd>2024년 12월 31일</dd></div>
+      <div><dt>새 목록 확인</dt><dd><b>매주 월요일 자동</b> (GitHub Actions)</dd></div>
+      <div><dt>반영 방법</dt><dd>새 목록이 나오면 알림을 받고, 형식을 확인한 뒤 반영</dd></div>
+    </dl>
+    <p class="src-note">KISA는 이 목록을 공공데이터포털에 1년에 한 번 공개합니다. 그래서 매주 데이터 페이지를 자동으로 확인해, 새 목록이 올라오면 바로 알 수 있게 해 두었습니다. <a href="https://github.com/sby1234-ai/myprofile/actions/workflows/phishing-list-check.yml">자동 확인 기록 보기</a></p>
+  </section>
+
   <footer class="foot">
-    <p class="call">이미 눌렀거나 정보를 입력했다면 국번 없이 <b>118</b>(KISA 상담센터)에 상담하세요.</p>
+    <p class="call">이미 눌렀거나 정보를 입력했다면 국번 없이 <a class="tel" href="tel:118">118</a>(KISA 상담센터)에 상담하세요.</p>
     <p>자료: 한국인터넷진흥원_피싱사이트_20241231(공공데이터포털). 2024년에 탐지된 주소라 그 뒤에 새로 생긴 주소는 들어 있지 않습니다. 결과는 참고용입니다.</p>
     <p>분석 코드: <a href="https://github.com/sby1234-ai/t10-holiday-phishing">t10-holiday-phishing</a> · 만든 사람: <a href="https://sby1234-ai.github.io/myprofile/">서보엽</a></p>
   </footer>

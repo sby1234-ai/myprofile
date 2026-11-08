@@ -1,0 +1,68 @@
+name: 피싱 목록 새 버전 확인
+
+# 「누르기 전에」(before-tap/)가 쓰는 KISA 피싱사이트 목록에 새 버전이 나왔는지 매주 확인합니다.
+# - 새 목록이 있으면 이슈로 알립니다(반영은 데이터 형식을 확인한 뒤 손으로 합니다).
+# - 페이지를 읽지 못하면 그것도 이슈로 알립니다.
+# - 확인 기록은 list-check 브랜치의 status.json에 남깁니다. 공개 저장소는 60일 동안 활동이 없으면
+#   예약 실행이 꺼지므로, 이 기록 커밋이 예약 실행을 계속 살려 둡니다. (사이트를 다시 배포하지 않도록 main이 아닌 브랜치에 씁니다)
+on:
+  schedule:
+    - cron: "17 0 * * 1"   # 매주 월요일 09:17 (한국 시간)
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  issues: write
+
+concurrency:
+  group: phishing-list-check
+  cancel-in-progress: false
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: 공공데이터포털에서 새 목록 확인
+        id: chk
+        env:
+          CURRENT_LIST_DATE: "20241231"
+        run: python3 .github/scripts/check_kisa_list.py
+
+      - name: 새 목록 알림 (이슈)
+        if: steps.chk.outputs.state == 'new'
+        env:
+          GH_TOKEN: ${{ github.token }}
+          LATEST: ${{ steps.chk.outputs.latest }}
+          DETAIL: ${{ steps.chk.outputs.detail }}
+        run: |
+          title="[누르기 전에] 새 KISA 피싱 목록(${LATEST}) 반영 필요"
+          if gh issue list --state all --search "in:title \"${title}\"" --json number --jq 'length' | grep -qv '^0$'; then
+            echo "이미 알린 목록입니다."; exit 0
+          fi
+          gh issue create --title "$title" --body "$(printf '%s\n\n- 데이터 페이지: https://www.data.go.kr/data/15143094/fileData.do\n- 할 일: 새 CSV를 받아 `before-tap/tools/prepare_data.py`로 `data/lookup.js`·`data/paper.js`를 다시 만들고, 화면의 기준일 문구와 이 워크플로의 CURRENT_LIST_DATE를 새 날짜로 바꿉니다.\n' "$DETAIL")"
+
+      - name: 확인 실패 알림 (이슈)
+        if: steps.chk.outputs.state == 'unknown'
+        env:
+          GH_TOKEN: ${{ github.token }}
+          DETAIL: ${{ steps.chk.outputs.detail }}
+        run: |
+          title="[누르기 전에] 피싱 목록 자동 확인 실패"
+          if gh issue list --state open --search "in:title \"${title}\"" --json number --jq 'length' | grep -qv '^0$'; then
+            echo "이미 열린 실패 알림이 있습니다."; exit 0
+          fi
+          gh issue create --title "$title" --body "$(printf '%s\n\n데이터 페이지(https://www.data.go.kr/data/15143094/fileData.do)를 직접 열어 확인해 주세요. 페이지 주소나 형식이 바뀌었다면 `.github/scripts/check_kisa_list.py`를 고칩니다.\n' "$DETAIL")"
+
+      - name: 확인 기록 남기기 (list-check 브랜치)
+        if: always()
+        run: |
+          [ -f status.json ] || exit 0
+          mkdir -p /tmp/rec && cp status.json /tmp/rec/status.json
+          cd /tmp/rec
+          git init -q && git checkout -q -b list-check
+          git add status.json
+          git -c user.name="list-check" -c user.email="list-check@users.noreply.github.com" commit -qm "목록 확인 $(date -u +%F)"
+          git push -qf "https://x-access-token:${{ github.token }}@github.com/${{ github.repository }}.git" list-check
